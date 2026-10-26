@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /obrigado
+Disallow: /comprou
+
+Sitemap: https://leandrowcampos.com.br/sitemap-index.xml

@@ -1,0 +1,241 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+import FAQ from '../../components/FAQ.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import AuthorBox from '../../components/AuthorBox.astro';
+import { site } from '../../config/site';
+import { brl } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const ebooks = await getCollection('ebooks', (e) => !e.data.draft);
+  return ebooks.map((ebook) => ({ params: { slug: ebook.id }, props: { ebook } }));
+}
+
+const { ebook } = Astro.props;
+const { data } = ebook;
+const { Content } = await render(ebook);
+
+const bonusTotal = data.bonuses.reduce((sum, b) => sum + b.value, 0);
+const discount = data.originalPrice ? Math.round((1 - data.price / data.originalPrice) * 100) : 0;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: data.title,
+  description: data.excerpt,
+  image: new URL(data.cover, site.url).toString(),
+  brand: { '@type': 'Person', name: site.author.name },
+  offers: {
+    '@type': 'Offer',
+    price: data.price.toFixed(2),
+    priceCurrency: 'BRL',
+    availability: 'https://schema.org/InStock',
+    url: new URL(`/ebook/${ebook.id}/`, site.url).toString(),
+  },
+};
+---
+
+<Base title={data.title} description={data.excerpt} image={data.cover} type="product" minimal schema={schema}>
+  <!-- 1. Promessa com mockup e botão -->
+  <section id="promessa" class="bg-surface-alt">
+    <div class="container-site grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1.2fr_0.8fr]">
+      <div>
+        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">E-book · {site.author.name}</p>
+        <h1 class="text-4xl sm:text-5xl">{data.promise.headline}</h1>
+        <p class="mt-5 text-lg text-muted">{data.promise.support}</p>
+        <div class="mt-8 flex flex-col items-start gap-3">
+          <Button href={data.checkoutUrl} checkout size="lg" id="cta-topo">{data.promise.cta}</Button>
+          <p class="text-sm text-muted">Garantia de {data.guaranteeDays} dias · Acesso imediato · Pagamento seguro pela Hotmart</p>
+        </div>
+      </div>
+      <img src={data.cover} alt={data.coverAlt} width="400" height="560" class="mx-auto w-60 drop-shadow-2xl sm:w-72" fetchpriority="high" />
+    </div>
+  </section>
+
+  <!-- 2. Vídeo -->
+  {data.videoUrl && (
+    <Section id="video" narrow class="!py-10">
+      <div class="aspect-video overflow-hidden rounded-card border border-line bg-ink shadow-card">
+        <iframe
+          src={data.videoUrl}
+          title={`Vídeo de apresentação: ${data.title}`}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          class="size-full"
+        ></iframe>
+      </div>
+    </Section>
+  )}
+
+  <!-- 3. A dor em 3 situações -->
+  <Section id="dor" eyebrow="Isso soa familiar?" title="Três situações que custam caro todo mês">
+    <ul class="grid gap-6 md:grid-cols-3">
+      {data.pains.map((p, i) => (
+        <li class="rounded-card border border-line bg-surface p-6 shadow-card">
+          <span class="font-display text-3xl font-bold text-brand-200">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="mt-2 text-xl">{p.title}</h3>
+          <p class="mt-2 text-muted">{p.text}</p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <!-- 4. O que você recebe (capítulos como resultados) -->
+  <Section id="conteudo-ebook" alt eyebrow="O que você recebe" title="Cada capítulo termina com algo funcionando">
+    <ol class="mx-auto max-w-3xl space-y-4">
+      {data.chapters.map((c) => (
+        <li class="flex gap-4 rounded-card border border-line bg-surface p-5">
+          <span aria-hidden="true" class="mt-0.5 text-success">✓</span>
+          <div>
+            <h3 class="text-lg">{c.title}</h3>
+            <p class="text-muted">{c.result}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="prose-site mx-auto mt-10 max-w-3xl">
+      <Content />
+    </div>
+  </Section>
+
+  <!-- 5. Os agentes -->
+  {data.agents.length > 0 && (
+    <Section id="agentes" eyebrow="Os agentes" title="Os assistentes que você monta com o manual">
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {data.agents.map((a) => (
+          <li class="rounded-card border border-line bg-surface p-6 shadow-card">
+            {a.icon && <span aria-hidden="true" class="text-3xl">{a.icon}</span>}
+            <h3 class="mt-3 text-lg">{a.name}</h3>
+            <p class="mt-2 text-sm text-muted">{a.what}</p>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )}
+
+  <!-- 6. Caso real com números -->
+  <Section id="caso" alt eyebrow="Caso real" title={data.caseStudy.title} narrow>
+    <p class="text-lg text-ink/90">{data.caseStudy.text}</p>
+    <dl class="mt-8 grid gap-6 sm:grid-cols-3">
+      {data.caseStudy.metrics.map((m) => (
+        <div class="rounded-card border border-line bg-surface p-6 text-center">
+          <dd class="font-display text-3xl font-bold text-brand-700">{m.value}</dd>
+          <dt class="mt-1 text-sm text-muted">{m.label}</dt>
+        </div>
+      ))}
+    </dl>
+    {data.caseStudy.disclaimer && <p class="mt-4 text-xs text-muted">{data.caseStudy.disclaimer}</p>}
+  </Section>
+
+  <!-- 7. Para quem é e para quem não é -->
+  <Section id="para-quem" title="Para quem é (e para quem não é)">
+    <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+      <div class="rounded-card border border-line bg-surface p-6 shadow-card">
+        <h3 class="text-xl text-success">É para você se…</h3>
+        <ul class="mt-4 space-y-3">
+          {data.forWho.map((t) => <li class="flex gap-3"><span aria-hidden="true" class="text-success">✓</span>{t}</li>)}
+        </ul>
+      </div>
+      <div class="rounded-card border border-line bg-surface p-6 shadow-card">
+        <h3 class="text-xl text-danger">Não é para você se…</h3>
+        <ul class="mt-4 space-y-3">
+          {data.notForWho.map((t) => <li class="flex gap-3"><span aria-hidden="true" class="text-danger">✕</span>{t}</li>)}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 8. Bônus com valor -->
+  {data.bonuses.length > 0 && (
+    <Section id="bonus" alt eyebrow="Bônus" title="Você também leva">
+      <ul class="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
+        {data.bonuses.map((b) => (
+          <li class="flex flex-col rounded-card border border-line bg-surface p-6 shadow-card">
+            <h3 class="text-lg">{b.title}</h3>
+            <p class="mt-2 flex-1 text-sm text-muted">{b.description}</p>
+            <p class="mt-4 text-sm font-semibold text-accent-600">{b.value > 0 ? `Valor: ${brl(b.value)}` : 'Incluso'}</p>
+          </li>
+        ))}
+      </ul>
+      {bonusTotal > 0 && <p class="mt-6 text-center text-muted">Bônus somados: <strong class="text-ink">{brl(bonusTotal)}</strong>. Hoje vão junto com o e-book.</p>}
+    </Section>
+  )}
+
+  <!-- 9. Oferta -->
+  <Section id="oferta" eyebrow="Oferta" title="Tudo isso por menos que um almoço de negócios">
+    <div class="mx-auto max-w-xl rounded-card border-2 border-brand-200 bg-surface p-8 text-center shadow-card">
+      <p class="text-lg font-semibold">{data.title}</p>
+      {data.originalPrice && (
+        <p class="mt-4 text-muted">
+          De <span class="line-through">{brl(data.originalPrice)}</span>
+          {discount > 0 && <span class="ml-2 rounded-full bg-accent-100 px-2 py-0.5 text-xs font-semibold text-accent-600">-{discount}%</span>}
+        </p>
+      )}
+      <p class="mt-1 font-display text-5xl font-bold text-brand-700">{brl(data.price)}</p>
+      {data.installments && <p class="mt-1 text-muted">{data.installments}</p>}
+      {data.pixDiscountText && <p class="mt-1 text-sm text-muted">{data.pixDiscountText}</p>}
+      <Button href={data.checkoutUrl} checkout size="lg" class="mt-8 w-full" id="cta-oferta">{data.promise.cta}</Button>
+      <p class="mt-4 text-xs text-muted">Pix, cartão (à vista ou parcelado) ou boleto. Checkout e entrega pela Hotmart.</p>
+    </div>
+  </Section>
+
+  <!-- 10. Garantia -->
+  <Section id="garantia" alt narrow>
+    <div class="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
+      <div aria-hidden="true" class="flex size-24 shrink-0 items-center justify-center rounded-full border-4 border-success/30 bg-surface font-display text-2xl font-bold text-success">{data.guaranteeDays}d</div>
+      <div>
+        <h2 class="text-2xl">Garantia incondicional de {data.guaranteeDays} dias</h2>
+        <p class="mt-2 text-muted">Leia, aplique e veja se faz sentido. Se não fizer, peça o reembolso pela Hotmart dentro de {data.guaranteeDays} dias e receba 100% do valor de volta. Sem perguntas.</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 11. Depoimentos -->
+  {data.testimonials.length > 0 && (
+    <Section id="depoimentos" eyebrow="Quem já leu" title="O que dizem">
+      <Testimonials items={data.testimonials} />
+    </Section>
+  )}
+
+  <!-- 12. Perguntas frequentes -->
+  <Section id="faq" alt title="Perguntas frequentes">
+    <FAQ items={data.faq} />
+  </Section>
+
+  <!-- 13. Sobre o autor -->
+  <Section id="autor">
+    <AuthorBox />
+  </Section>
+
+  <!-- 14. Botão final -->
+  <Section id="cta-final" alt narrow class="text-center">
+    <h2 class="text-3xl">{data.promise.headline}</h2>
+    <p class="mt-4 text-muted">Garantia de {data.guaranteeDays} dias. Acesso imediato. {brl(data.price)}.</p>
+    <Button href={data.checkoutUrl} checkout size="lg" class="mt-8" id="cta-final-botao">{data.promise.cta}</Button>
+  </Section>
+
+  <!-- Dados do produto para o evento ViewContent (Meta) / view_item (GA4). -->
+  <div id="ebook-data" hidden data-id={ebook.id} data-title={data.title} data-price={data.price}></div>
+  <script>
+    import { track } from '../../lib/tracking';
+    const el = document.getElementById('ebook-data');
+    if (el) {
+      track('ViewContent', {
+        content_ids: [el.dataset.id],
+        content_name: el.dataset.title,
+        content_type: 'product',
+        value: Number(el.dataset.price),
+        currency: 'BRL',
+      });
+      document.querySelectorAll('a[data-checkout]').forEach((a) =>
+        a.addEventListener('click', () =>
+          track('InitiateCheckout', { content_ids: [el.dataset.id], value: Number(el.dataset.price), currency: 'BRL' }),
+        ),
+      );
+    }
+  </script>
+</Base>

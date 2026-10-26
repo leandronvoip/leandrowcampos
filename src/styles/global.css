@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/*
+ * Tokens de design.
+ * Paleta neutra provisória: a paleta final virá do agente de identidade visual.
+ * Para trocar as cores do site inteiro, basta alterar os valores abaixo.
+ * As classes Tailwind geradas seguem o nome do token: bg-brand-600, text-ink, border-line...
+ */
+@theme {
+  /* Cor principal (botões, links, destaques) */
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dbe6fe;
+  --color-brand-200: #bfd3fe;
+  --color-brand-300: #93b4fd;
+  --color-brand-400: #6090fa;
+  --color-brand-500: #3b6cf6;
+  --color-brand-600: #254deb;
+  --color-brand-700: #1d3ad8;
+  --color-brand-800: #1e31af;
+  --color-brand-900: #1e2f8a;
+
+  /* Cor de apoio (selos, preço, urgência) */
+  --color-accent-100: #fff1d6;
+  --color-accent-400: #f5b23c;
+  --color-accent-500: #e99a12;
+  --color-accent-600: #c77d08;
+
+  /* Neutros */
+  --color-ink: #141821;        /* texto principal */
+  --color-muted: #5b6372;      /* texto secundário */
+  --color-surface: #ffffff;    /* fundo padrão */
+  --color-surface-alt: #f5f7fa;/* fundo de seções alternadas */
+  --color-line: #e3e7ee;       /* bordas e divisores */
+  --color-success: #15803d;
+  --color-danger: #b91c1c;
+
+  /* Tipografia: fonte do sistema por padrão (zero requisição de rede).
+     Para usar uma fonte do Google, troque aqui e adicione o <link> em src/layouts/Base.astro. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-sans);
+
+  --radius-card: 1rem;
+  --shadow-card: 0 1px 2px rgb(20 24 33 / 0.06), 0 8px 24px -12px rgb(20 24 33 / 0.18);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display font-bold tracking-tight text-balance;
+  }
+  a {
+    @apply underline-offset-4;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .prose-site {
+    @apply max-w-none text-ink/90 leading-relaxed;
+  }
+  .prose-site :where(h2) { @apply mt-10 mb-4 text-2xl; }
+  .prose-site :where(h3) { @apply mt-8 mb-3 text-xl; }
+  .prose-site :where(p) { @apply my-4; }
+  .prose-site :where(ul) { @apply my-4 list-disc pl-6; }
+  .prose-site :where(ol) { @apply my-4 list-decimal pl-6; }
+  .prose-site :where(li) { @apply my-1; }
+  .prose-site :where(a) { @apply text-brand-700 underline; }
+  .prose-site :where(blockquote) { @apply my-6 border-l-4 border-brand-200 pl-4 italic text-muted; }
+  .prose-site :where(strong) { @apply font-semibold text-ink; }
+  .prose-site :where(code) { @apply rounded bg-surface-alt px-1 py-0.5 text-sm; }
+  .prose-site :where(hr) { @apply my-10 border-line; }
+}

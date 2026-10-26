@@ -1,0 +1,74 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { site } from '../config/site';
+import { longDate, shortDate } from '../lib/format';
+
+const ebook = await getEntry('ebooks', site.launch.featuredEbook);
+
+// [PLACEHOLDER] Três conteúdos de aquecimento. Trocar href pelo link real (vídeo, post, live) quando existir.
+const warmup = [
+  {
+    date: '2026-11-03',
+    title: '[PLACEHOLDER] Aula 1 — Onde a IA dá dinheiro numa PME (e onde não dá)',
+    text: '[PLACEHOLDER] O mapa dos processos que valem automatizar primeiro, com exemplos da Nvoip.',
+    href: '#',
+  },
+  {
+    date: '2026-11-05',
+    title: '[PLACEHOLDER] Aula 2 — Montando o primeiro agente de atendimento ao vivo',
+    text: '[PLACEHOLDER] Do zero a um assistente respondendo no WhatsApp em 40 minutos.',
+    href: '#',
+  },
+  {
+    date: '2026-11-08',
+    title: '[PLACEHOLDER] Aula 3 — O plano de 7 dias e a abertura do carrinho',
+    text: '[PLACEHOLDER] Como aplicar o manual na sua empresa e o que vem junto no lançamento.',
+    href: '#',
+  },
+];
+---
+
+<Base title="Lançamento" description={`Carrinho aberto de ${shortDate(site.launch.cartOpens)} a ${shortDate(site.launch.cartCloses)}. Entre na lista para acompanhar o aquecimento e receber a oferta.`}>
+  <section class="bg-surface-alt">
+    <div class="container-site grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-2">
+      <div>
+        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">Lançamento · {longDate(site.launch.cartOpens)}</p>
+        <h1 class="text-4xl sm:text-5xl">{ebook?.data.title ?? '[PLACEHOLDER] Título do e-book'}</h1>
+        <p class="mt-5 text-lg text-muted">
+          Carrinho aberto de <strong class="text-ink">{shortDate(site.launch.cartOpens)}</strong> a
+          <strong class="text-ink">{shortDate(site.launch.cartCloses)}</strong>. Antes disso, três conteúdos gratuitos para você já sair aplicando.
+        </p>
+        <div class="mt-8 rounded-card border border-line bg-surface p-6 shadow-card">
+          <h2 class="text-lg">Entre na lista do lançamento</h2>
+          <p class="mb-5 mt-1 text-sm text-muted">Você recebe os três conteúdos e a condição de abertura antes de todo mundo.</p>
+          <LeadForm origem="lancamento" cta="Quero entrar na lista" />
+        </div>
+      </div>
+      {ebook && <img src={ebook.data.cover} alt={ebook.data.coverAlt} width="400" height="560" class="mx-auto hidden w-64 drop-shadow-2xl lg:block" />}
+    </div>
+  </section>
+
+  <Section eyebrow="Aquecimento" title="Três conteúdos antes do carrinho abrir">
+    <ol class="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
+      {warmup.map((w, i) => (
+        <li class="flex flex-col rounded-card border border-line bg-surface p-6 shadow-card">
+          <span class="text-xs font-semibold uppercase tracking-wide text-brand-700">Conteúdo {i + 1} · {shortDate(w.date)}</span>
+          <h3 class="mt-2 text-lg">{w.title}</h3>
+          <p class="mt-2 flex-1 text-sm text-muted">{w.text}</p>
+          <a href={w.href} class="mt-4 text-sm font-semibold text-brand-700 hover:underline">Em breve →</a>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section alt narrow>
+    <div class="mx-auto max-w-xl text-center">
+      <h2 class="text-2xl">Já conhece o e-book?</h2>
+      <p class="mt-2 text-muted">A página completa de venda, com conteúdo, bônus e garantia, já está disponível.</p>
+      {ebook && <a href={`/ebook/${ebook.id}/`} class="mt-4 inline-block font-semibold text-brand-700 underline">Ver a página do e-book →</a>}
+    </div>
+  </Section>
+</Base>

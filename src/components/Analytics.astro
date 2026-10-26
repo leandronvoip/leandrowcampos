@@ -1,0 +1,46 @@
+---
+/**
+ * Slots de rastreamento. Cada bloco só é renderizado quando a variável existe.
+ * PUBLIC_META_PIXEL_ID  -> Meta Pixel (PageView automático)
+ * PUBLIC_GA4_ID         -> Google Analytics 4 (page_view automático)
+ * Eventos adicionais (ViewContent, Lead) são disparados via src/lib/tracking.ts.
+ */
+const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID?.trim() || '';
+const ga4Id = import.meta.env.PUBLIC_GA4_ID?.trim() || '';
+---
+
+{metaPixelId && (
+  <>
+    <script is:inline define:vars={{ metaPixelId }}>
+      // @ts-nocheck
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+        t = b.createElement(e); t.async = !0; t.src = v;
+        s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', metaPixelId);
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none" alt="" src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`} />
+    </noscript>
+  </>
+)}
+
+{ga4Id && (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+    <script is:inline define:vars={{ ga4Id }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', ga4Id, { anonymize_ip: true });
+    </script>
+  </>
+)}

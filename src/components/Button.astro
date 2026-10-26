@@ -1,0 +1,29 @@
+---
+export interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'md' | 'lg';
+  /** Marca o link como checkout: recebe UTMs via data-checkout. */
+  checkout?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, variant = 'primary', size = 'md', checkout = false, class: className = '', ...rest } = Astro.props;
+
+const base = 'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors no-underline';
+const variants = {
+  primary: 'bg-brand-600 text-white shadow-sm hover:bg-brand-700',
+  secondary: 'border border-line bg-surface text-ink hover:border-brand-300 hover:text-brand-700',
+  ghost: 'text-brand-700 hover:bg-brand-50',
+};
+const sizes = { md: 'px-5 py-3 text-base', lg: 'px-7 py-4 text-lg' };
+---
+
+<a
+  href={href}
+  data-checkout={checkout ? '' : undefined}
+  class:list={[base, variants[variant], sizes[size], className]}
+  {...rest}
+>
+  <slot />
+</a>

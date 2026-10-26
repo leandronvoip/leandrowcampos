@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AuthorBox from '../../components/AuthorBox.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { site } from '../../config/site';
+import { longDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.publishedAt.toISOString(),
+  dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
+  author: { '@type': 'Person', name: site.author.name, url: site.url },
+  mainEntityOfPage: new URL(`/blog/${post.id}/`, site.url).toString(),
+  inLanguage: site.lang,
+};
+---
+
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.cover}
+  type="article"
+  publishedAt={post.data.publishedAt}
+  updatedAt={post.data.updatedAt}
+  schema={schema}
+>
+  <article class="container-site max-w-3xl py-14 sm:py-20">
+    <header class="mb-10">
+      <a href="/blog" class="text-sm font-semibold text-brand-700 hover:underline">← Blog</a>
+      <h1 class="mt-4 text-4xl sm:text-5xl">{post.data.title}</h1>
+      <p class="mt-4 text-lg text-muted">{post.data.description}</p>
+      <p class="mt-4 text-sm text-muted">
+        Por {site.author.name} ·
+        <time datetime={post.data.publishedAt.toISOString()}>{longDate(post.data.publishedAt)}</time>
+      </p>
+    </header>
+    <div class="prose-site">
+      <Content />
+    </div>
+  </article>
+
+  <section class="bg-surface-alt py-14">
+    <div class="container-site grid max-w-5xl gap-10 lg:grid-cols-2">
+      <AuthorBox compact />
+      <div class="rounded-card border border-line bg-surface p-6 shadow-card">
+        <h2 class="text-xl">Gostou? Receba os próximos</h2>
+        <p class="mb-5 mt-1 text-sm text-muted">Um e-mail por semana, sem spam.</p>
+        <LeadForm origem={`blog-${post.id}`} cta="Assinar" compact redirect="" footnote="" />
+      </div>
+    </div>
+  </section>
+</Base>

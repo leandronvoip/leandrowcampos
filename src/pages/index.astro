@@ -1,0 +1,86 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { site } from '../config/site';
+import { brl } from '../lib/format';
+
+const featured =
+  (await getEntry('ebooks', site.launch.featuredEbook)) ??
+  (await getCollection('ebooks', (e) => !e.data.draft))[0];
+---
+
+<Base title={`${site.name} — IA aplicada a pequenas e médias empresas`} description={site.description}>
+  <!-- Herói: quem é o Leandro em 3 linhas -->
+  <section class="bg-surface-alt">
+    <div class="container-site grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
+      <div>
+        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">IA para quem toca o negócio</p>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl">
+          IA aplicada à sua empresa, por quem construiu uma de verdade.
+        </h1>
+        <ul class="mt-6 space-y-2 text-lg text-muted">
+          {site.author.bioShort.map((line) => <li class="flex gap-3"><span aria-hidden="true" class="mt-2 size-2 shrink-0 rounded-full bg-brand-500"></span>{line}</li>)}
+        </ul>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href="/gratis" size="lg">Baixar o guia grátis</Button>
+          <Button href="/ebooks" variant="secondary" size="lg">Ver os e-books</Button>
+        </div>
+      </div>
+      <div class="mx-auto w-full max-w-sm">
+        <img src={site.author.photo} alt={`Foto de ${site.author.name}`} width="480" height="480" class="aspect-square w-full rounded-card border border-line object-cover shadow-card" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Prova de empresa real -->
+  <Section id="prova" eyebrow="Empresa real, não slide" title={`Fundador da ${site.company.name}`} lead="Tudo o que ensino foi testado numa empresa que paga folha todo mês. Os números abaixo são da operação, não de projeção.">
+    <dl class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
+      {site.company.proof.map((p) => (
+        <div class="rounded-card border border-line bg-surface p-6 text-center shadow-card">
+          <dt class="order-2 text-sm text-muted">{p.label}</dt>
+          <dd class="font-display text-3xl font-bold text-brand-700">{p.value}</dd>
+        </div>
+      ))}
+    </dl>
+    <p class="mt-6 text-center text-sm text-muted">
+      Conheça a <a href={site.company.url} rel="noopener" target="_blank" class="underline">{site.company.name}</a>.
+    </p>
+  </Section>
+
+  <!-- E-book em destaque -->
+  {featured && (
+    <Section id="ebook" alt eyebrow="Lançamento" title={featured.data.title} lead={featured.data.subtitle}>
+      <div class="mx-auto grid max-w-4xl items-center gap-10 md:grid-cols-[0.8fr_1.2fr]">
+        <a href={`/ebook/${featured.id}/`} class="block">
+          <img src={featured.data.cover} alt={featured.data.coverAlt} width="400" height="560" class="mx-auto w-56 drop-shadow-xl md:w-64" />
+        </a>
+        <div>
+          <ul class="space-y-3">
+            {featured.data.chapters.slice(0, 3).map((c) => (
+              <li class="flex gap-3"><span aria-hidden="true" class="mt-1 text-success">✓</span><span>{c.result}</span></li>
+            ))}
+          </ul>
+          <p class="mt-6 font-display text-2xl font-bold">
+            {featured.data.originalPrice && <span class="mr-2 text-base font-normal text-muted line-through">{brl(featured.data.originalPrice)}</span>}
+            {brl(featured.data.price)}
+            {featured.data.installments && <span class="block text-sm font-normal text-muted">{featured.data.installments}</span>}
+          </p>
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button href={`/ebook/${featured.id}/`} size="lg">Conhecer o e-book</Button>
+            <Button href="/lancamento" variant="ghost" size="lg">Entrar na lista do lançamento</Button>
+          </div>
+        </div>
+      </div>
+    </Section>
+  )}
+
+  <!-- Captura da isca -->
+  <Section id="gratis" eyebrow="Comece de graça" title="[PLACEHOLDER] Guia gratuito: 5 automações com IA para esta semana" lead="[PLACEHOLDER] Um PDF curto com cinco automações que qualquer PME consegue montar em uma tarde. Receba no e-mail agora.">
+    <div class="mx-auto max-w-lg rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
+      <LeadForm origem="home-isca" cta="Quero o guia grátis" />
+    </div>
+  </Section>
+</Base>

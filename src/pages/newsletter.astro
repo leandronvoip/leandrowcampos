@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { site } from '../config/site';
+---
+
+<Base title="Newsletter" description="[PLACEHOLDER] Um e-mail por semana sobre IA aplicada a pequenas e médias empresas, com o que funcionou (e o que não funcionou) na prática.">
+  <section class="container-site grid max-w-5xl items-start gap-10 py-14 sm:py-20 lg:grid-cols-2">
+    <div>
+      <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">Newsletter</p>
+      <h1 class="text-4xl sm:text-5xl">[PLACEHOLDER] IA no negócio, toda semana, em 5 minutos</h1>
+      <p class="mt-5 text-lg text-muted">[PLACEHOLDER] Um e-mail por semana com uma automação, um erro que cometi e uma ferramenta que vale testar. Escrito por {site.author.name}.</p>
+      <ul class="mt-6 space-y-3 text-muted">
+        <li class="flex gap-3"><span aria-hidden="true" class="text-success">✓</span>[PLACEHOLDER] Sem teoria: o que rodou de verdade na Nvoip</li>
+        <li class="flex gap-3"><span aria-hidden="true" class="text-success">✓</span>[PLACEHOLDER] Sempre com um passo prático para a semana</li>
+        <li class="flex gap-3"><span aria-hidden="true" class="text-success">✓</span>Cancela com um clique, quando quiser</li>
+      </ul>
+    </div>
+    <div class="rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
+      <LeadForm origem="newsletter" cta="Quero receber a newsletter" whatsapp={false} />
+    </div>
+  </section>
+</Base>

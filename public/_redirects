@@ -1,0 +1,7 @@
+# Redirecionamentos da Cloudflare Pages.
+# Só valem para domínios anexados a este projeto Pages. Para o .com redirecionar,
+# anexe leandrowcampos.com (e www) como domínios personalizados do mesmo projeto
+# ou use uma Redirect Rule na zona do .com no painel da Cloudflare.
+https://leandrowcampos.com/*      https://leandrowcampos.com.br/:splat  301!
+https://www.leandrowcampos.com/*  https://leandrowcampos.com.br/:splat  301!
+https://www.leandrowcampos.com.br/*  https://leandrowcampos.com.br/:splat  301!

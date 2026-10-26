@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { site } from '../config/site';
+---
+
+<Base title="Guia grátis" description="[PLACEHOLDER] Baixe o guia gratuito com 5 automações com IA que qualquer pequena empresa monta em uma tarde.">
+  <section class="bg-surface-alt">
+    <div class="container-site grid items-start gap-10 py-14 sm:py-20 lg:grid-cols-2">
+      <div>
+        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">Guia gratuito</p>
+        <h1 class="text-4xl sm:text-5xl">[PLACEHOLDER] 5 automações com IA para colocar na sua empresa esta semana</h1>
+        <p class="mt-5 text-lg text-muted">[PLACEHOLDER] Um PDF curto, direto e sem teoria: cinco automações que você monta em uma tarde, com as ferramentas que já usa.</p>
+        <ul class="mt-6 space-y-3">
+          {[
+            '[PLACEHOLDER] Resposta automática no WhatsApp fora do horário',
+            '[PLACEHOLDER] Follow-up de orçamento que ninguém esquece',
+            '[PLACEHOLDER] Resumo semanal do caixa no seu e-mail',
+            '[PLACEHOLDER] Triagem de mensagens por urgência',
+            '[PLACEHOLDER] Rascunho de posts a partir de uma ideia',
+          ].map((item) => <li class="flex gap-3"><span aria-hidden="true" class="text-success">✓</span>{item}</li>)}
+        </ul>
+        <p class="mt-6 text-sm text-muted">Escrito por {site.author.name}, {site.author.role.toLowerCase()}.</p>
+      </div>
+      <div class="rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
+        <h2 class="text-xl">Onde enviamos o guia?</h2>
+        <p class="mb-6 mt-1 text-sm text-muted">Chega no e-mail em poucos minutos. WhatsApp é opcional, para quem quiser receber avisos por lá.</p>
+        <LeadForm origem="gratis" cta="Quero receber o guia" />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { brl } from '../lib/format';
+
+interface Props { ebook: CollectionEntry<'ebooks'> }
+const { ebook } = Astro.props;
+const { data } = ebook;
+const href = `/ebook/${ebook.id}/`;
+---
+
+<article class="flex flex-col overflow-hidden rounded-card border border-line bg-surface shadow-card">
+  <a href={href} class="block bg-surface-alt p-6">
+    <img src={data.cover} alt={data.coverAlt} width="400" height="560" loading="lazy" class="mx-auto h-56 w-auto object-contain drop-shadow-md" />
+  </a>
+  <div class="flex flex-1 flex-col gap-3 p-6">
+    {data.featured && <span class="w-fit rounded-full bg-accent-100 px-3 py-1 text-xs font-semibold text-accent-600">Lançamento</span>}
+    <h3 class="text-xl"><a href={href} class="hover:text-brand-700">{data.title}</a></h3>
+    <p class="text-sm text-muted">{data.excerpt}</p>
+    <div class="mt-auto flex items-center justify-between pt-2">
+      <p class="font-display text-lg font-bold">
+        {data.originalPrice && <span class="mr-2 text-sm font-normal text-muted line-through">{brl(data.originalPrice)}</span>}
+        {brl(data.price)}
+      </p>
+      <a href={href} class="text-sm font-semibold text-brand-700 hover:underline">Ver e-book →</a>
+    </div>
+  </div>
+</article>

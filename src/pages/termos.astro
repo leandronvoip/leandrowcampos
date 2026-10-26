@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { site } from '../config/site';
+---
+
+<Base title="Termos de Uso" description={`Termos de uso do site ${site.name} e condições de compra dos e-books.`}>
+  <Section narrow>
+    <div class="prose-site">
+      <h1 class="text-4xl">Termos de Uso</h1>
+      <p class="text-muted">Última atualização: [PLACEHOLDER] 26 de outubro de 2026</p>
+
+      <p>[PLACEHOLDER] Este texto é um rascunho de referência e deve ser revisado por responsável jurídico antes da publicação.</p>
+
+      <h2>1. O site</h2>
+      <p>O site <strong>{site.url.replace('https://', '')}</strong> é mantido por {site.author.name} e divulga conteúdos e produtos digitais (e-books) sobre inteligência artificial aplicada a pequenas e médias empresas.</p>
+
+      <h2>2. Compra e entrega</h2>
+      <p>A venda, o pagamento e a entrega dos e-books são processados pela <strong>Hotmart</strong>. Ao comprar, você aceita também os termos da Hotmart. O acesso é liberado na área de membros após a confirmação do pagamento.</p>
+
+      <h2>3. Garantia</h2>
+      <p>Todos os e-books têm garantia incondicional de <strong>15 dias</strong> a partir da compra, além do prazo legal de 7 dias do Código de Defesa do Consumidor. O pedido de reembolso é feito diretamente na Hotmart.</p>
+
+      <h2>4. Uso do conteúdo</h2>
+      <p>Os e-books e os bônus são de uso pessoal e intransferível. É proibido copiar, distribuir, revender ou publicar o conteúdo, total ou parcialmente, sem autorização por escrito.</p>
+
+      <h2>5. Resultados</h2>
+      <p>Os conteúdos são educacionais e refletem a experiência do autor. Exemplos e números apresentados são de casos específicos e não constituem promessa de resultado. A aplicação no seu negócio depende de fatores fora do nosso controle.</p>
+
+      <h2>6. Conteúdo gratuito e comunicações</h2>
+      <p>Ao se inscrever em formulários do site, você concorda em receber comunicações conforme a <a href="/privacidade">Política de Privacidade</a>. Você pode cancelar a qualquer momento.</p>
+
+      <h2>7. Alterações</h2>
+      <p>Estes termos podem ser atualizados. A data no topo indica a versão vigente.</p>
+
+      <h2>8. Contato</h2>
+      <p><a href={`mailto:${site.author.email}`}>{site.author.email}</a></p>
+    </div>
+  </Section>
+</Base>

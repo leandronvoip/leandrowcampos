@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import { site } from '../config/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Analytics from '../components/Analytics.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  /** Caminho (ex.: /images/og.png) ou URL absoluta. */
+  image?: string;
+  /** "website" (padrão), "article" ou "product". */
+  type?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+  /** Esconde cabeçalho e rodapé (páginas de venda e de obrigado ficam mais limpas). */
+  minimal?: boolean;
+  publishedAt?: Date;
+  updatedAt?: Date;
+  /** JSON-LD extra (objeto já pronto). */
+  schema?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description = site.description,
+  image = site.defaultOgImage,
+  type = 'website',
+  noindex = false,
+  minimal = false,
+  publishedAt,
+  updatedAt,
+  schema,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
+const ogImage = new URL(image, Astro.site ?? site.url).toString();
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+
+const baseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  inLanguage: site.lang,
+};
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} — Blog`} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type === 'product' ? 'website' : type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
+    {updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={site.social.twitter} />
+    <meta name="twitter:creator" content={site.social.twitter} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!--
+      Fonte do Google (opcional). Hoje o site usa a fonte do sistema (ver src/styles/global.css).
+      Para ativar, descomente as linhas abaixo e troque --font-sans no CSS. Sempre com display=swap.
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    -->
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema ?? baseSchema)} />
+
+    <Analytics />
+  </head>
+  <body class="min-h-dvh flex flex-col">
+    <a
+      href="#conteudo"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
+    >
+      Ir para o conteúdo
+    </a>
+    {!minimal && <Header />}
+    <main id="conteudo" class="flex-1">
+      <slot />
+    </main>
+    <Footer minimal={minimal} />
+
+    <script>
+      // Captura UTMs em toda página e decora links de checkout.
+      import { captureUtms, decorateCheckoutLinks } from '../lib/tracking';
+      captureUtms();
+      decorateCheckoutLinks();
+    </script>
+  </body>
+</html>

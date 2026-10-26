@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import EbookCard from '../components/EbookCard.astro';
+import LeadForm from '../components/LeadForm.astro';
+
+const ebooks = (await getCollection('ebooks', (e) => !e.data.draft)).sort(
+  (a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+---
+
+<Base title="E-books" description="E-books práticos de IA aplicada a pequenas e médias empresas. Sem hype, com passo a passo.">
+  <Section title="E-books" lead="Manuais práticos para colocar IA no atendimento, nas vendas e na operação da sua empresa.">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {ebooks.map((ebook) => <EbookCard ebook={ebook} />)}
+    </div>
+    {ebooks.length === 0 && <p class="text-center text-muted">Nenhum e-book publicado ainda.</p>}
+  </Section>
+
+  <Section alt title="Ainda não decidiu?" lead="Comece pelo guia gratuito e veja se o jeito de ensinar faz sentido para você." narrow>
+    <div class="mx-auto max-w-lg rounded-card border border-line bg-surface p-6 shadow-card">
+      <LeadForm origem="ebooks-isca" cta="Quero o guia grátis" compact />
+    </div>
+  </Section>
+</Base>

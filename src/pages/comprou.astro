@@ -1,0 +1,47 @@
+---
+/**
+ * Página de pós-compra. Configure na Hotmart como "página de obrigado" externa
+ * para o produto 8764405. Não recebe dados da compra: só orienta o próximo passo.
+ */
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import { site } from '../config/site';
+---
+
+<Base title="Compra confirmada" description="Próximos passos após a compra." noindex minimal>
+  <section class="container-site max-w-2xl py-16 text-center sm:py-24">
+    <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-success">Compra confirmada</p>
+    <h1 class="text-4xl">Obrigado! Seu e-book está a caminho.</h1>
+    <p class="mt-5 text-lg text-muted">
+      A Hotmart envia em instantes um e-mail com o acesso à área de membros. Lá ficam o PDF, os bônus e as futuras atualizações.
+    </p>
+
+    <ol class="mt-10 space-y-4 text-left">
+      {[
+        ['Procure o e-mail da Hotmart', 'O remetente é a Hotmart. Se não aparecer em alguns minutos, confira a caixa de promoções e o spam.'],
+        ['Entre na área de membros', 'Use o mesmo e-mail da compra. No primeiro acesso, a Hotmart pede para criar uma senha.'],
+        ['Comece pelo plano de 7 dias', '[PLACEHOLDER] Sugestão de por onde começar a leitura para ter o primeiro resultado rápido.'],
+      ].map(([title, text], i) => (
+        <li class="flex gap-4 rounded-card border border-line bg-surface-alt p-5">
+          <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-600 font-bold text-white">{i + 1}</span>
+          <div>
+            <h2 class="text-lg">{title}</h2>
+            <p class="text-muted">{text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="mt-10 text-sm text-muted">
+      Pagou por boleto? O acesso chega após a compensação (até 3 dias úteis). Qualquer problema, escreva para
+      <a href={`mailto:${site.author.email}`} class="underline">{site.author.email}</a>.
+    </p>
+    <Button href="/" variant="secondary" class="mt-8">Voltar ao início</Button>
+  </section>
+
+  <script>
+    import { track } from '../lib/tracking';
+    // Sinal leve de conclusão. O evento Purchase com valor deve vir do servidor (webhook da Hotmart), não daqui.
+    track('CompleteRegistration', { content_name: 'comprou' });
+  </script>
+</Base>

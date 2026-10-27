@@ -1,18 +1,40 @@
 ---
 import { site } from '../config/site';
-interface Props { title?: string; compact?: boolean }
-const { title = 'Sobre o autor', compact = false } = Astro.props;
+import Portrait from './Portrait.astro';
+
+interface Props {
+  title?: string;
+  /** Compacto: avatar pequeno e texto ao lado (rodapé de post). */
+  compact?: boolean;
+  /** Retrato a usar na versão completa (padrão: busto). */
+  portrait?: string;
+}
+const { title = 'Sobre o autor', compact = false, portrait = site.author.portraitBust } = Astro.props;
 ---
 
-<div class:list={['mx-auto flex max-w-3xl flex-col items-center gap-6 text-center sm:flex-row sm:text-left', compact && 'rounded-card border border-line bg-surface p-6']}>
-  <img src={site.author.photo} alt={`Foto de ${site.author.name}`} width="160" height="160" loading="lazy" class="size-32 shrink-0 rounded-full border border-line object-cover sm:size-40" />
-  <div>
-    {!compact && <p class="text-sm font-semibold uppercase tracking-wide text-brand-700">{title}</p>}
-    <h3 class="mt-1 text-2xl">{site.author.name}</h3>
-    <p class="text-sm text-muted">{site.author.role}</p>
-    <div class="mt-3 space-y-2 text-ink/90">
-      {site.author.bioShort.map((line) => <p>{line}</p>)}
+{compact ? (
+  <div class="card flex flex-col items-start gap-6 p-7 sm:flex-row">
+    <img src={site.author.photo} alt={`Foto de ${site.author.name}`} width="160" height="160" loading="lazy" decoding="async" class="size-20 shrink-0 rounded-full object-cover" />
+    <div>
+      <h3 class="text-xl">{site.author.name}</h3>
+      <p class="text-sm text-muted">{site.author.role}</p>
+      <div class="mt-3 space-y-2 text-[0.9375rem] text-ink/90">
+        {site.author.bioShort.map((line) => <p>{line}</p>)}
+      </div>
+      <a href="/sobre" class="mt-4 inline-block text-sm font-medium text-accent no-underline hover:text-ink">Conheça a história completa →</a>
     </div>
-    <a href="/sobre" class="mt-3 inline-block text-sm font-semibold text-brand-700 hover:underline">Conheça a história completa →</a>
   </div>
-</div>
+) : (
+  <div class="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[2fr_3fr] md:gap-16">
+    <Portrait src={portrait} class="reveal mx-auto w-full max-w-xs md:max-w-sm" ratio="3 / 4" />
+    <div class="reveal" data-reveal-delay="120">
+      <p class="eyebrow mb-5">{title}</p>
+      <h2 class="display-3">{site.author.name}</h2>
+      <p class="mt-2 text-muted">{site.author.role}</p>
+      <div class="measure mt-7 space-y-4 text-ink/90">
+        {site.author.bioShort.map((line) => <p>{line}</p>)}
+      </div>
+      <a href="/sobre" class="mt-7 inline-block font-medium text-accent no-underline hover:text-ink">Conheça a história completa →</a>
+    </div>
+  </div>
+)}

@@ -11,18 +11,18 @@ const posts = (await getCollection('posts', (p) => !p.data.draft)).sort(
 ---
 
 <Base title="Blog" description="Artigos curtos sobre IA aplicada a pequenas e médias empresas: o que funciona, o que não funciona e como implementar.">
-  <Section title="Blog" lead="Artigos curtos sobre IA no dia a dia de uma empresa.">
-    <p class="-mt-6 mb-8 text-center text-sm text-muted">Também disponível em <a href="/rss.xml" class="underline">RSS</a>.</p>
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {posts.map((post) => <PostCard post={post} />)}
+  <Section eyebrow="Blog" title="IA no dia a dia de uma empresa." lead="Artigos curtos, com o que funcionou e o que não funcionou." class="glow overflow-hidden">
+    <p class="reveal -mt-8 mb-12 text-center text-sm text-muted">Também disponível em <a href="/rss.xml" class="text-ink underline decoration-ink/40">RSS</a>.</p>
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post, i) => <PostCard post={post} delay={i * 80} />)}
     </div>
     {posts.length === 0 && <p class="text-center text-muted">Nenhum artigo publicado ainda.</p>}
   </Section>
 
-  <Section alt narrow>
-    <div class="mx-auto max-w-lg rounded-card border border-line bg-surface p-6 shadow-card">
-      <h2 class="text-xl">Receba os próximos por e-mail</h2>
-      <p class="mb-5 mt-1 text-sm text-muted">Um e-mail por semana, sem spam.</p>
+  <Section alt narrow compact>
+    <div class="card-elevated reveal mx-auto max-w-lg p-7 sm:p-9">
+      <h2 class="text-2xl">Receba os próximos por e-mail</h2>
+      <p class="mb-7 mt-2 text-sm text-muted">Um e-mail por semana, sem spam.</p>
       <LeadForm origem="blog-newsletter" cta="Assinar" compact redirect="" footnote="" />
     </div>
   </Section>

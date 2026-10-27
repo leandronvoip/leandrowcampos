@@ -21,7 +21,7 @@ Requer Node 22.23+ (ver `engines` no `package.json`).
 | O quê | Onde |
 |---|---|
 | Nome, bio, links sociais, números da Nvoip, datas do lançamento | `src/config/site.ts` |
-| Cores, fonte, raio e sombra (tokens) | `src/styles/global.css` (bloco `@theme`) |
+| Cores, fontes, raio e sombra (tokens) e utilitários do sistema visual | `src/styles/global.css` (bloco `@theme`) |
 | E-books (um arquivo por produto; o nome do arquivo é o slug) | `src/content/ebooks/*.mdx` |
 | Posts do blog | `src/content/posts/*.md` |
 | Esquema dos campos (o que é obrigatório em cada e-book/post) | `src/content.config.ts` |
@@ -30,20 +30,38 @@ Requer Node 22.23+ (ver `engines` no `package.json`).
 | Formulário de captura | `src/components/LeadForm.astro` |
 | Pixel da Meta e GA4 | `src/components/Analytics.astro` |
 | UTMs, cookie e eventos | `src/lib/tracking.ts` |
-| Imagens públicas (capa, foto, OG) | `public/images/` |
+| Imagens públicas (retratos, capa, OG) | `public/images/` |
 | Redirecionamentos e robots | `public/_redirects`, `public/robots.txt` |
 
 Todo texto provisório está marcado com `[PLACEHOLDER]`. Antes de publicar: `grep -rn PLACEHOLDER src public`.
 
-### Trocar a paleta
+### Sistema visual
 
-Edite os tokens em `src/styles/global.css`. As classes seguem o nome do token (`bg-brand-600`, `text-ink`, `border-line`, `bg-surface-alt`). Para usar uma fonte do Google, troque `--font-sans` e descomente o `<link>` em `src/layouts/Base.astro` (sempre com `display=swap`).
+Escuro, sóbrio, com muito espaço e uma ideia por tela. Os tokens ficam no bloco `@theme` de `src/styles/global.css`:
+
+| Token | Valor | Classe |
+|---|---|---|
+| Fundo | `#0A0A0C` | `bg-bg` |
+| Superfície / elevada | `#121216` / `#1A1A20` | `bg-surface` / `bg-surface-2` |
+| Linha | `rgba(255,255,255,0.08)` | `border-line` |
+| Texto / secundário / apagado | `#F5F3EE` / `#A3A09A` / `#6B6965` | `text-ink` / `text-muted` / `text-dim` |
+| Acento (dourado, só em rótulos, links e um detalhe por tela) | `#D4A857` | `text-accent` |
+
+Tipografia pelo Google Fonts (`display=swap`, link em `src/layouts/Base.astro`): **Inter Tight** 500/600 nos títulos, **Inter** no texto.
+Utilitários do sistema (definidos em `global.css`): `display-1/2/3` (títulos de tela), `eyebrow` (rótulo em versalete), `lead`, `measure`, `section-y`, `card`, `card-elevated`, `glow` (brilho radial atrás do herói), `reveal` (aparece na rolagem; `data-reveal-delay="120"` atrasa em ms) e a seção `pinned` (`src/components/Pinned.astro`).
+
+Componentes de marca: `Logo.astro` (monograma inline + nome), `BookMockup.astro` (livro em CSS; usa a capa real quando ela existir), `Portrait.astro` (retrato vertical com vinheta). Os desenhos originais do logotipo ficam em `brand/logo/`.
+
+### Fotos e capa
+
+- Retratos em `public/images/`: `leandro-retrato.jpg` (herói e Sobre), `leandro-retrato-busto.jpg` (página de venda) e `leandro-perfil.jpg` (avatar e JSON-LD). Caminhos em `src/config/site.ts`.
+- Capa do e-book: coloque `public/images/capa-<slug>.png` (ou `.jpg`/`.webp`) e o site passa a usá-la no lugar do livro em CSS, sem mexer em código (`src/lib/assets.ts`).
 
 ### Novo e-book
 
 1. Copie `src/content/ebooks/ia-no-negocio.mdx` para `src/content/ebooks/<slug>.mdx`.
 2. Preencha o frontmatter (o build falha se faltar campo obrigatório).
-3. Coloque a capa em `public/images/` e aponte em `cover`.
+3. Coloque a capa em `public/images/capa-<slug>.png`; enquanto não existir, o site mostra o livro em CSS.
 4. `checkoutUrl` é a URL de checkout da Hotmart. O site só linka; não há integração.
 5. Para destacar no início, defina `featured: true` e ajuste `launch.featuredEbook` em `src/config/site.ts`.
 
@@ -110,7 +128,8 @@ src/
   content/ebooks/         um .mdx por e-book
   content/posts/          um .md por post
   layouts/Base.astro      <head>, SEO, OG, analytics, header/footer
-  components/             LeadForm, Button, Section, FAQ, cards...
+  components/             LeadForm, Button, Section, Pinned, Logo, BookMockup, Portrait, FAQ, cards...
+  lib/assets.ts           existência de arquivos em public/ (capa e retrato reais)
   lib/tracking.ts         UTMs, cookie, eventos
   lib/format.ts           moeda e datas em pt-BR
   pages/                  rotas (index, ebooks, ebook/[slug], gratis, obrigado,

@@ -1,0 +1,21 @@
+---
+/** Cartão de um agente (ou capítulo): número em acento, nome e o que faz. */
+interface Props {
+  index: number;
+  name: string;
+  text: string;
+  /** Texto pequeno acima do nome (ex.: "Atendimento"). */
+  area?: string;
+  delay?: number;
+}
+const { index, name, text, area, delay = 0 } = Astro.props;
+---
+
+<article class="card reveal flex gap-6 p-7 sm:p-8" data-reveal-delay={delay}>
+  <span aria-hidden="true" class="eyebrow mt-1.5 shrink-0 tabular-nums">{String(index).padStart(2, '0')}</span>
+  <div>
+    {area && <p class="text-sm text-muted">{area}</p>}
+    <h3 class="text-xl sm:text-2xl">{name}</h3>
+    <p class="mt-3 text-muted">{text}</p>
+  </div>
+</article>

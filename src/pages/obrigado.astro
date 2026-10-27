@@ -5,24 +5,26 @@ import { site } from '../config/site';
 ---
 
 <Base title="Obrigado" description="Inscrição confirmada." noindex>
-  <section class="container-site max-w-2xl py-16 text-center sm:py-24">
-    <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-success">Inscrição recebida</p>
-    <h1 class="text-4xl">Obrigado! Agora confira seu e-mail.</h1>
-    <p class="mt-5 text-lg text-muted">
-      Em poucos minutos chega uma mensagem de <strong class="text-ink">{site.author.email}</strong>.
-      Se não aparecer, olhe a caixa de promoções ou o spam e marque como “não é spam”.
-    </p>
-    <p data-wa class="mt-3 hidden text-muted">Você também vai receber um “oi” no WhatsApp para confirmar o número.</p>
+  <section class="glow overflow-hidden">
+    <div class="container-site max-w-2xl py-20 text-center sm:py-32">
+      <p class="eyebrow mb-7">Inscrição recebida</p>
+      <h1 class="display-2">Obrigado. Agora confira seu e-mail.</h1>
+      <p class="lead mx-auto mt-8">
+        Em poucos minutos chega uma mensagem de <strong class="font-medium text-ink">{site.author.email}</strong>.
+        Se não aparecer, olhe a caixa de promoções ou o spam e marque como “não é spam”.
+      </p>
+      <p data-wa class="mt-4 hidden text-muted">Você também vai receber um “oi” no WhatsApp para confirmar o número.</p>
 
-    <div class="mt-10 rounded-card border border-line bg-surface-alt p-6 text-left">
-      <h2 class="text-xl">Enquanto espera</h2>
-      <ul class="mt-3 space-y-2 text-muted">
-        <li>→ <a href="/blog" class="underline">Leia o blog</a>: artigos curtos sobre IA no dia a dia da empresa.</li>
-        <li>→ <a href="/lancamento" class="underline">Veja o lançamento</a>: o e-book abre carrinho de 10 a 12 de novembro.</li>
-        <li>→ <a href={site.social.linkedin} rel="noopener" target="_blank" class="underline">Siga no LinkedIn</a> para acompanhar os bastidores.</li>
-      </ul>
+      <div class="card reveal mt-14 p-7 text-left sm:p-9" data-reveal-delay="180">
+        <h2 class="text-xl sm:text-2xl">Enquanto espera</h2>
+        <ul class="mt-5 space-y-4 text-muted">
+          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/blog" class="text-ink no-underline hover:text-accent">Leia o blog</a>: artigos curtos sobre IA no dia a dia da empresa.</span></li>
+          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/lancamento" class="text-ink no-underline hover:text-accent">Veja o lançamento</a>: o e-book abre carrinho de 10 a 12 de novembro.</span></li>
+          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href={site.social.linkedin} rel="noopener" target="_blank" class="text-ink no-underline hover:text-accent">Siga no LinkedIn</a> para acompanhar os bastidores.</span></li>
+        </ul>
+      </div>
+      <Button href="/" variant="secondary" class="mt-10">Voltar ao início</Button>
     </div>
-    <Button href="/" variant="secondary" class="mt-8">Voltar ao início</Button>
   </section>
 
   <script>

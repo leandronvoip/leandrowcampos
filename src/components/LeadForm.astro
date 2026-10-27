@@ -45,7 +45,7 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
 
 <form
   id={id}
-  class:list={['lead-form grid gap-4', className]}
+  class:list={['lead-form grid gap-5', className]}
   data-webhook={webhookUrl}
   data-origem={origem}
   data-redirect={redirect}
@@ -53,7 +53,7 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
 >
   {!compact && (
     <div>
-      <label for={`${id}-nome`} class="mb-1 block text-sm font-medium">Seu nome</label>
+      <label for={`${id}-nome`} class="mb-2 block text-sm text-muted">Seu nome</label>
       <input
         id={`${id}-nome`}
         name="nome"
@@ -62,13 +62,13 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
         required
         minlength="2"
         placeholder="Como quer ser chamado?"
-        class="w-full rounded-lg border border-line bg-surface px-4 py-3 text-base placeholder:text-muted/70 focus:border-brand-500"
+        class="field"
       />
     </div>
   )}
 
   <div>
-    <label for={`${id}-email`} class="mb-1 block text-sm font-medium">Seu melhor e-mail</label>
+    <label for={`${id}-email`} class="mb-2 block text-sm text-muted">Seu melhor e-mail</label>
     <input
       id={`${id}-email`}
       name="email"
@@ -77,14 +77,14 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
       inputmode="email"
       required
       placeholder="voce@empresa.com.br"
-      class="w-full rounded-lg border border-line bg-surface px-4 py-3 text-base placeholder:text-muted/70 focus:border-brand-500"
+      class="field"
     />
   </div>
 
   {whatsapp && !compact && (
     <div>
-      <label for={`${id}-whatsapp`} class="mb-1 block text-sm font-medium">
-        WhatsApp <span class="font-normal text-muted">(opcional)</span>
+      <label for={`${id}-whatsapp`} class="mb-2 block text-sm text-muted">
+        WhatsApp <span class="text-dim">(opcional)</span>
       </label>
       <input
         id={`${id}-whatsapp`}
@@ -93,7 +93,7 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
         autocomplete="tel-national"
         inputmode="tel"
         placeholder="(11) 99999-9999"
-        class="w-full rounded-lg border border-line bg-surface px-4 py-3 text-base placeholder:text-muted/70 focus:border-brand-500"
+        class="field"
       />
     </div>
   )}
@@ -104,18 +104,18 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
     <input id={`${id}-site`} name="site" type="text" tabindex="-1" autocomplete="off" />
   </div>
 
-  <fieldset class="grid gap-2 text-sm">
+  <fieldset class="grid gap-3 text-sm text-muted">
     <legend class="sr-only">Consentimentos</legend>
     <label class="flex items-start gap-2">
-      <input type="checkbox" name="consent_email" required class="mt-1 size-4 accent-brand-600" />
+      <input type="checkbox" name="consent_email" required class="checkbox" />
       <span>
         Aceito receber e-mails com conteúdos e ofertas de {`Leandro W. Campos`}, conforme a
-        <a href="/privacidade" class="underline">política de privacidade</a>.
+        <a href="/privacidade" class="text-ink underline decoration-ink/40">política de privacidade</a>.
       </span>
     </label>
     {whatsapp && !compact && (
       <label class="flex items-start gap-2">
-        <input type="checkbox" name="consent_whatsapp" class="mt-1 size-4 accent-brand-600" />
+        <input type="checkbox" name="consent_whatsapp" class="checkbox" />
         <span>Aceito receber mensagens no WhatsApp (opcional).</span>
       </label>
     )}
@@ -123,7 +123,7 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
 
   <button
     type="submit"
-    class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60"
+    class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-base font-medium text-bg transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
   >
     <span data-label>{cta}</span>
     <svg data-spinner class="hidden size-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -132,7 +132,7 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
     </svg>
   </button>
 
-  <p data-status role="status" aria-live="polite" class="hidden rounded-lg px-4 py-3 text-sm"></p>
+  <p data-status role="status" aria-live="polite" class="hidden rounded-xl px-4 py-3 text-sm"></p>
   {footnote && <p class="text-xs text-muted">{footnote}</p>}
 </form>
 
@@ -153,12 +153,12 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
     label.textContent =
       status === 'loading' ? 'Enviando…' : status === 'success' ? 'Enviado!' : (label.dataset.original ?? label.textContent);
 
-    box.classList.remove('hidden', 'bg-green-50', 'text-success', 'bg-red-50', 'text-danger');
+    box.classList.remove('hidden', 'bg-success/10', 'text-success', 'bg-danger/10', 'text-danger');
     if (status === 'success') {
-      box.classList.add('bg-green-50', 'text-success');
+      box.classList.add('bg-success/10', 'text-success');
       box.textContent = message || 'Pronto! Confira seu e-mail nos próximos minutos.';
     } else if (status === 'error') {
-      box.classList.add('bg-red-50', 'text-danger');
+      box.classList.add('bg-danger/10', 'text-danger');
       box.textContent = message || 'Não conseguimos enviar agora. Tente de novo em instantes.';
     } else {
       box.classList.add('hidden');

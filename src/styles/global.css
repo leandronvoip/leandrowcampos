@@ -1,83 +1,401 @@
 @import "tailwindcss";
 
 /*
- * Tokens de design.
- * Paleta neutra provisória: a paleta final virá do agente de identidade visual.
- * Para trocar as cores do site inteiro, basta alterar os valores abaixo.
- * As classes Tailwind geradas seguem o nome do token: bg-brand-600, text-ink, border-line...
+ * Tokens de design: sistema escuro, sóbrio e com muito espaço.
+ * As classes Tailwind seguem o nome do token: bg-bg, bg-surface, bg-surface-2,
+ * text-ink, text-muted, text-dim, text-accent, border-line.
+ * O dourado (accent) é só para rótulos pequenos, links e um detalhe por tela.
  */
 @theme {
-  /* Cor principal (botões, links, destaques) */
-  --color-brand-50: #eef4ff;
-  --color-brand-100: #dbe6fe;
-  --color-brand-200: #bfd3fe;
-  --color-brand-300: #93b4fd;
-  --color-brand-400: #6090fa;
-  --color-brand-500: #3b6cf6;
-  --color-brand-600: #254deb;
-  --color-brand-700: #1d3ad8;
-  --color-brand-800: #1e31af;
-  --color-brand-900: #1e2f8a;
+  /* Fundos */
+  --color-bg: #0a0a0c;          /* fundo da página */
+  --color-surface: #121216;     /* cartões e seções alternadas */
+  --color-surface-2: #1a1a20;   /* superfície elevada (oferta, formulário) */
+  --color-line: rgba(255, 255, 255, 0.08);
 
-  /* Cor de apoio (selos, preço, urgência) */
-  --color-accent-100: #fff1d6;
-  --color-accent-400: #f5b23c;
-  --color-accent-500: #e99a12;
-  --color-accent-600: #c77d08;
+  /* Texto */
+  --color-ink: #f5f3ee;         /* branco quente */
+  --color-muted: #a3a09a;       /* secundário (AA sobre o fundo: 7,5:1) */
+  --color-dim: #6b6965;         /* apagado: só em texto grande ou decorativo */
 
-  /* Neutros */
-  --color-ink: #141821;        /* texto principal */
-  --color-muted: #5b6372;      /* texto secundário */
-  --color-surface: #ffffff;    /* fundo padrão */
-  --color-surface-alt: #f5f7fa;/* fundo de seções alternadas */
-  --color-line: #e3e7ee;       /* bordas e divisores */
-  --color-success: #15803d;
-  --color-danger: #b91c1c;
+  /* Acento e estados */
+  --color-accent: #d4a857;      /* dourado discreto */
+  --color-success: #8fd3a0;
+  --color-danger: #e89a9a;
 
-  /* Tipografia: fonte do sistema por padrão (zero requisição de rede).
-     Para usar uma fonte do Google, troque aqui e adicione o <link> em src/layouts/Base.astro. */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: var(--font-sans);
+  /* Tipografia (Google Fonts com display=swap, ver Base.astro) */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Inter Tight", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  --radius-card: 1rem;
-  --shadow-card: 0 1px 2px rgb(20 24 33 / 0.06), 0 8px 24px -12px rgb(20 24 33 / 0.18);
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+  --shadow-book: 0 40px 80px -30px rgba(0, 0, 0, 0.9), 0 12px 24px -12px rgba(0, 0, 0, 0.6);
+
+  /* Movimento */
+  --ease-reveal: cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
   }
   body {
-    @apply bg-surface text-ink font-sans antialiased;
+    @apply bg-bg text-ink font-sans antialiased;
+    font-size: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
+    line-height: 1.6;
+    overflow-x: clip;
   }
   h1, h2, h3, h4 {
-    @apply font-display font-bold tracking-tight text-balance;
+    @apply font-display font-semibold text-balance;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
   a {
     @apply underline-offset-4;
   }
-  :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-500;
+  ::selection {
+    background: rgba(212, 168, 87, 0.3);
+    color: #f5f3ee;
   }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+  }
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+}
+
+/* ---------- Utilitários do sistema ---------- */
+
+/* Respiro vertical das telas: ~80px no celular, até 180px em telas largas. */
+@utility section-y {
+  padding-block: clamp(5rem, 3.5rem + 6vw, 11.25rem);
+}
+@utility section-y-sm {
+  padding-block: clamp(3.5rem, 2.5rem + 4vw, 7.5rem);
+}
+
+/* Títulos de tela: 48px no celular a 96px no desktop. */
+@utility display-1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3rem, 1.6rem + 4.5vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+@utility display-2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 1.25rem + 3.2vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+@utility display-3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Rótulo pequeno em versalete espaçado, na cor de acento. */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Largura de leitura. */
+@utility measure {
+  max-width: 68ch;
+}
+@utility measure-sm {
+  max-width: 52ch;
+}
+
+/* Texto de apoio sob um título. */
+@utility lead {
+  color: var(--color-muted);
+  font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
+  line-height: 1.55;
+}
+
+/* Cartões. */
+@utility card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+}
+@utility card-elevated {
+  background: var(--color-surface-2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Linha fina decorativa. */
+@utility hairline {
+  height: 1px;
+  background: var(--color-line);
 }
 
 @layer components {
   .container-site {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-10;
   }
+
+  /* Brilho radial sutil atrás do herói (sem imagem). */
+  .glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .glow::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 90%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 55% at 50% 0%, rgba(212, 168, 87, 0.10), transparent 70%),
+      radial-gradient(45% 40% at 50% 10%, rgba(245, 243, 238, 0.06), transparent 70%);
+  }
+
+  /* Grão muito leve: SVG feTurbulence pequeno, repetido. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 180px 180px;
+  }
+
+  /* Revelação na rolagem. Só esconde quando há JS (html.js), para não sumir sem script. */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s var(--ease-reveal),
+      transform 0.9s var(--ease-reveal);
+    will-change: opacity, transform;
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Seção "pinned": título fixo à esquerda, cartões passando à direita. No celular vira lista. */
+  .pinned {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .pinned-cards {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 1024px) {
+    .pinned {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 4rem;
+      align-items: start;
+    }
+    .pinned-title {
+      position: sticky;
+      top: clamp(6rem, 18vh, 10rem);
+    }
+    .pinned-cards {
+      gap: 1.25rem;
+      padding-block: 1rem;
+    }
+  }
+
+  /* Retrato vertical em fundo escuro, com vinheta para fundir com a página. */
+  .portrait {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to top, var(--color-bg) 0%, rgba(10, 10, 12, 0.35) 28%, transparent 55%),
+      radial-gradient(110% 95% at 50% 40%, transparent 55%, var(--color-bg) 100%);
+  }
+  .portrait--plain::after {
+    background: linear-gradient(to top, rgba(10, 10, 12, 0.7) 0%, transparent 40%);
+  }
+
+  /* Livro em CSS: capa escura, lombada e sombra. Quando há capa real, ela cobre a face. */
+  .book {
+    --book-w: 17rem;
+    position: relative;
+    width: var(--book-w);
+    aspect-ratio: 5 / 7;
+    perspective: 1800px;
+    margin-inline: auto;
+  }
+  .book-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 0.375rem 0.875rem 0.875rem 0.375rem;
+    background:
+      linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 45%),
+      linear-gradient(180deg, #1c1c22 0%, #0f0f13 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-book);
+    transform: rotateY(-14deg) rotateX(2deg);
+    transform-origin: left center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 9% 9% 10%;
+  }
+  .book-face::before {
+    /* lombada */
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 7%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.55), rgba(255, 255, 255, 0.06) 60%, rgba(0, 0, 0, 0.25));
+  }
+  .book-face::after {
+    /* reflexo suave */
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.07) 0%, transparent 35%, transparent 70%, rgba(255, 255, 255, 0.03) 100%);
+  }
+  .book-pages {
+    /* miolo visível à direita */
+    position: absolute;
+    top: 1.5%;
+    bottom: 1.5%;
+    right: -2.2%;
+    width: 2.6%;
+    border-radius: 0 0.25rem 0.25rem 0;
+    background: repeating-linear-gradient(180deg, #e8e4dc 0 1px, #cfcac0 1px 2px);
+    transform: rotateY(-14deg) rotateX(2deg);
+    transform-origin: left center;
+    opacity: 0.9;
+  }
+  .book-face img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .book-title {
+    position: relative;
+    padding-left: 6%;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-size: calc(var(--book-w) * 0.085);
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+  .book-subtitle {
+    position: relative;
+    padding-left: 6%;
+    margin-top: 6%;
+    font-size: calc(var(--book-w) * 0.038);
+    line-height: 1.35;
+    color: var(--color-muted);
+  }
+  .book-author {
+    position: relative;
+    padding-left: 6%;
+    font-size: calc(var(--book-w) * 0.036);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .book-author::before {
+    content: "";
+    display: block;
+    width: 2.2rem;
+    height: 1px;
+    margin-bottom: 8%;
+    background: var(--color-accent);
+    opacity: 0.8;
+  }
+  .book-shadow {
+    position: absolute;
+    left: 8%;
+    right: -4%;
+    bottom: -9%;
+    height: 14%;
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.75), transparent 70%);
+    filter: blur(6px);
+  }
+
+  /* Campos de formulário. */
+  .field {
+    @apply w-full rounded-xl border border-line bg-bg px-4 py-3.5 text-base text-ink transition-colors;
+  }
+  .field::placeholder { color: var(--color-dim); }
+  .field:focus {
+    outline: none;
+    border-color: rgba(245, 243, 238, 0.45);
+  }
+  .checkbox {
+    @apply mt-1 size-4 shrink-0 rounded border border-line bg-bg;
+    accent-color: var(--color-accent);
+  }
+
+  /* Texto corrido (blog, termos, privacidade, MDX). */
   .prose-site {
-    @apply max-w-none text-ink/90 leading-relaxed;
+    @apply max-w-none text-ink/90;
+    line-height: 1.7;
   }
-  .prose-site :where(h2) { @apply mt-10 mb-4 text-2xl; }
-  .prose-site :where(h3) { @apply mt-8 mb-3 text-xl; }
-  .prose-site :where(p) { @apply my-4; }
-  .prose-site :where(ul) { @apply my-4 list-disc pl-6; }
-  .prose-site :where(ol) { @apply my-4 list-decimal pl-6; }
-  .prose-site :where(li) { @apply my-1; }
-  .prose-site :where(a) { @apply text-brand-700 underline; }
-  .prose-site :where(blockquote) { @apply my-6 border-l-4 border-brand-200 pl-4 italic text-muted; }
+  .prose-site :where(h2) { @apply mt-14 mb-4 text-2xl sm:text-3xl; }
+  .prose-site :where(h3) { @apply mt-10 mb-3 text-xl sm:text-2xl; }
+  .prose-site :where(p) { @apply my-5; }
+  .prose-site :where(ul) { @apply my-5 list-disc pl-6; }
+  .prose-site :where(ol) { @apply my-5 list-decimal pl-6; }
+  .prose-site :where(li) { @apply my-1.5; }
+  .prose-site :where(li)::marker { color: var(--color-dim); }
+  .prose-site :where(a) { @apply text-accent underline decoration-accent/40 hover:decoration-accent; }
+  .prose-site :where(blockquote) { @apply my-8 border-l border-accent/60 pl-5 text-muted; font-family: var(--font-display); font-size: 1.25em; letter-spacing: -0.01em; line-height: 1.4; }
   .prose-site :where(strong) { @apply font-semibold text-ink; }
-  .prose-site :where(code) { @apply rounded bg-surface-alt px-1 py-0.5 text-sm; }
-  .prose-site :where(hr) { @apply my-10 border-line; }
+  .prose-site :where(code) { @apply rounded bg-surface-2 px-1.5 py-0.5 text-[0.9em] text-ink; }
+  .prose-site :where(hr) { @apply my-12 border-line; }
 }

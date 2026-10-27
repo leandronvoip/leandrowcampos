@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
+import Portrait from '../components/Portrait.astro';
 import { site } from '../config/site';
 
 const schema = {
@@ -17,22 +18,22 @@ const schema = {
 ---
 
 <Base title="Sobre" description={`Quem é ${site.author.name}: ${site.author.role.toLowerCase()} e autor de e-books sobre IA aplicada a pequenas e médias empresas.`} schema={schema}>
-  <section class="bg-surface-alt">
-    <div class="container-site grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[0.8fr_1.2fr]">
-      <img src={site.author.photo} alt={`Foto de ${site.author.name}`} width="480" height="480" class="mx-auto aspect-square w-full max-w-sm rounded-card border border-line object-cover shadow-card" />
+  <section class="glow overflow-hidden">
+    <div class="container-site grid items-center gap-12 pb-16 pt-14 sm:pt-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:pb-28 lg:pt-28">
+      <Portrait priority class="mx-auto w-full max-w-sm" ratio="3 / 4" />
       <div>
-        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">Sobre</p>
-        <h1 class="text-4xl sm:text-5xl">{site.author.name}</h1>
-        <p class="mt-2 text-lg text-muted">{site.author.role}</p>
-        <div class="mt-6 space-y-3 text-lg">
+        <p class="eyebrow mb-7">Sobre</p>
+        <h1 class="display-1">{site.author.name}</h1>
+        <p class="mt-4 text-lg text-muted">{site.author.role}</p>
+        <div class="measure mt-8 space-y-4 text-lg text-ink/90">
           {site.author.bioShort.map((line) => <p>{line}</p>)}
         </div>
       </div>
     </div>
   </section>
 
-  <Section narrow>
-    <div class="prose-site">
+  <Section narrow alt>
+    <div class="prose-site reveal">
       <h2>[PLACEHOLDER] A história</h2>
       <p>[PLACEHOLDER] Como a Nvoip nasceu, o que foi construído e o que isso tem a ver com IA hoje. Três a cinco parágrafos em primeira pessoa.</p>
       <h2>[PLACEHOLDER] Por que escrevo sobre IA para PMEs</h2>
@@ -44,7 +45,7 @@ const schema = {
         <li>[PLACEHOLDER] Conteúdo gratuito para começar hoje.</li>
       </ul>
     </div>
-    <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+    <div class="reveal mt-12 flex flex-col gap-3 sm:flex-row">
       <Button href="/ebooks">Ver os e-books</Button>
       <Button href="/newsletter" variant="secondary">Assinar a newsletter</Button>
     </div>

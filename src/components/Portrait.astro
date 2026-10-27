@@ -1,0 +1,40 @@
+---
+/**
+ * Retrato vertical em fundo escuro com vinheta que funde a foto ao fundo da
+ * página. Usa o arquivo informado se existir em public/; senão, o placeholder.
+ */
+import { site } from '../config/site';
+import { publicFileExists } from '../lib/assets';
+
+interface Props {
+  /** Caminho em public/ (padrão: retrato de meio corpo). */
+  src?: string;
+  alt?: string;
+  priority?: boolean;
+  class?: string;
+  /** Proporção CSS (padrão 4/5). */
+  ratio?: string;
+}
+const {
+  src = site.author.portrait,
+  alt = `Retrato de ${site.author.name}`,
+  priority = false,
+  class: className = '',
+  ratio = '4 / 5',
+} = Astro.props;
+
+const real = publicFileExists(src);
+const finalSrc = real ? src : '/images/autor-placeholder.svg';
+---
+
+<figure class:list={['portrait', !real && 'portrait--plain', className]} style={`aspect-ratio:${ratio}`}>
+  <img
+    src={finalSrc}
+    alt={alt}
+    width="1024"
+    height="1536"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : undefined}
+    decoding="async"
+  />
+</figure>

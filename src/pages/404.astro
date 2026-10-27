@@ -4,13 +4,15 @@ import Button from '../components/Button.astro';
 ---
 
 <Base title="Página não encontrada" description="Esta página não existe." noindex>
-  <section class="container-site max-w-xl py-24 text-center">
-    <p class="font-display text-6xl font-bold text-brand-200">404</p>
-    <h1 class="mt-2 text-3xl">Página não encontrada</h1>
-    <p class="mt-4 text-muted">O endereço pode ter mudado ou nunca existiu. Veja os e-books ou volte ao início.</p>
-    <div class="mt-8 flex justify-center gap-3">
-      <Button href="/">Início</Button>
-      <Button href="/ebooks" variant="secondary">E-books</Button>
+  <section class="glow overflow-hidden">
+    <div class="container-site max-w-xl py-28 text-center sm:py-40">
+      <p class="eyebrow mb-7">Erro 404</p>
+      <h1 class="display-1">Página não encontrada.</h1>
+      <p class="lead mx-auto mt-8">O endereço pode ter mudado ou nunca existiu. Veja os e-books ou volte ao início.</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <Button href="/">Início</Button>
+        <Button href="/ebooks" variant="secondary">E-books</Button>
+      </div>
     </div>
   </section>
 </Base>

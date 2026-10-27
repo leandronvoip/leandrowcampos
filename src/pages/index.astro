@@ -1,86 +1,154 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
 import LeadForm from '../components/LeadForm.astro';
+import Portrait from '../components/Portrait.astro';
+import BookMockup from '../components/BookMockup.astro';
+import Pinned from '../components/Pinned.astro';
+import AgentCard from '../components/AgentCard.astro';
 import { site } from '../config/site';
 import { brl } from '../lib/format';
+import { resolveCover } from '../lib/assets';
 
 const featured =
   (await getEntry('ebooks', site.launch.featuredEbook)) ??
   (await getCollection('ebooks', (e) => !e.data.draft))[0];
+const cover = featured ? resolveCover(featured.id, featured.data.cover) : null;
+
+// Três provas, uma por tela.
+const proofs = [
+  {
+    eyebrow: 'Empresa real',
+    title: 'Fundador de uma empresa de tecnologia em operação.',
+    text: `A ${site.company.name} é uma plataforma de telefonia e comunicação em nuvem que paga folha todo mês há mais de dez anos. O que está nestes livros foi testado lá, não em slide.`,
+    link: { href: site.company.url, label: `Conheça a ${site.company.name}`, external: true },
+    stats: site.company.proof,
+  },
+  {
+    eyebrow: 'Todos os dias',
+    title: 'IA no atendimento, nas vendas e no financeiro. Todos os dias.',
+    text: 'Não é laboratório nem demonstração. São agentes respondendo cliente, cobrando, conciliando e resumindo a semana, dentro de uma operação que não pode parar.',
+  },
+  {
+    eyebrow: 'Para quem decide',
+    title: 'Escrito para quem quer resultado, não demonstração.',
+    text: 'Frases curtas, passo a passo e o critério de quem precisa que funcione na segunda-feira. Sem hype, sem jargão e sem promessa que a sua empresa não consegue cumprir.',
+  },
+];
 ---
 
 <Base title={`${site.name} — IA aplicada a pequenas e médias empresas`} description={site.description}>
-  <!-- Herói: quem é o Leandro em 3 linhas -->
-  <section class="bg-surface-alt">
-    <div class="container-site grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
+  <!-- 1. Herói: afirmação e retrato -->
+  <section class="glow overflow-hidden">
+    <div class="container-site grid items-center gap-12 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:pb-24 lg:pt-28">
       <div>
-        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">IA para quem toca o negócio</p>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl">
-          IA aplicada à sua empresa, por quem construiu uma de verdade.
-        </h1>
-        <ul class="mt-6 space-y-2 text-lg text-muted">
-          {site.author.bioShort.map((line) => <li class="flex gap-3"><span aria-hidden="true" class="mt-2 size-2 shrink-0 rounded-full bg-brand-500"></span>{line}</li>)}
-        </ul>
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <p class="eyebrow mb-7">{site.author.name} · {site.author.role}</p>
+        <h1 class="display-1">IA aplicada à sua empresa, por quem construiu uma de verdade.</h1>
+        <p class="lead measure mt-8">
+          E-books práticos para colocar inteligência artificial para trabalhar no atendimento, nas vendas e na operação da sua empresa.
+        </p>
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button href="/gratis" size="lg">Baixar o guia grátis</Button>
           <Button href="/ebooks" variant="secondary" size="lg">Ver os e-books</Button>
         </div>
       </div>
-      <div class="mx-auto w-full max-w-sm">
-        <img src={site.author.photo} alt={`Foto de ${site.author.name}`} width="480" height="480" class="aspect-square w-full rounded-card border border-line object-cover shadow-card" />
+      <Portrait priority class="mx-auto w-full max-w-sm lg:max-w-md" ratio="3 / 4" />
+    </div>
+  </section>
+
+  <!-- 2. Três provas, uma por tela -->
+  {proofs.map((p, i) => (
+    <section id={i === 0 ? 'prova' : undefined} class:list={['section-y', i % 2 === 0 && 'border-t border-line']}>
+      <div class="container-site">
+        <div class="reveal mx-auto max-w-4xl text-center">
+          <p class="eyebrow mb-6">{String(i + 1).padStart(2, '0')} · {p.eyebrow}</p>
+          <h2 class="display-2">{p.title}</h2>
+          <p class="lead measure mx-auto mt-8">{p.text}</p>
+          {p.link && (
+            <a href={p.link.href} rel={p.link.external ? 'noopener' : undefined} target={p.link.external ? '_blank' : undefined} class="mt-8 inline-block font-medium text-accent no-underline hover:text-ink">
+              {p.link.label} →
+            </a>
+          )}
+        </div>
+        {p.stats && (
+          <dl class="reveal mx-auto mt-16 grid max-w-3xl gap-8 border-t border-line pt-10 sm:grid-cols-3" data-reveal-delay="150">
+            {p.stats.map((s) => (
+              <div class="text-center">
+                <dd class:list={['font-display font-semibold tracking-tight', s.value.includes('PLACEHOLDER') ? 'text-lg text-dim' : 'text-4xl sm:text-5xl']}>{s.value}</dd>
+                <dt class="mt-2 text-sm text-muted">{s.label}</dt>
+              </div>
+            ))}
+          </dl>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <!-- 3. Seis agentes, seis áreas (pinned) -->
+  {featured && featured.data.agents.length > 0 && (
+    <Pinned id="agentes" alt eyebrow="O que você monta" title="Seis agentes. Seis áreas." lead="Cada um cuida de uma parte da empresa e devolve tempo para quem decide. Você monta um por vez, sem equipe técnica.">
+      {featured.data.agents.map((a, i) => (
+        <AgentCard index={i + 1} name={a.name} text={a.what} area={a.area} delay={(i % 3) * 90} />
+      ))}
+    </Pinned>
+  )}
+
+  <!-- 4. O e-book em destaque -->
+  {featured && (
+    <section id="ebook" class="glow section-y overflow-hidden border-t border-line">
+      <div class="container-site">
+        <div class="mx-auto grid max-w-5xl items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <a href={`/ebook/${featured.id}/`} class="reveal block no-underline">
+            <BookMockup title={featured.data.title} subtitle={featured.data.subtitle} cover={cover} coverAlt={featured.data.coverAlt} width="min(20rem, 70vw)" class="lg:mr-0" />
+          </a>
+          <div class="reveal" data-reveal-delay="120">
+            <p class="eyebrow mb-6">Lançamento · e-book</p>
+            <h2 class="display-2">{featured.data.title}</h2>
+            <p class="lead measure mt-6">{featured.data.subtitle}</p>
+            <ul class="mt-8 space-y-3 border-t border-line pt-8">
+              {featured.data.chapters.slice(0, 3).map((c) => (
+                <li class="flex gap-4 text-ink/90"><span aria-hidden="true" class="mt-0.5 text-accent">—</span><span>{c.result}</span></li>
+              ))}
+            </ul>
+            <p class="mt-10 flex items-baseline gap-3">
+              <span class="font-display text-5xl font-semibold tracking-tight sm:text-6xl">{brl(featured.data.price, { cents: false })}</span>
+              {featured.data.originalPrice && <span class="text-muted line-through">{brl(featured.data.originalPrice, { cents: false })}</span>}
+            </p>
+            {featured.data.installments && <p class="mt-1 text-sm text-muted">{featured.data.installments}</p>}
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button href={`/ebook/${featured.id}/`} size="lg">Conhecer o e-book</Button>
+              <Button href="/lancamento" variant="ghost" size="lg">Entrar na lista do lançamento</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 5. A isca gratuita -->
+  <section id="gratis" class="section-y bg-surface">
+    <div class="container-site">
+      <div class="mx-auto grid max-w-5xl items-start gap-12 lg:grid-cols-2 lg:gap-20">
+        <div class="reveal">
+          <p class="eyebrow mb-6">Comece de graça</p>
+          <h2 class="display-2">[PLACEHOLDER] Cinco automações com IA para esta semana.</h2>
+          <p class="lead measure-sm mt-6">[PLACEHOLDER] Um PDF curto com cinco automações que qualquer PME consegue montar em uma tarde. Chega no seu e-mail em minutos.</p>
+        </div>
+        <div class="card-elevated reveal p-7 sm:p-9" data-reveal-delay="120">
+          <LeadForm origem="home-isca" cta="Quero o guia grátis" />
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Prova de empresa real -->
-  <Section id="prova" eyebrow="Empresa real, não slide" title={`Fundador da ${site.company.name}`} lead="Tudo o que ensino foi testado numa empresa que paga folha todo mês. Os números abaixo são da operação, não de projeção.">
-    <dl class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
-      {site.company.proof.map((p) => (
-        <div class="rounded-card border border-line bg-surface p-6 text-center shadow-card">
-          <dt class="order-2 text-sm text-muted">{p.label}</dt>
-          <dd class="font-display text-3xl font-bold text-brand-700">{p.value}</dd>
-        </div>
-      ))}
-    </dl>
-    <p class="mt-6 text-center text-sm text-muted">
-      Conheça a <a href={site.company.url} rel="noopener" target="_blank" class="underline">{site.company.name}</a>.
-    </p>
-  </Section>
-
-  <!-- E-book em destaque -->
-  {featured && (
-    <Section id="ebook" alt eyebrow="Lançamento" title={featured.data.title} lead={featured.data.subtitle}>
-      <div class="mx-auto grid max-w-4xl items-center gap-10 md:grid-cols-[0.8fr_1.2fr]">
-        <a href={`/ebook/${featured.id}/`} class="block">
-          <img src={featured.data.cover} alt={featured.data.coverAlt} width="400" height="560" class="mx-auto w-56 drop-shadow-xl md:w-64" />
-        </a>
-        <div>
-          <ul class="space-y-3">
-            {featured.data.chapters.slice(0, 3).map((c) => (
-              <li class="flex gap-3"><span aria-hidden="true" class="mt-1 text-success">✓</span><span>{c.result}</span></li>
-            ))}
-          </ul>
-          <p class="mt-6 font-display text-2xl font-bold">
-            {featured.data.originalPrice && <span class="mr-2 text-base font-normal text-muted line-through">{brl(featured.data.originalPrice)}</span>}
-            {brl(featured.data.price)}
-            {featured.data.installments && <span class="block text-sm font-normal text-muted">{featured.data.installments}</span>}
-          </p>
-          <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Button href={`/ebook/${featured.id}/`} size="lg">Conhecer o e-book</Button>
-            <Button href="/lancamento" variant="ghost" size="lg">Entrar na lista do lançamento</Button>
-          </div>
-        </div>
-      </div>
-    </Section>
-  )}
-
-  <!-- Captura da isca -->
-  <Section id="gratis" eyebrow="Comece de graça" title="[PLACEHOLDER] Guia gratuito: 5 automações com IA para esta semana" lead="[PLACEHOLDER] Um PDF curto com cinco automações que qualquer PME consegue montar em uma tarde. Receba no e-mail agora.">
-    <div class="mx-auto max-w-lg rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
-      <LeadForm origem="home-isca" cta="Quero o guia grátis" />
+  <!-- 6. Fecho -->
+  <section class="section-y border-t border-line">
+    <div class="container-site">
+      <p class="reveal display-2 mx-auto max-w-4xl text-center">Menos promessa. Mais operação.</p>
+      <p class="reveal mx-auto mt-8 max-w-xl text-center text-muted" data-reveal-delay="120">
+        Se a IA não devolver tempo ou dinheiro para a sua empresa, ela não está pronta. Aqui você aprende a pedir isso dela.
+      </p>
     </div>
-  </Section>
+  </section>
 </Base>

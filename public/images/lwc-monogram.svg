@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Leandro W. Campos">
+  <!-- Monograma "LW." : L e W compartilham a linha de base; o ponto final remete ao "W." do nome. Traço único de 4 px. -->
+  <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 14 V50 H26" />
+    <path d="M30 28 L35.5 50 L42 36 L48.5 50 L54 28" />
+  </g>
+  <circle cx="59" cy="48" r="2.6" fill="currentColor" />
+</svg>

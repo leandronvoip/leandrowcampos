@@ -1,39 +1,43 @@
 ---
 import { site } from '../config/site';
+import Logo from './Logo.astro';
 interface Props { minimal?: boolean }
 const { minimal = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-line bg-surface-alt">
-  <div class="container-site py-10 text-sm text-muted">
+<footer class="border-t border-line">
+  <div class="container-site py-12 text-[0.9375rem] text-muted sm:py-16">
     {!minimal && (
-      <div class="grid gap-8 md:grid-cols-3">
+      <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <p class="font-display text-base font-bold text-ink">{site.name}</p>
-          <p class="mt-2 max-w-xs">{site.description}</p>
+          <a href="/" class="no-underline"><Logo /></a>
+          <p class="measure-sm mt-5 max-w-xs">{site.description}</p>
         </div>
-        <nav aria-label="Rodapé" class="grid grid-cols-2 gap-2">
-          <a href="/ebooks" class="hover:text-ink">E-books</a>
-          <a href="/blog" class="hover:text-ink">Blog</a>
-          <a href="/gratis" class="hover:text-ink">Guia grátis</a>
-          <a href="/newsletter" class="hover:text-ink">Newsletter</a>
-          <a href="/lancamento" class="hover:text-ink">Lançamento</a>
-          <a href="/sobre" class="hover:text-ink">Sobre</a>
+        <nav aria-label="Rodapé" class="grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-1">
+          <a href="/ebooks" class="no-underline hover:text-ink">E-books</a>
+          <a href="/blog" class="no-underline hover:text-ink">Blog</a>
+          <a href="/gratis" class="no-underline hover:text-ink">Guia grátis</a>
+          <a href="/newsletter" class="no-underline hover:text-ink">Newsletter</a>
+          <a href="/lancamento" class="no-underline hover:text-ink">Lançamento</a>
+          <a href="/sobre" class="no-underline hover:text-ink">Sobre</a>
         </nav>
-        <div class="flex flex-col gap-2">
-          <a href={site.social.linkedin} rel="me noopener" target="_blank" class="hover:text-ink">LinkedIn</a>
-          <a href={site.social.instagram} rel="me noopener" target="_blank" class="hover:text-ink">Instagram</a>
-          <a href={site.social.youtube} rel="me noopener" target="_blank" class="hover:text-ink">YouTube</a>
-          <a href={`mailto:${site.author.email}`} class="hover:text-ink">{site.author.email}</a>
+        <div class="flex flex-col gap-3">
+          <a href={site.social.linkedin} rel="me noopener" target="_blank" class="no-underline hover:text-ink">LinkedIn</a>
+          <a href={site.social.instagram} rel="me noopener" target="_blank" class="no-underline hover:text-ink">Instagram</a>
+          <a href={site.social.youtube} rel="me noopener" target="_blank" class="no-underline hover:text-ink">YouTube</a>
+          <a href={`mailto:${site.author.email}`} class="no-underline hover:text-ink">{site.author.email}</a>
         </div>
       </div>
     )}
-    <div class:list={['flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between', !minimal && 'mt-10 border-t border-line pt-6']}>
-      <p>© {year} {site.name}. Todos os direitos reservados.</p>
-      <p class="flex gap-4">
-        <a href="/privacidade" class="hover:text-ink">Privacidade</a>
-        <a href="/termos" class="hover:text-ink">Termos</a>
+    <div class:list={['flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between', !minimal && 'mt-12 border-t border-line pt-6']}>
+      <p class="flex items-center gap-3">
+        {minimal && <Logo size={20} name={false} class="text-muted" />}
+        <span>© {year} {site.name}. Todos os direitos reservados.</span>
+      </p>
+      <p class="flex gap-5">
+        <a href="/privacidade" class="no-underline hover:text-ink">Privacidade</a>
+        <a href="/termos" class="no-underline hover:text-ink">Termos</a>
       </p>
     </div>
   </div>

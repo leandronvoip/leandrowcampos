@@ -4,6 +4,7 @@ import { site } from '../config/site';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Analytics from '../components/Analytics.astro';
+import Logo from '../components/Logo.astro';
 
 export interface Props {
   title: string;
@@ -13,7 +14,7 @@ export interface Props {
   /** "website" (padrão), "article" ou "product". */
   type?: 'website' | 'article' | 'product';
   noindex?: boolean;
-  /** Esconde cabeçalho e rodapé (páginas de venda e de obrigado ficam mais limpas). */
+  /** Esconde a navegação (páginas de venda e de obrigado ficam mais limpas): só o logotipo no topo. */
   minimal?: boolean;
   publishedAt?: Date;
   updatedAt?: Date;
@@ -57,7 +58,8 @@ const baseSchema = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title={`${site.name} — Blog`} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#0a0a0c" />
+    <meta name="color-scheme" content="dark" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Open Graph -->
@@ -81,36 +83,77 @@ const baseSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!--
-      Fonte do Google (opcional). Hoje o site usa a fonte do sistema (ver src/styles/global.css).
-      Para ativar, descomente as linhas abaixo e troque --font-sans no CSS. Sempre com display=swap.
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    -->
+    <!-- Tipografia: Inter Tight (títulos) e Inter (texto), sempre com display=swap. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Carrega sem bloquear a renderização: entra como "print" e vira "all" quando termina de baixar. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    </noscript>
+
+    <!-- Marca que há JS: só assim os elementos .reveal começam escondidos. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
 
     <script type="application/ld+json" set:html={JSON.stringify(schema ?? baseSchema)} />
 
     <Analytics />
   </head>
-  <body class="min-h-dvh flex flex-col">
+  <body class="flex min-h-dvh flex-col">
     <a
       href="#conteudo"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-bg"
     >
       Ir para o conteúdo
     </a>
-    {!minimal && <Header />}
+    {minimal ? (
+      <div class="container-site flex h-16 items-center sm:h-[4.5rem]">
+        <a href="/" class="no-underline"><Logo /></a>
+      </div>
+    ) : (
+      <Header />
+    )}
     <main id="conteudo" class="flex-1">
       <slot />
     </main>
     <Footer minimal={minimal} />
+    <div class="grain" aria-hidden="true"></div>
 
     <script>
       // Captura UTMs em toda página e decora links de checkout.
       import { captureUtms, decorateCheckoutLinks } from '../lib/tracking';
       captureUtms();
       decorateCheckoutLinks();
+    </script>
+
+    <script is:inline>
+      // Revelação na rolagem: .reveal ganha .is-visible ao entrar na tela.
+      // data-reveal-delay="120" atrasa em ms (cascata). Respeita prefers-reduced-motion.
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce || !('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var el = entry.target;
+            var delay = el.getAttribute('data-reveal-delay');
+            if (delay) el.style.transitionDelay = delay + 'ms';
+            el.classList.add('is-visible');
+            io.unobserve(el);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        els.forEach(function (el) { io.observe(el); });
+      })();
     </script>
   </body>
 </html>

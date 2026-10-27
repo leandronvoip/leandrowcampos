@@ -6,8 +6,12 @@ import Button from '../../components/Button.astro';
 import FAQ from '../../components/FAQ.astro';
 import Testimonials from '../../components/Testimonials.astro';
 import AuthorBox from '../../components/AuthorBox.astro';
+import BookMockup from '../../components/BookMockup.astro';
+import Pinned from '../../components/Pinned.astro';
+import AgentCard from '../../components/AgentCard.astro';
 import { site } from '../../config/site';
 import { brl } from '../../lib/format';
+import { resolveCover } from '../../lib/assets';
 
 export async function getStaticPaths() {
   const ebooks = await getCollection('ebooks', (e) => !e.data.draft);
@@ -18,15 +22,18 @@ const { ebook } = Astro.props;
 const { data } = ebook;
 const { Content } = await render(ebook);
 
+const cover = resolveCover(ebook.id, data.cover);
+const ogCover = cover ?? data.cover;
 const bonusTotal = data.bonuses.reduce((sum, b) => sum + b.value, 0);
 const discount = data.originalPrice ? Math.round((1 - data.price / data.originalPrice) * 100) : 0;
+const price = brl(data.price, { cents: false });
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: data.title,
   description: data.excerpt,
-  image: new URL(data.cover, site.url).toString(),
+  image: new URL(ogCover, site.url).toString(),
   brand: { '@type': 'Person', name: site.author.name },
   offers: {
     '@type': 'Offer',
@@ -38,27 +45,29 @@ const schema = {
 };
 ---
 
-<Base title={data.title} description={data.excerpt} image={data.cover} type="product" minimal schema={schema}>
+<Base title={data.title} description={data.excerpt} image={ogCover} type="product" minimal schema={schema}>
   <!-- 1. Promessa com mockup e botão -->
-  <section id="promessa" class="bg-surface-alt">
-    <div class="container-site grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1.2fr_0.8fr]">
+  <section id="promessa" class="glow overflow-hidden">
+    <div class="container-site grid items-center gap-14 pb-16 pt-10 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-28 lg:pt-20">
       <div>
-        <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-700">E-book · {site.author.name}</p>
-        <h1 class="text-4xl sm:text-5xl">{data.promise.headline}</h1>
-        <p class="mt-5 text-lg text-muted">{data.promise.support}</p>
-        <div class="mt-8 flex flex-col items-start gap-3">
+        <p class="eyebrow mb-7">E-book · {site.author.name}</p>
+        <h1 class="display-2">{data.promise.headline}</h1>
+        <p class="lead measure mt-8">{data.promise.support}</p>
+        <div class="mt-10 flex flex-col items-start gap-4">
           <Button href={data.checkoutUrl} checkout size="lg" id="cta-topo">{data.promise.cta}</Button>
           <p class="text-sm text-muted">Garantia de {data.guaranteeDays} dias · Acesso imediato · Pagamento seguro pela Hotmart</p>
         </div>
       </div>
-      <img src={data.cover} alt={data.coverAlt} width="400" height="560" class="mx-auto w-60 drop-shadow-2xl sm:w-72" fetchpriority="high" />
+      <div>
+        <BookMockup title={data.title} subtitle={data.subtitle} cover={cover} coverAlt={data.coverAlt} width="min(21rem, 72vw)" priority />
+      </div>
     </div>
   </section>
 
   <!-- 2. Vídeo -->
   {data.videoUrl && (
-    <Section id="video" narrow class="!py-10">
-      <div class="aspect-video overflow-hidden rounded-card border border-line bg-ink shadow-card">
+    <Section id="video" narrow compact>
+      <div class="reveal aspect-video overflow-hidden rounded-card border border-line bg-surface">
         <iframe
           src={data.videoUrl}
           title={`Vídeo de apresentação: ${data.title}`}
@@ -72,78 +81,72 @@ const schema = {
   )}
 
   <!-- 3. A dor em 3 situações -->
-  <Section id="dor" eyebrow="Isso soa familiar?" title="Três situações que custam caro todo mês">
-    <ul class="grid gap-6 md:grid-cols-3">
+  <Section id="dor" eyebrow="Isso soa familiar?" title="Três situações que custam caro todo mês." class="border-t border-line">
+    <ul class="grid gap-5 md:grid-cols-3">
       {data.pains.map((p, i) => (
-        <li class="rounded-card border border-line bg-surface p-6 shadow-card">
-          <span class="font-display text-3xl font-bold text-brand-200">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="mt-2 text-xl">{p.title}</h3>
-          <p class="mt-2 text-muted">{p.text}</p>
+        <li class="card reveal p-7 sm:p-8" data-reveal-delay={i * 100}>
+          <span aria-hidden="true" class="font-display text-5xl font-semibold tracking-tight text-dim">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="mt-5 text-xl sm:text-2xl">{p.title}</h3>
+          <p class="mt-3 text-muted">{p.text}</p>
         </li>
       ))}
     </ul>
   </Section>
 
   <!-- 4. O que você recebe (capítulos como resultados) -->
-  <Section id="conteudo-ebook" alt eyebrow="O que você recebe" title="Cada capítulo termina com algo funcionando">
-    <ol class="mx-auto max-w-3xl space-y-4">
-      {data.chapters.map((c) => (
-        <li class="flex gap-4 rounded-card border border-line bg-surface p-5">
-          <span aria-hidden="true" class="mt-0.5 text-success">✓</span>
+  <Section id="conteudo-ebook" alt eyebrow="O que você recebe" title="Cada capítulo termina com algo funcionando.">
+    <ol class="mx-auto max-w-3xl border-t border-line">
+      {data.chapters.map((c, i) => (
+        <li class="reveal grid gap-2 border-b border-line py-7 sm:grid-cols-[4rem_1fr] sm:gap-6" data-reveal-delay={(i % 3) * 80}>
+          <span aria-hidden="true" class="eyebrow pt-1 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
           <div>
-            <h3 class="text-lg">{c.title}</h3>
-            <p class="text-muted">{c.result}</p>
+            <h3 class="text-xl sm:text-2xl">{c.title}</h3>
+            <p class="mt-2 text-muted">{c.result}</p>
           </div>
         </li>
       ))}
     </ol>
-    <div class="prose-site mx-auto mt-10 max-w-3xl">
+    <div class="prose-site reveal mx-auto mt-12 max-w-3xl">
       <Content />
     </div>
   </Section>
 
-  <!-- 5. Os agentes -->
+  <!-- 5. Os agentes (pinned) -->
   {data.agents.length > 0 && (
-    <Section id="agentes" eyebrow="Os agentes" title="Os assistentes que você monta com o manual">
-      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {data.agents.map((a) => (
-          <li class="rounded-card border border-line bg-surface p-6 shadow-card">
-            {a.icon && <span aria-hidden="true" class="text-3xl">{a.icon}</span>}
-            <h3 class="mt-3 text-lg">{a.name}</h3>
-            <p class="mt-2 text-sm text-muted">{a.what}</p>
-          </li>
-        ))}
-      </ul>
-    </Section>
+    <Pinned id="agentes" eyebrow="Os agentes" title="Os assistentes que você monta com o manual." lead="Um por área da empresa. Cada um nasce de um capítulo e fica rodando depois que você fecha o livro.">
+      {data.agents.map((a, i) => (
+        <AgentCard index={i + 1} name={a.name} text={a.what} area={a.area} delay={(i % 3) * 90} />
+      ))}
+    </Pinned>
   )}
 
   <!-- 6. Caso real com números -->
   <Section id="caso" alt eyebrow="Caso real" title={data.caseStudy.title} narrow>
-    <p class="text-lg text-ink/90">{data.caseStudy.text}</p>
-    <dl class="mt-8 grid gap-6 sm:grid-cols-3">
+    <p class="reveal lead mx-auto text-center">{data.caseStudy.text}</p>
+    <dl class="reveal mt-14 grid gap-10 border-t border-line pt-10 sm:grid-cols-3" data-reveal-delay="120">
       {data.caseStudy.metrics.map((m) => (
-        <div class="rounded-card border border-line bg-surface p-6 text-center">
-          <dd class="font-display text-3xl font-bold text-brand-700">{m.value}</dd>
-          <dt class="mt-1 text-sm text-muted">{m.label}</dt>
+        <div class="text-center">
+          <dd class:list={['font-display font-semibold tracking-tight', m.value.includes('PLACEHOLDER') ? 'text-lg text-dim' : 'text-4xl sm:text-5xl']}>{m.value}</dd>
+          <dt class="mt-2 text-sm text-muted">{m.label}</dt>
         </div>
       ))}
     </dl>
-    {data.caseStudy.disclaimer && <p class="mt-4 text-xs text-muted">{data.caseStudy.disclaimer}</p>}
+    {data.caseStudy.disclaimer && <p class="reveal mt-8 text-center text-xs text-muted">{data.caseStudy.disclaimer}</p>}
   </Section>
 
   <!-- 7. Para quem é e para quem não é -->
-  <Section id="para-quem" title="Para quem é (e para quem não é)">
-    <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
-      <div class="rounded-card border border-line bg-surface p-6 shadow-card">
-        <h3 class="text-xl text-success">É para você se…</h3>
-        <ul class="mt-4 space-y-3">
-          {data.forWho.map((t) => <li class="flex gap-3"><span aria-hidden="true" class="text-success">✓</span>{t}</li>)}
+  <Section id="para-quem" title="Para quem é. E para quem não é.">
+    <div class="mx-auto grid max-w-4xl gap-5 md:grid-cols-2">
+      <div class="card reveal p-7 sm:p-8">
+        <h3 class="text-xl sm:text-2xl">É para você se…</h3>
+        <ul class="mt-6 space-y-4 text-ink/90">
+          {data.forWho.map((t) => <li class="flex gap-4"><span aria-hidden="true" class="mt-0.5 text-success">✓</span>{t}</li>)}
         </ul>
       </div>
-      <div class="rounded-card border border-line bg-surface p-6 shadow-card">
-        <h3 class="text-xl text-danger">Não é para você se…</h3>
-        <ul class="mt-4 space-y-3">
-          {data.notForWho.map((t) => <li class="flex gap-3"><span aria-hidden="true" class="text-danger">✕</span>{t}</li>)}
+      <div class="card reveal p-7 sm:p-8" data-reveal-delay="120">
+        <h3 class="text-xl sm:text-2xl">Não é para você se…</h3>
+        <ul class="mt-6 space-y-4 text-muted">
+          {data.notForWho.map((t) => <li class="flex gap-4"><span aria-hidden="true" class="mt-0.5 text-danger">✕</span>{t}</li>)}
         </ul>
       </div>
     </div>
@@ -151,58 +154,61 @@ const schema = {
 
   <!-- 8. Bônus com valor -->
   {data.bonuses.length > 0 && (
-    <Section id="bonus" alt eyebrow="Bônus" title="Você também leva">
-      <ul class="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
-        {data.bonuses.map((b) => (
-          <li class="flex flex-col rounded-card border border-line bg-surface p-6 shadow-card">
-            <h3 class="text-lg">{b.title}</h3>
-            <p class="mt-2 flex-1 text-sm text-muted">{b.description}</p>
-            <p class="mt-4 text-sm font-semibold text-accent-600">{b.value > 0 ? `Valor: ${brl(b.value)}` : 'Incluso'}</p>
+    <Section id="bonus" alt eyebrow="Bônus" title="Você também leva.">
+      <ul class="mx-auto grid max-w-4xl gap-5 sm:grid-cols-3">
+        {data.bonuses.map((b, i) => (
+          <li class="card reveal flex flex-col p-7" data-reveal-delay={i * 100}>
+            <h3 class="text-xl">{b.title}</h3>
+            <p class="mt-3 flex-1 text-muted">{b.description}</p>
+            <p class="mt-6 border-t border-line pt-4 text-sm text-accent">{b.value > 0 ? `Valor: ${brl(b.value, { cents: false })}` : 'Incluso'}</p>
           </li>
         ))}
       </ul>
-      {bonusTotal > 0 && <p class="mt-6 text-center text-muted">Bônus somados: <strong class="text-ink">{brl(bonusTotal)}</strong>. Hoje vão junto com o e-book.</p>}
+      {bonusTotal > 0 && <p class="reveal mt-10 text-center text-muted">Bônus somados: <strong class="font-medium text-ink">{brl(bonusTotal, { cents: false })}</strong>. Hoje vão junto com o e-book.</p>}
     </Section>
   )}
 
   <!-- 9. Oferta -->
-  <Section id="oferta" eyebrow="Oferta" title="Tudo isso por menos que um almoço de negócios">
-    <div class="mx-auto max-w-xl rounded-card border-2 border-brand-200 bg-surface p-8 text-center shadow-card">
-      <p class="text-lg font-semibold">{data.title}</p>
+  <Section id="oferta" eyebrow="Oferta" title="Tudo isso por menos que um almoço de negócios.">
+    <div class="card-elevated reveal mx-auto max-w-xl p-8 text-center sm:p-12">
+      <p class="font-display text-lg font-medium">{data.title}</p>
       {data.originalPrice && (
-        <p class="mt-4 text-muted">
-          De <span class="line-through">{brl(data.originalPrice)}</span>
-          {discount > 0 && <span class="ml-2 rounded-full bg-accent-100 px-2 py-0.5 text-xs font-semibold text-accent-600">-{discount}%</span>}
+        <p class="mt-6 text-muted">
+          De <span class="line-through">{brl(data.originalPrice, { cents: false })}</span>
+          {discount > 0 && <span class="ml-2 rounded-full border border-accent/40 px-2.5 py-0.5 text-xs text-accent">−{discount}%</span>}
         </p>
       )}
-      <p class="mt-1 font-display text-5xl font-bold text-brand-700">{brl(data.price)}</p>
-      {data.installments && <p class="mt-1 text-muted">{data.installments}</p>}
+      <p class="mt-2 font-display text-7xl font-semibold tracking-[-0.04em] sm:text-8xl">{price}</p>
+      {data.installments && <p class="mt-3 text-muted">{data.installments}</p>}
       {data.pixDiscountText && <p class="mt-1 text-sm text-muted">{data.pixDiscountText}</p>}
-      <Button href={data.checkoutUrl} checkout size="lg" class="mt-8 w-full" id="cta-oferta">{data.promise.cta}</Button>
-      <p class="mt-4 text-xs text-muted">Pix, cartão (à vista ou parcelado) ou boleto. Checkout e entrega pela Hotmart.</p>
+      <Button href={data.checkoutUrl} checkout size="lg" class="mt-10 w-full" id="cta-oferta">{data.promise.cta}</Button>
+      <p class="mt-5 text-xs text-muted">Pix, cartão (à vista ou parcelado) ou boleto. Checkout e entrega pela Hotmart.</p>
     </div>
   </Section>
 
   <!-- 10. Garantia -->
-  <Section id="garantia" alt narrow>
-    <div class="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
-      <div aria-hidden="true" class="flex size-24 shrink-0 items-center justify-center rounded-full border-4 border-success/30 bg-surface font-display text-2xl font-bold text-success">{data.guaranteeDays}d</div>
+  <Section id="garantia" alt narrow compact>
+    <div class="reveal flex flex-col items-center gap-8 text-center sm:flex-row sm:text-left">
+      <div aria-hidden="true" class="flex size-24 shrink-0 flex-col items-center justify-center rounded-full border border-accent/50 font-display">
+        <span class="text-3xl font-semibold leading-none">{data.guaranteeDays}</span>
+        <span class="mt-1 text-[0.65rem] uppercase tracking-[0.14em] text-accent">dias</span>
+      </div>
       <div>
-        <h2 class="text-2xl">Garantia incondicional de {data.guaranteeDays} dias</h2>
-        <p class="mt-2 text-muted">Leia, aplique e veja se faz sentido. Se não fizer, peça o reembolso pela Hotmart dentro de {data.guaranteeDays} dias e receba 100% do valor de volta. Sem perguntas.</p>
+        <h2 class="text-2xl sm:text-3xl">Garantia incondicional de {data.guaranteeDays} dias.</h2>
+        <p class="mt-3 text-muted">Leia, aplique e veja se faz sentido. Se não fizer, peça o reembolso pela Hotmart dentro de {data.guaranteeDays} dias e receba 100% do valor de volta. Sem perguntas.</p>
       </div>
     </div>
   </Section>
 
   <!-- 11. Depoimentos -->
   {data.testimonials.length > 0 && (
-    <Section id="depoimentos" eyebrow="Quem já leu" title="O que dizem">
+    <Section id="depoimentos" eyebrow="Quem já leu" title="O que dizem.">
       <Testimonials items={data.testimonials} />
     </Section>
   )}
 
   <!-- 12. Perguntas frequentes -->
-  <Section id="faq" alt title="Perguntas frequentes">
+  <Section id="faq" alt title="Perguntas frequentes." level={3}>
     <FAQ items={data.faq} />
   </Section>
 
@@ -212,10 +218,12 @@ const schema = {
   </Section>
 
   <!-- 14. Botão final -->
-  <Section id="cta-final" alt narrow class="text-center">
-    <h2 class="text-3xl">{data.promise.headline}</h2>
-    <p class="mt-4 text-muted">Garantia de {data.guaranteeDays} dias. Acesso imediato. {brl(data.price)}.</p>
-    <Button href={data.checkoutUrl} checkout size="lg" class="mt-8" id="cta-final-botao">{data.promise.cta}</Button>
+  <Section id="cta-final" alt class="text-center">
+    <h2 class="reveal display-2 mx-auto max-w-4xl">{data.promise.headline}</h2>
+    <p class="reveal mt-6 text-muted" data-reveal-delay="100">Garantia de {data.guaranteeDays} dias. Acesso imediato. {price}.</p>
+    <div class="reveal mt-10" data-reveal-delay="180">
+      <Button href={data.checkoutUrl} checkout size="lg" id="cta-final-botao">{data.promise.cta}</Button>
+    </div>
   </Section>
 
   <!-- Dados do produto para o evento ViewContent (Meta) / view_item (GA4). -->

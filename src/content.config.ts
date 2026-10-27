@@ -39,7 +39,13 @@ const ebooks = defineCollection({
     pains: z.array(z.object({ title: z.string(), text: z.string() })).length(3),
     chapters: z.array(z.object({ title: z.string(), result: z.string() })).min(1),
     agents: z.array(
-      z.object({ name: z.string(), what: z.string(), icon: z.string().optional() }),
+      z.object({
+        name: z.string(),
+        what: z.string(),
+        /** Área da empresa a que o agente pertence (rótulo curto). */
+        area: z.string().optional(),
+        icon: z.string().optional(),
+      }),
     ),
     caseStudy: z.object({
       title: z.string(),

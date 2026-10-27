@@ -1,0 +1,32 @@
+---
+/**
+ * Seção "pinned": à esquerda um bloco fixo (sticky) com o título grande; à
+ * direita os cartões passam na rolagem. No celular vira uma lista normal.
+ * Uso: <Pinned eyebrow=".." title=".." lead=".."> cartões </Pinned>
+ */
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  alt?: boolean;
+  class?: string;
+}
+const { id, eyebrow, title, lead, alt = false, class: className = '' } = Astro.props;
+---
+
+<section id={id} class:list={['section-y', alt && 'bg-surface', className]}>
+  <div class="container-site">
+    <div class="pinned">
+      <div class="pinned-title reveal">
+        {eyebrow && <p class="eyebrow mb-5">{eyebrow}</p>}
+        <h2 class="display-2">{title}</h2>
+        {lead && <p class="lead measure-sm mt-6">{lead}</p>}
+        <slot name="after-title" />
+      </div>
+      <div class="pinned-cards">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

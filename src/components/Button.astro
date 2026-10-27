@@ -1,6 +1,7 @@
 ---
 export interface Props {
   href: string;
+  /** primary: branco quente com texto escuro; secondary: borda de 1px; ghost: link com seta. */
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'md' | 'lg';
   /** Marca o link como checkout: recebe UTMs via data-checkout. */
@@ -10,13 +11,13 @@ export interface Props {
 }
 const { href, variant = 'primary', size = 'md', checkout = false, class: className = '', ...rest } = Astro.props;
 
-const base = 'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors no-underline';
+const base = 'inline-flex items-center justify-center gap-2 rounded-full font-medium no-underline transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]';
 const variants = {
-  primary: 'bg-brand-600 text-white shadow-sm hover:bg-brand-700',
-  secondary: 'border border-line bg-surface text-ink hover:border-brand-300 hover:text-brand-700',
-  ghost: 'text-brand-700 hover:bg-brand-50',
+  primary: 'bg-ink text-bg hover:bg-white',
+  secondary: 'border border-ink/25 text-ink hover:border-ink/70',
+  ghost: 'text-accent hover:text-ink px-0! py-0!',
 };
-const sizes = { md: 'px-5 py-3 text-base', lg: 'px-7 py-4 text-lg' };
+const sizes = { md: 'px-6 py-3 text-[0.9375rem]', lg: 'px-8 py-4 text-base' };
 ---
 
 <a
@@ -26,4 +27,5 @@ const sizes = { md: 'px-5 py-3 text-base', lg: 'px-7 py-4 text-lg' };
   {...rest}
 >
   <slot />
+  {variant === 'ghost' && <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>}
 </a>

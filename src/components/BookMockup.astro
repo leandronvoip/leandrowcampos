@@ -1,0 +1,48 @@
+---
+/**
+ * Mockup do e-book. Sem capa real, renderiza um livro em CSS (capa escura com
+ * título em Inter Tight, assinatura do autor, lombada e sombra). Com `cover`,
+ * a imagem cobre a face do livro.
+ */
+import { site } from '../config/site';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  /** Caminho da capa real; null/undefined = livro em CSS. */
+  cover?: string | null;
+  coverAlt?: string;
+  /** Largura do livro (qualquer unidade CSS). */
+  width?: string;
+  /** Prioridade de carregamento da capa real (herói). */
+  priority?: boolean;
+  class?: string;
+}
+const {
+  title,
+  subtitle,
+  cover = null,
+  coverAlt = `Capa do e-book ${title}`,
+  width = '17rem',
+  priority = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['book', className]} style={`--book-w:${width}`} role={cover ? undefined : 'img'} aria-label={cover ? undefined : coverAlt}>
+  <div class="book-shadow" aria-hidden="true"></div>
+  <div class="book-pages" aria-hidden="true"></div>
+  <div class="book-face">
+    {cover ? (
+      <img src={cover} alt={coverAlt} width="500" height="700" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" />
+    ) : (
+      <>
+        <div aria-hidden="true">
+          <p class="book-title">{title}</p>
+          {subtitle && <p class="book-subtitle">{subtitle}</p>}
+        </div>
+        <p class="book-author" aria-hidden="true">{site.author.name}</p>
+      </>
+    )}
+  </div>
+</div>

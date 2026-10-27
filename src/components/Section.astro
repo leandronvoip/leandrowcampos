@@ -1,24 +1,44 @@
 ---
+/**
+ * Tela de uma ideia: respiro generoso, cabeçalho centralizado com rótulo
+ * pequeno, título grande e texto de apoio. `alt` usa a superfície escura.
+ */
 export interface Props {
   id?: string;
-  /** Fundo alternado. */
   alt?: boolean;
   title?: string;
   eyebrow?: string;
   lead?: string;
   class?: string;
   narrow?: boolean;
+  /** Cabeçalho alinhado à esquerda em vez de centralizado. */
+  left?: boolean;
+  /** Tamanho do título: 2 (padrão) ou 3 (menor). */
+  level?: 2 | 3;
+  /** Espaçamento menor. */
+  compact?: boolean;
 }
-const { id, alt = false, title, eyebrow, lead, class: className = '', narrow = false } = Astro.props;
+const {
+  id,
+  alt = false,
+  title,
+  eyebrow,
+  lead,
+  class: className = '',
+  narrow = false,
+  left = false,
+  level = 2,
+  compact = false,
+} = Astro.props;
 ---
 
-<section id={id} class:list={['py-14 sm:py-20', alt && 'bg-surface-alt', className]}>
+<section id={id} class:list={[compact ? 'section-y-sm' : 'section-y', alt && 'bg-surface', className]}>
   <div class:list={['container-site', narrow && 'max-w-3xl']}>
     {(title || eyebrow || lead) && (
-      <header class="mx-auto mb-10 max-w-3xl text-center">
-        {eyebrow && <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-brand-700">{eyebrow}</p>}
-        {title && <h2 class="text-3xl sm:text-4xl">{title}</h2>}
-        {lead && <p class="mt-4 text-lg text-muted">{lead}</p>}
+      <header class:list={['reveal mb-14 sm:mb-20', left ? 'max-w-3xl' : 'mx-auto max-w-3xl text-center']}>
+        {eyebrow && <p class="eyebrow mb-5">{eyebrow}</p>}
+        {title && <h2 class={level === 2 ? 'display-2' : 'display-3'}>{title}</h2>}
+        {lead && <p class:list={['lead mt-6', left ? 'measure' : 'mx-auto measure']}>{lead}</p>}
       </header>
     )}
     <slot />

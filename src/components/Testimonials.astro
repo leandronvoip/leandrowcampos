@@ -3,12 +3,13 @@ interface Props { items: { name: string; role?: string; text: string }[] }
 const { items } = Astro.props;
 ---
 
-<ul class="grid gap-6 md:grid-cols-3">
-  {items.map((t) => (
-    <li class="flex flex-col rounded-card border border-line bg-surface p-6 shadow-card">
-      <blockquote class="flex-1 text-ink/90">“{t.text}”</blockquote>
-      <footer class="mt-4 text-sm">
-        <p class="font-semibold">{t.name}</p>
+<ul class="grid gap-5 md:grid-cols-3">
+  {items.map((t, i) => (
+    <li class="card reveal flex flex-col p-7" data-reveal-delay={i * 90}>
+      <span aria-hidden="true" class="font-display text-4xl leading-none text-accent">“</span>
+      <blockquote class="mt-3 flex-1 text-ink/90">{t.text}</blockquote>
+      <footer class="mt-6 border-t border-line pt-4 text-sm">
+        <p class="font-medium text-ink">{t.name}</p>
         {t.role && <p class="text-muted">{t.role}</p>}
       </footer>
     </li>

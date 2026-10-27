@@ -19,8 +19,12 @@ export const site = {
       'Aplica IA no dia a dia de uma empresa real: atendimento, vendas, financeiro e operação.',
       'Escreve para o empreendedor que quer resultado prático, não demonstração bonita.',
     ],
-    // [PLACEHOLDER] Foto do autor (substituir por JPG/PNG real em public/images).
-    photo: '/images/autor-placeholder.svg',
+    /** Avatar quadrado (posts, caixa do autor, JSON-LD). */
+    photo: '/images/leandro-perfil.jpg',
+    /** Retrato vertical de meio corpo, fundo preto (herói do início e página Sobre). */
+    portrait: '/images/leandro-retrato.jpg',
+    /** Busto vertical, fundo preto (seção "Sobre o autor" da página de venda). */
+    portraitBust: '/images/leandro-retrato-busto.jpg',
     email: 'contato@leandrowcampos.com.br',
   },
   company: {

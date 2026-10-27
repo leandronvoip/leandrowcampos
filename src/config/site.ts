@@ -44,11 +44,11 @@ export const site = {
     ],
   },
   social: {
-    // Handles a confirmar por Leandro.
-    linkedin: 'https://www.linkedin.com/in/leandrowcampos',
+    // Perfis confirmados por Leandro em 27/10/2026.
+    linkedin: 'https://www.linkedin.com/in/leandro-campos',
     instagram: 'https://www.instagram.com/leandrowcampos',
-    youtube: 'https://www.youtube.com/@leandrowcampos',
-    twitter: '@leandrowcampos',
+    youtube: 'https://www.youtube.com/c/leandro-campos',
+    twitter: '',
   },
   hotmart: {
     productId: '8764405',

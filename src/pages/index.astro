@@ -65,32 +65,55 @@ const proofs = [
     </div>
   </section>
 
-  <!-- 2. Três provas, uma por tela -->
+  <!-- 2. Três provas: a primeira centrada com os números; as outras duas com foto ao lado -->
   {proofs.map((p, i) => (
-    <section id={i === 0 ? 'prova' : undefined} class:list={['section-y', i % 2 === 0 && 'border-t border-line']}>
+    <section id={i === 0 ? 'prova' : undefined} class:list={[i === 0 ? 'section-y-sm pt-16 lg:pt-24' : 'section-y-sm', i === 0 && 'border-t border-line']}>
       <div class="container-site">
-        <div class="reveal mx-auto max-w-4xl text-center">
-          <span class:list={['mx-auto mb-6 flex size-12 items-center justify-center rounded-full border border-line', i === 0 ? 'text-accent' : 'text-muted']}>
-            <Icon name={p.icon} />
-          </span>
-          <p class="eyebrow mb-6">{String(i + 1).padStart(2, '0')} · {p.eyebrow}</p>
-          <h2 class="display-2">{p.title}</h2>
-          <p class="lead measure mx-auto mt-8">{p.text}</p>
-          {p.link && (
-            <a href={p.link.href} rel={p.link.external ? 'noopener' : undefined} target={p.link.external ? '_blank' : undefined} class="mt-8 inline-block font-medium text-accent no-underline hover:text-ink">
-              {p.link.label} →
-            </a>
-          )}
-        </div>
-        {p.stats && (
-          <dl class="reveal mx-auto mt-16 grid max-w-3xl gap-8 border-t border-line pt-10 sm:grid-cols-3" data-reveal-delay="150">
-            {p.stats.map((s) => (
-              <div class="text-center">
-                <dd class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">{s.value}</dd>
-                <dt class="mt-2 text-sm text-muted">{s.label}</dt>
-              </div>
-            ))}
-          </dl>
+        {i === 0 ? (
+          <>
+            <div class="reveal mx-auto max-w-4xl text-center">
+              <span class="mx-auto mb-6 flex size-12 items-center justify-center rounded-full border border-line text-accent">
+                <Icon name={p.icon} />
+              </span>
+              <p class="eyebrow mb-6">01 · {p.eyebrow}</p>
+              <h2 class="display-2">{p.title}</h2>
+              <p class="lead measure mx-auto mt-8">{p.text}</p>
+              {p.link && (
+                <a href={p.link.href} rel="noopener" target="_blank" class="mt-8 inline-block font-medium text-accent no-underline hover:text-ink">
+                  {p.link.label} →
+                </a>
+              )}
+            </div>
+            {p.stats && (
+              <dl class="reveal mx-auto mt-14 grid max-w-3xl gap-8 border-t border-line pt-10 sm:grid-cols-3" data-reveal-delay="150">
+                {p.stats.map((s) => (
+                  <div class="text-center">
+                    <dd class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">{s.value}</dd>
+                    <dt class="mt-2 text-sm text-muted">{s.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </>
+        ) : (
+          <div class:list={['mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16', i === 2 && 'lg:[&>*:first-child]:order-2']}>
+            <figure class="reveal overflow-hidden rounded-card border border-line">
+              <img
+                src={i === 1 ? '/images/palestra/palestra-1.jpg' : '/images/palestra/palestra-2.jpg'}
+                alt={i === 1 ? `${site.author.name} palestrando no Dia da Inovação` : `${site.author.name} ao microfone diante do telão do Dia da Inovação`}
+                width="1600" height="1066" loading="lazy" decoding="async"
+                class="aspect-[3/2] w-full object-cover"
+              />
+            </figure>
+            <div class="reveal" data-reveal-delay="120">
+              <span class="mb-6 flex size-12 items-center justify-center rounded-full border border-line text-muted">
+                <Icon name={p.icon} />
+              </span>
+              <p class="eyebrow mb-6">{String(i + 1).padStart(2, '0')} · {p.eyebrow}</p>
+              <h2 class="display-3">{p.title}</h2>
+              <p class="lead measure-sm mt-7">{p.text}</p>
+            </div>
+          </div>
         )}
       </div>
     </section>

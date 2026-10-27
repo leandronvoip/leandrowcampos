@@ -77,7 +77,7 @@ const baseSchema = {
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content={site.social.twitter} />
+    {site.social.twitter && <meta name="twitter:site" content={site.social.twitter} />}
     <meta name="twitter:creator" content={site.social.twitter} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />

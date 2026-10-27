@@ -23,7 +23,7 @@ export const site = {
     bioShort: [
       'Fundador da Nvoip, plataforma de telefonia e comunicação em nuvem com mais de 10 anos de operação e mais de 50 mil clientes atendidos.',
       'Reduziu o time de 70 para 10 pessoas com IA e automação de processos, sem perder clientes. Captou mais de R$ 3 milhões em duas rodadas com três fundos de venture capital.',
-      'Quinze anos empreendendo em tecnologia, os últimos oito à frente de uma empresa 100% digital. Mentor do Inovativa Brasil por quatro anos.',
+      'Quinze anos empreendendo em tecnologia, os últimos oito à frente de uma empresa 100% digital. Nvoip acelerada pelo Inovativa Brasil (2019.1) e participante do ScaleUP Endeavor (2020); mentor do Inovativa por quatro anos.',
     ],
     /** Avatar quadrado (posts, caixa do autor, JSON-LD). */
     photo: '/images/leandro-perfil.jpg',

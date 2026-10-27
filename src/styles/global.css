@@ -417,6 +417,32 @@
   .prose-site :where(strong) { @apply font-semibold text-ink; }
   .prose-site :where(code) { @apply rounded bg-surface-2 px-1.5 py-0.5 text-[0.9em] text-ink; }
   .prose-site :where(hr) { @apply my-12 border-line; }
+  /* Blocos de prompt e código: cartão escuro, quebra de linha, botão "Copiar" (ver blog/[slug].astro). */
+  .prose-site :where(pre) {
+    @apply relative my-7 overflow-x-auto rounded-card border border-line p-5 pr-24 text-[0.9rem] leading-relaxed text-ink;
+    background: var(--color-surface) !important;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prose-site :where(pre code) { @apply bg-transparent p-0 text-inherit; }
+  .prose-site :where(pre code .line:first-child) { @apply font-semibold text-accent; }
+  .prose-site :where(.copy-btn) {
+    @apply absolute right-3 top-3 rounded-full border border-ink/25 bg-bg px-3 py-1 text-xs font-medium text-ink transition-colors hover:border-ink/70;
+  }
+  .prose-site :where(.copy-btn.is-done) { @apply border-accent text-accent; }
+  .prose-site :where(table) { @apply my-8 block w-full overflow-x-auto border-collapse text-[0.9375rem]; }
+  .prose-site :where(thead) { @apply text-left; }
+  .prose-site :where(th) { @apply border-b border-ink/30 px-3 py-2.5 align-bottom font-semibold text-ink; }
+  .prose-site :where(td) { @apply border-b border-line px-3 py-2.5 align-top text-ink/85; }
+  .prose-site :where(tbody tr:hover) { background: rgba(255, 255, 255, 0.025); }
+  .prose-site :where(img) { @apply my-8 rounded-card border border-line; }
+
+  /* Sumário do artigo. */
+  .toc { @apply my-10 rounded-card border border-line bg-surface p-6; }
+  .toc :where(ol) { @apply mt-3 space-y-1.5 text-[0.9375rem]; counter-reset: toc; }
+  .toc :where(li) { counter-increment: toc; }
+  .toc :where(li)::before { content: counter(toc) '.'; @apply mr-2 text-dim; }
+  .toc :where(a) { @apply text-ink/85 no-underline hover:text-accent; }
 }
 
 /* Riscado suave para o título da isca ("estagiário" → "analista"). */

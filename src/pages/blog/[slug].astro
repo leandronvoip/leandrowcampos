@@ -9,6 +9,7 @@ import { site } from '../../config/site';
 import { longDate } from '../../lib/format';
 import { getPublishedPosts } from '../../lib/posts';
 import { splitForBanner } from '../../lib/html-insert';
+import PostCard from '../../components/PostCard.astro';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -16,7 +17,16 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth === 2);
+
+// Artigos relacionados: mais tags em comum, depois mais recente. Até 3.
+const all = (await getPublishedPosts()).filter((p) => p.id !== post.id);
+const related = all
+  .map((p) => ({ p, score: p.data.tags.filter((t) => post.data.tags.includes(t)).length }))
+  .sort((a, b) => b.score - a.score || b.p.data.publishedAt.getTime() - a.p.data.publishedAt.getTime())
+  .slice(0, 3)
+  .map((r) => r.p);
 
 // O artigo é renderizado em HTML e dividido no ponto do banner (ver src/lib/html-insert.ts).
 const container = await AstroContainer.create();
@@ -83,6 +93,15 @@ const schema = {
       <img src={post.data.cover} alt="" width="1200" height="630" class="mb-12 w-full rounded-card border border-line object-cover" loading="eager" decoding="async" />
     )}
 
+    {toc.length >= 3 && (
+      <nav class="toc reveal" aria-label="Neste artigo">
+        <p class="eyebrow text-[0.75rem]">Neste artigo</p>
+        <ol>
+          {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+        </ol>
+      </nav>
+    )}
+
     <div class="prose-site reveal" set:html={before} />
     {after !== null && (
       <>
@@ -95,6 +114,42 @@ const schema = {
       <EbookBanner />
     </footer>
   </article>
+
+  {related.length > 0 && (
+    <section class="section-y-sm">
+      <div class="container-site max-w-5xl">
+        <p class="eyebrow mb-6">Leia também</p>
+        <div class="grid gap-5 md:grid-cols-3">
+          {related.map((p, i) => <PostCard post={p} delay={i * 80} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <script is:inline>
+    // Botão "Copiar" em cada bloco de prompt/código do artigo.
+    (function () {
+      var blocks = document.querySelectorAll('.prose-site pre');
+      if (!blocks.length || !navigator.clipboard) return;
+      blocks.forEach(function (pre) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copiar';
+        btn.setAttribute('aria-label', 'Copiar o texto deste bloco');
+        btn.addEventListener('click', function () {
+          var code = pre.querySelector('code');
+          var text = (code || pre).innerText.replace(/\n$/, '');
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = 'Copiado';
+            btn.classList.add('is-done');
+            setTimeout(function () { btn.textContent = 'Copiar'; btn.classList.remove('is-done'); }, 2000);
+          });
+        });
+        pre.appendChild(btn);
+      });
+    })();
+  </script>
 
   <section class="section-y-sm bg-surface">
     <div class="container-site grid max-w-5xl gap-6 lg:grid-cols-2">

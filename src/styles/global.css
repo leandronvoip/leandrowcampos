@@ -332,6 +332,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Com a face em 3D, a capa real precisa de z-index explícito para não ficar atrás do fundo da face. */
+    z-index: 1;
+  }
+  .book-face::before,
+  .book-face::after {
+    z-index: 2;
   }
   .book-title {
     position: relative;

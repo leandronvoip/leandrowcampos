@@ -1,37 +1,36 @@
 ---
 /**
- * Logotipo: monograma "LW." inline (herda a cor via currentColor) com o nome
- * ao lado em Inter Tight. Fonte do desenho: brand/logo/lwc-monogram.svg.
+ * Logotipo (opção A, 26/10/2026): palavra-marca "Leandro Campos" em Inter Tight,
+ * tracking fechado, com ponto final dourado. Sem monograma ao lado do nome.
+ * Quando `name` é false (barra mínima, rodapé compacto), mostra o ícone "LC"
+ * (brand/logo/lc-icon.svg) herdando a cor via currentColor.
  */
 import { site } from '../config/site';
 
 interface Props {
-  /** Altura do monograma em px. */
+  /** Altura do ícone "LC" em px (só quando name = false). */
   size?: number;
-  /** Mostra o nome ao lado do monograma. */
+  /** Mostra a palavra-marca; false mostra só o ícone "LC". */
   name?: boolean;
   class?: string;
 }
 const { size = 28, name = true, class: className = '' } = Astro.props;
 ---
 
-<span class:list={['inline-flex items-center gap-3 text-ink', className]}>
+{name ? (
+  <span class:list={['inline-flex items-baseline text-ink font-display font-semibold leading-none tracking-[-0.035em] text-[1.25rem] sm:text-[1.35rem]', className]} aria-label={site.name}>
+    <span>{site.name}</span><span class="text-accent" aria-hidden="true">.</span>
+  </span>
+) : (
   <svg
     width={size}
     height={size}
     viewBox="0 0 64 64"
     role="img"
-    aria-label={name ? undefined : site.name}
-    aria-hidden={name ? 'true' : undefined}
-    class="shrink-0"
+    aria-label={site.name}
+    class:list={['shrink-0 text-ink', className]}
   >
-    <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 14 V50 H26" />
-      <path d="M30 28 L35.5 50 L42 36 L48.5 50 L54 28" />
-    </g>
-    <circle cx="59" cy="48" r="2.6" fill="currentColor" />
+    <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="currentColor" stroke-width="2.5" />
+    <text x="32" y="41" text-anchor="middle" font-family="'Inter Tight', Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="26" letter-spacing="-1" fill="currentColor">LC</text>
   </svg>
-  {name && (
-    <span class="font-display text-[0.95rem] font-semibold tracking-[0.12em] uppercase leading-none">{site.name}</span>
-  )}
-</span>
+)}

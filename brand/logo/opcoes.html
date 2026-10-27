@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Opções de logotipo — Leandro Campos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500&family=Cormorant+Garamond:wght@500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0A0A0C;--ink:#F5F3EE;--muted:#A3A09A;--gold:#D4A857;--line:rgba(255,255,255,.08)}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;padding:40px}
+  h1{font:600 14px/1 Inter;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin:0 0 32px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .card{border:1px solid var(--line);border-radius:20px;padding:40px 36px;background:#101014;min-height:200px;display:flex;flex-direction:column;justify-content:space-between}
+  .card.light{background:#F5F3EE;color:#0A0A0C}
+  .label{font:500 12px/1 Inter;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:28px}
+  .light .label{color:#6B6965}
+  .mark{display:flex;align-items:center;gap:18px}
+  svg{display:block}
+  /* Opção A: só a palavra, Inter Tight, ponto dourado */
+  .a{font:600 44px/1 'Inter Tight';letter-spacing:-.035em}
+  .a .dot{color:var(--gold)}
+  /* Opção B: monograma LC em círculo + nome */
+  .b-name{font:600 22px/1 'Inter Tight';letter-spacing:.02em}
+  .b-sub{font:500 11px/1 Inter;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  /* Opção C: serifa editorial */
+  .c{font:500 48px/1 'Fraunces';letter-spacing:-.02em;font-variation-settings:'opsz' 144}
+  .c em{font-style:italic;color:var(--gold)}
+  /* Opção D: iniciais empilhadas, estilo selo */
+  .d-name{font:600 20px/1.1 'Inter Tight';letter-spacing:.08em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<h1>Opções de logotipo · Leandro Campos</h1>
+<div class="grid">
+
+  <div class="card">
+    <div class="mark"><div class="a">Leandro Campos<span class="dot">.</span></div></div>
+    <div class="label">A · Palavra-marca, Inter Tight, ponto dourado</div>
+  </div>
+
+  <div class="card">
+    <div class="mark">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="28" stroke="currentColor" opacity=".9"/>
+        <path d="M22 20v24h13"/>
+        <path d="M44 27a9 9 0 1 0 0 10"/>
+      </svg>
+      <div><div class="b-name">Leandro Campos</div><div class="b-sub">IA aplicada ao negócio</div></div>
+    </div>
+    <div class="label">B · Monograma LC em selo circular + nome e descritor</div>
+  </div>
+
+  <div class="card">
+    <div class="mark"><div class="c">Leandro <em>Campos</em></div></div>
+    <div class="label">C · Serifa editorial (Fraunces), sobrenome em itálico dourado</div>
+  </div>
+
+  <div class="card">
+    <div class="mark">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <rect x="2" y="2" width="60" height="60" rx="14" stroke="currentColor" stroke-width="2.5"/>
+        <text x="32" y="41" text-anchor="middle" font-family="Inter Tight" font-weight="600" font-size="26" fill="currentColor" letter-spacing="-1">LC</text>
+      </svg>
+      <div class="d-name">Leandro<br>Campos</div>
+    </div>
+    <div class="label">D · Ícone de app (LC em quadrado arredondado) + nome empilhado</div>
+  </div>
+
+  <div class="card light">
+    <div class="mark"><div class="a">Leandro Campos<span class="dot">.</span></div></div>
+    <div class="label">A em fundo claro</div>
+  </div>
+
+  <div class="card light">
+    <div class="mark">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="28" opacity=".9"/>
+        <path d="M22 20v24h13"/>
+        <path d="M44 27a9 9 0 1 0 0 10"/>
+      </svg>
+      <div><div class="b-name">Leandro Campos</div><div class="b-sub" style="color:#6B6965">IA aplicada ao negócio</div></div>
+    </div>
+    <div class="label">B em fundo claro</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -26,6 +26,7 @@ Requer Node 22.23+ (ver `engines` no `package.json`).
 | Posts do blog | `src/content/posts/*.md` |
 | Esquema dos campos (o que é obrigatório em cada e-book/post) | `src/content.config.ts` |
 | Páginas fixas (início, grátis, lançamento, sobre, privacidade, termos...) | `src/pages/*.astro` |
+| Dados do responsável/vendedor nos textos legais | `src/config/legal.ts` |
 | Página de venda (14 seções, ordem fixa) | `src/pages/ebook/[slug].astro` |
 | Formulário de captura | `src/components/LeadForm.astro` |
 | Pixel da Meta e GA4 | `src/components/Analytics.astro` |
@@ -33,7 +34,15 @@ Requer Node 22.23+ (ver `engines` no `package.json`).
 | Imagens públicas (retratos, capa, OG) | `public/images/` |
 | Redirecionamentos e robots | `public/_redirects`, `public/robots.txt` |
 
-Todo texto provisório está marcado com `[PLACEHOLDER]`. Antes de publicar: `grep -rn PLACEHOLDER src public`.
+Antes de publicar: `grep -rn PLACEHOLDER src public` deve devolver só o `checkoutUrl` do e-book (enquanto a URL da Hotmart não existir).
+
+### Pré-lançamento e abertura do carrinho
+
+`src/lib/launch.ts` decide, **no build**, o estado de venda de cada e-book: `open` quando a data do build é >= `cartOpens` e o `checkoutUrl` já é real; senão `prelaunch`. No pré-lançamento todos os botões de compra (página de venda, cartão da inicial, vitrine e banners do blog) viram "Entrar na lista de abertura" → `/lancamento`, com a linha "Abre em 10 de novembro às 9h · R$ 47 no lançamento"; o preço continua visível. Como o site é estático, **refaça o deploy** quando preencher o `checkoutUrl` e no dia da abertura (push ou "Retry deployment" na Cloudflare Pages).
+
+### Blog
+
+Posts com `draft: true` não aparecem na lista, no RSS, no sitemap nem geram página no build (em `npm run dev` aparecem, para conferir). Campos opcionais do frontmatter: `description`, `cover` (1200x630), `tags`, `updatedAt`. O banner do e-book (`EbookBanner.astro`) entra sozinho no artigo: antes do terceiro `##` (ou depois do 4º parágrafo, se não houver três títulos) e no fim; em artigo curto, só no fim. A regra fica em `src/lib/html-insert.ts`.
 
 ### Sistema visual
 

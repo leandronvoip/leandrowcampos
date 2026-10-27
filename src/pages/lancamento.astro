@@ -7,6 +7,7 @@ import BookMockup from '../components/BookMockup.astro';
 import { site } from '../config/site';
 import { longDate, shortDate } from '../lib/format';
 import { resolveCover } from '../lib/assets';
+import { prelaunchLine } from '../lib/launch';
 
 const ebook = await getEntry('ebooks', site.launch.featuredEbook);
 const cover = ebook ? resolveCover(ebook.id, ebook.data.cover) : null;
@@ -45,8 +46,9 @@ const warmup: { date: Date; title: string; text: string; href?: string }[] = [
           Carrinho aberto de <strong class="font-medium text-ink">{shortDate(site.launch.cartOpens)}</strong> a
           <strong class="font-medium text-ink">{shortDate(site.launch.cartCloses)}</strong>. Antes disso, três conteúdos gratuitos para você já sair aplicando.
         </p>
-        <div class="card-elevated mt-10 p-7 sm:p-9">
-          <h2 class="text-2xl">Entre na lista do lançamento</h2>
+        {ebook && <p class="mt-6 text-sm text-muted">{prelaunchLine(ebook)}.</p>}
+        <div id="lista" class="card-elevated mt-10 p-7 sm:p-9">
+          <h2 class="text-2xl">Entre na lista de abertura</h2>
           <p class="mb-7 mt-2 text-sm text-muted">Você recebe os três conteúdos e a condição de abertura antes de todo mundo.</p>
           <LeadForm origem="lancamento" cta="Quero entrar na lista" />
         </div>

@@ -44,7 +44,7 @@ export const site = {
     ],
   },
   social: {
-    // [PLACEHOLDER] Confirmar handles.
+    // Handles a confirmar por Leandro.
     linkedin: 'https://www.linkedin.com/in/leandrowcampos',
     instagram: 'https://www.instagram.com/leandrowcampos',
     youtube: 'https://www.youtube.com/@leandrowcampos',

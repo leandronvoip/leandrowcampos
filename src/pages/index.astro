@@ -9,14 +9,17 @@ import BookMockup from '../components/BookMockup.astro';
 import Pinned from '../components/Pinned.astro';
 import AgentCard from '../components/AgentCard.astro';
 import Icon from '../components/Icon.astro';
+import BuyCta from '../components/BuyCta.astro';
 import { site } from '../config/site';
 import { brl } from '../lib/format';
 import { resolveCover } from '../lib/assets';
+import { saleState, prelaunchLine } from '../lib/launch';
 
 const featured =
   (await getEntry('ebooks', site.launch.featuredEbook)) ??
   (await getCollection('ebooks', (e) => !e.data.draft))[0];
 const cover = featured ? resolveCover(featured.id, featured.data.cover) : null;
+const state = featured ? saleState(featured) : 'prelaunch';
 
 // Três provas, uma por tela. Fatos confirmados por Leandro em 26/10/2026.
 const proofs = [
@@ -137,9 +140,21 @@ const proofs = [
               {featured.data.originalPrice && <span class="text-muted line-through">{brl(featured.data.originalPrice, { cents: false })}</span>}
             </p>
             {featured.data.installments && <p class="mt-1 text-sm text-muted">{featured.data.installments}</p>}
-            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button href={`/ebook/${featured.id}/`} size="lg">Conhecer o e-book</Button>
-              <Button href="/lancamento" variant="ghost" size="lg">Entrar na lista do lançamento</Button>
+            <div class="mt-8 flex flex-col gap-4">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                {state === 'open' ? (
+                  <>
+                    <BuyCta ebook={featured} id="cta-home" />
+                    <Button href={`/ebook/${featured.id}/`} variant="secondary" size="lg">Conhecer o e-book</Button>
+                  </>
+                ) : (
+                  <>
+                    <Button href={`/ebook/${featured.id}/`} size="lg">Conhecer o e-book</Button>
+                    <BuyCta ebook={featured} id="cta-home" hideLine />
+                  </>
+                )}
+              </div>
+              {state === 'prelaunch' && <p class="text-sm text-muted">{prelaunchLine(featured)}</p>}
             </div>
           </div>
         </div>

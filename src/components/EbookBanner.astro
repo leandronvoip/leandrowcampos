@@ -1,0 +1,63 @@
+---
+/**
+ * Cartão compacto do e-book em destaque (blog: meio e fim do artigo, fim da lista).
+ * Capa pequena à esquerda, rótulo, título, uma linha de apoio, preço e o botão que
+ * respeita o estado de venda (compra quando aberto; lista de abertura antes).
+ * `compact`: versão empilhada e estreita para barra lateral.
+ */
+import { getCollection, getEntry } from 'astro:content';
+import { site } from '../config/site';
+import { brl } from '../lib/format';
+import { resolveCover } from '../lib/assets';
+import BuyCta from './BuyCta.astro';
+
+interface Props {
+  compact?: boolean;
+  /** Slug do e-book; padrão: o destaque do lançamento. */
+  slug?: string;
+  class?: string;
+}
+const { compact = false, slug = site.launch.featuredEbook, class: className = '' } = Astro.props;
+
+const ebook =
+  (await getEntry('ebooks', slug)) ?? (await getCollection('ebooks', (e) => !e.data.draft))[0];
+const cover = ebook ? resolveCover(ebook.id, ebook.data.cover) ?? '/images/capa-ia-no-negocio.jpg' : null;
+const href = ebook ? `/ebook/${ebook.id}/` : '/ebooks';
+const title = ebook?.data.title ?? 'IA no Negócio: o manual prático do empreendedor';
+const support = ebook?.data.subtitle ?? 'Os prompts e agentes que uso para operar minha empresa, prontos para a sua.';
+const price = ebook ? brl(ebook.data.price, { cents: false }) : 'R$ 47';
+---
+
+{ebook && (
+  <aside
+    aria-label={`E-book ${title}`}
+    class:list={[
+      'card-elevated ebook-banner not-prose',
+      compact ? 'flex flex-col gap-5 p-6' : 'flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-8',
+      className,
+    ]}
+  >
+    <a href={href} class:list={['block shrink-0 no-underline', compact ? 'w-20' : 'w-24 sm:w-28']}>
+      <img
+        src={cover}
+        alt={ebook.data.coverAlt}
+        width="250"
+        height="350"
+        loading="lazy"
+        decoding="async"
+        class="aspect-[5/7] w-full rounded-md border border-white/10 object-cover shadow-[0_18px_40px_-20px_rgba(0,0,0,0.9)]"
+      />
+    </a>
+    <div class="min-w-0 flex-1">
+      <p class="eyebrow text-[0.75rem]">Primeira série · E-book</p>
+      <h3 class:list={['mt-3 font-display font-semibold tracking-tight', compact ? 'text-lg' : 'text-xl sm:text-2xl']}>
+        <a href={href} class="no-underline hover:text-muted">{title}</a>
+      </h3>
+      <p class:list={['mt-2 text-muted', compact ? 'text-sm' : 'text-[0.9375rem]']}>{support}</p>
+      <div class:list={['mt-5 flex gap-4', compact ? 'flex-col' : 'flex-col sm:flex-row sm:items-center sm:gap-6']}>
+        <p class="font-display text-2xl font-semibold tracking-tight">{price}</p>
+        <BuyCta ebook={ebook} label={`Comprar por ${price}`} size="md" align={compact ? 'stretch' : 'start'} class="sm:flex-1" />
+      </div>
+    </div>
+  </aside>
+)}

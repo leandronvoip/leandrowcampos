@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import { site } from '../config/site';
+import { legal } from '../config/legal';
+
+const domain = site.url.replace('https://', '');
 ---
 
 <Base title="Política de Privacidade" description={`Como ${site.name} coleta, usa e protege seus dados pessoais.`}>
@@ -9,50 +12,55 @@ import { site } from '../config/site';
     <div class="prose-site reveal">
       <p class="eyebrow mb-7">Legal</p>
       <h1 class="display-2">Política de Privacidade</h1>
-      <p class="mt-6 text-muted">Última atualização: [PLACEHOLDER] 26 de outubro de 2026</p>
+      <p class="mt-6 text-muted">Última atualização: {legal.updatedAtLong}</p>
 
-      <p>[PLACEHOLDER] Este texto é um rascunho de referência e deve ser revisado por responsável jurídico antes da publicação. Ele descreve, em linguagem simples, o que o site <strong>{site.url.replace('https://', '')}</strong> faz com os seus dados, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+      <p>Esta política descreve, em linguagem simples, o que o site <strong>{domain}</strong> faz com os seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).</p>
 
-      <h2>1. Quem é o controlador</h2>
-      <p>[PLACEHOLDER] {site.author.name}, [PLACEHOLDER CPF/CNPJ], com contato em <a href={`mailto:${site.author.email}`}>{site.author.email}</a>.</p>
+      <h2>1. Quem é o responsável</h2>
+      <p>O site é mantido por <strong>{legal.operator.person}</strong>, por meio de <strong>{legal.operator.entity}</strong>, CNPJ {legal.operator.cnpj}, {legal.operator.city}, que responde como controlador dos dados tratados aqui. Contato: <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a>.</p>
 
       <h2>2. Quais dados coletamos</h2>
       <ul>
-        <li><strong>Formulários:</strong> nome, e-mail e, se você informar, número de WhatsApp.</li>
-        <li><strong>Consentimentos:</strong> registro de que você aceitou receber e-mails e, separadamente, mensagens no WhatsApp.</li>
-        <li><strong>Origem:</strong> a página em que você se inscreveu e parâmetros de campanha (UTMs) presentes no link que você clicou, guardados em um cookie de primeira parte por 30 dias.</li>
-        <li><strong>Navegação:</strong> quando ativados, Meta Pixel e Google Analytics 4 coletam dados de uso de forma pseudonimizada.</li>
+        <li><strong>Formulários:</strong> nome, e-mail e, se você informar, número de WhatsApp. Todos os formulários do site têm uma caixa de consentimento para e-mail e, quando há campo de WhatsApp, outra caixa separada para mensagens nesse canal.</li>
+        <li><strong>Consentimentos:</strong> o registro de que você aceitou receber e-mails e, separadamente, mensagens no WhatsApp, com data e hora.</li>
+        <li><strong>Origem:</strong> a página em que você se inscreveu e os parâmetros de campanha (UTMs) presentes no link que você clicou, guardados em um cookie de primeira parte (<code>lwc_utm</code>) por 30 dias.</li>
+        <li><strong>Medição de audiência:</strong> somente quando ativadas, as ferramentas Meta Pixel e Google Analytics 4 coletam dados de uso do site de forma pseudonimizada (páginas vistas, cliques em botões de compra, envios de formulário). Hoje elas só são carregadas se estiverem configuradas no site.</li>
       </ul>
+      <p>Não coletamos dados de pagamento: a compra dos e-books acontece inteiramente na Hotmart, que nos informa apenas o necessário para a entrega e o suporte.</p>
 
       <h2>3. Para que usamos</h2>
       <ul>
-        <li>Enviar o conteúdo que você pediu (guia, newsletter, avisos de lançamento).</li>
+        <li>Enviar o conteúdo que você pediu: o PDF gratuito, a newsletter e os avisos do lançamento.</li>
         <li>Enviar mensagens no WhatsApp, somente se você marcou essa opção.</li>
-        <li>Medir a origem das inscrições e melhorar o site e as campanhas.</li>
+        <li>Medir a origem das inscrições e das vendas para melhorar o site e as campanhas.</li>
+        <li>Responder a pedidos de suporte, nota fiscal e exercício de direitos.</li>
       </ul>
 
       <h2>4. Base legal</h2>
-      <p>Consentimento (art. 7º, I, da LGPD) para comunicações de marketing; legítimo interesse (art. 7º, IX) para métricas agregadas de navegação.</p>
+      <p>Consentimento (art. 7º, I, da LGPD) para as comunicações por e-mail e WhatsApp; legítimo interesse (art. 7º, IX) para a medição agregada de audiência e a atribuição de origem; execução de contrato e cumprimento de obrigação legal (art. 7º, V e II) para a entrega dos e-books e a emissão de nota fiscal.</p>
 
       <h2>5. Com quem compartilhamos</h2>
       <ul>
-        <li><strong>Hotmart:</strong> processa o pagamento e entrega o e-book. Ao comprar, você também está sujeito à política de privacidade da Hotmart.</li>
-        <li><strong>Amazon Web Services (SES):</strong> envio dos e-mails.</li>
-        <li><strong>Meta e Google:</strong> quando os rastreadores estiverem ativos.</li>
-        <li><strong>[PLACEHOLDER]</strong> ferramenta de automação (n8n) hospedada em [PLACEHOLDER], que recebe os dados dos formulários.</li>
+        <li><strong>Hotmart:</strong> processa o pagamento e entrega o e-book na área de membros. Ao comprar, você também está sujeito à política de privacidade da Hotmart.</li>
+        <li><strong>Amazon Web Services (Amazon SES):</strong> infraestrutura de envio dos e-mails.</li>
+        <li><strong>Servidor de automação próprio (n8n), hospedado em nuvem:</strong> recebe os dados dos formulários, registra os consentimentos e dispara os e-mails e as mensagens.</li>
+        <li><strong>Meta e Google:</strong> apenas quando as ferramentas de medição estiverem ativadas, recebem dados de navegação pseudonimizados.</li>
       </ul>
+      <p>Não vendemos nem cedemos seus dados a terceiros para fins próprios deles.</p>
 
       <h2>6. Cookies</h2>
-      <p>Usamos um cookie próprio (<code>lwc_utm</code>) para lembrar a origem da sua visita por 30 dias. Rastreadores de terceiros, quando ativos, podem definir cookies próprios. Você pode apagar cookies nas configurações do navegador.</p>
+      <p>Usamos um cookie próprio (<code>lwc_utm</code>) para lembrar a origem da sua visita por 30 dias. As ferramentas de medição da Meta e do Google, quando ativadas, definem cookies próprios para medir audiência e campanhas. Você pode apagar ou bloquear cookies nas configurações do navegador; o site continua funcionando sem eles.</p>
 
       <h2>7. Por quanto tempo guardamos</h2>
-      <p>[PLACEHOLDER] Enquanto você mantiver a inscrição ativa ou por até [X] meses após a última interação. Dados de compra seguem os prazos legais fiscais.</p>
+      <p>Enquanto você mantiver a inscrição ativa. Quando você se descadastra ou revoga o consentimento, paramos de enviar comunicações e excluímos seus dados de contato, mantendo apenas o registro do consentimento e da revogação pelo tempo necessário para comprovar o atendimento ao pedido. Dados de compra e de nota fiscal seguem os prazos legais fiscais.</p>
 
       <h2>8. Seus direitos</h2>
-      <p>Você pode pedir acesso, correção, exclusão, portabilidade ou revogar o consentimento a qualquer momento escrevendo para <a href={`mailto:${site.author.email}`}>{site.author.email}</a>. Todo e-mail enviado tem link de descadastro.</p>
+      <p>Você pode pedir confirmação do tratamento, acesso, correção, exclusão, portabilidade ou revogar o consentimento a qualquer momento escrevendo para <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a>. Respondemos no prazo da LGPD. Todo e-mail enviado tem link de descadastro; no WhatsApp, basta responder pedindo para sair.</p>
 
       <h2>9. Alterações</h2>
       <p>Esta política pode ser atualizada. A data no topo indica a versão vigente.</p>
+
+      <p class="text-sm text-muted">{legal.disclaimer}</p>
     </div>
   </Section>
 </Base>

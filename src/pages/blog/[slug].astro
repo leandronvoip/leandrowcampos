@@ -1,29 +1,50 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import Base from '../../layouts/Base.astro';
 import AuthorBox from '../../components/AuthorBox.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import EbookBanner from '../../components/EbookBanner.astro';
 import { site } from '../../config/site';
 import { longDate } from '../../lib/format';
+import { getPublishedPosts } from '../../lib/posts';
+import { splitForBanner } from '../../lib/html-insert';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts', (p) => !p.data.draft);
+  const posts = await getPublishedPosts();
   return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 
 const { post } = Astro.props;
 const { Content } = await render(post);
 
+// O artigo é renderizado em HTML e dividido no ponto do banner (ver src/lib/html-insert.ts).
+const container = await AstroContainer.create();
+const html = await container.renderToString(Content);
+const { before, after } = splitForBanner(html);
+
+const url = new URL(`/blog/${post.id}/`, site.url).toString();
+const image = new URL(post.data.cover ?? site.defaultOgImage, site.url).toString();
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
+  '@type': 'Article',
   headline: post.data.title,
   description: post.data.description,
+  image: [image],
   datePublished: post.data.publishedAt.toISOString(),
   dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
-  author: { '@type': 'Person', name: site.author.name, url: site.url },
-  mainEntityOfPage: new URL(`/blog/${post.id}/`, site.url).toString(),
+  author: { '@type': 'Person', name: site.author.name, url: new URL('/sobre/', site.url).toString() },
+  publisher: {
+    '@type': 'Person',
+    name: site.author.name,
+    url: site.url,
+    image: new URL(site.author.photo, site.url).toString(),
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  url,
   inLanguage: site.lang,
+  isAccessibleForFree: true,
+  ...(post.data.tags.length > 0 ? { keywords: post.data.tags.join(', ') } : {}),
 };
 ---
 
@@ -35,20 +56,44 @@ const schema = {
   publishedAt={post.data.publishedAt}
   updatedAt={post.data.updatedAt}
   schema={schema}
+  noindex={post.data.draft}
 >
   <article class="container-site max-w-3xl pb-20 pt-14 sm:pt-20 lg:pb-28 lg:pt-24">
     <header class="mb-14 border-b border-line pb-10">
       <a href="/blog" class="text-sm font-medium text-accent no-underline hover:text-ink">← Blog</a>
+      {post.data.draft && <p class="eyebrow mt-6">Rascunho · não publicado</p>}
       <h1 class="display-2 mt-6">{post.data.title}</h1>
       <p class="lead mt-6">{post.data.description}</p>
       <p class="mt-6 text-sm text-muted">
         Por {site.author.name} ·
         <time datetime={post.data.publishedAt.toISOString()}>{longDate(post.data.publishedAt)}</time>
+        {post.data.updatedAt && (
+          <>
+            {' '}· Atualizado em <time datetime={post.data.updatedAt.toISOString()}>{longDate(post.data.updatedAt)}</time>
+          </>
+        )}
       </p>
+      {post.data.tags.length > 0 && (
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {post.data.tags.map((t) => <li class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{t}</li>)}
+        </ul>
+      )}
     </header>
-    <div class="prose-site reveal">
-      <Content />
-    </div>
+    {post.data.cover && (
+      <img src={post.data.cover} alt="" width="1200" height="630" class="mb-12 w-full rounded-card border border-line object-cover" loading="eager" decoding="async" />
+    )}
+
+    <div class="prose-site reveal" set:html={before} />
+    {after !== null && (
+      <>
+        <EbookBanner class="my-12" />
+        <div class="prose-site" set:html={after} />
+      </>
+    )}
+
+    <footer class="mt-16 border-t border-line pt-12">
+      <EbookBanner />
+    </footer>
   </article>
 
   <section class="section-y-sm bg-surface">

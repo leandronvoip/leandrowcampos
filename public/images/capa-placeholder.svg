@@ -7,7 +7,7 @@
   </defs>
   <rect width="400" height="560" rx="12" fill="url(#g)"/>
   <rect x="24" y="24" width="352" height="512" rx="8" fill="none" stroke="#ffffff" stroke-opacity="0.25"/>
-  <text x="48" y="120" font-family="system-ui, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.7" letter-spacing="3">[PLACEHOLDER]</text>
+  <text x="48" y="120" font-family="system-ui, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.7" letter-spacing="3">CAPA PROVISÓRIA</text>
   <text x="48" y="190" font-family="system-ui, sans-serif" font-size="40" font-weight="700" fill="#ffffff">IA no</text>
   <text x="48" y="238" font-family="system-ui, sans-serif" font-size="40" font-weight="700" fill="#ffffff">Negócio</text>
   <text x="48" y="290" font-family="system-ui, sans-serif" font-size="16" fill="#ffffff" fill-opacity="0.85">o manual prático</text>

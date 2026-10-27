@@ -1,0 +1,52 @@
+---
+/**
+ * Botão de compra que respeita o estado de venda (src/lib/launch.ts).
+ *
+ * - 'open': botão de checkout (data-checkout, recebe UTMs e dispara InitiateCheckout
+ *   na página de venda), com o texto de `label` (padrão: promise.cta do e-book).
+ * - 'prelaunch': "Entrar na lista de abertura" → /lancamento, sem data-checkout, e
+ *   logo abaixo a linha "Abre em 10 de novembro às 9h · R$ 47 no lançamento".
+ */
+import Button from './Button.astro';
+import { saleState, prelaunchLine, PRELAUNCH_CTA, PRELAUNCH_HREF, type SaleInput } from '../lib/launch';
+
+interface Props {
+  ebook: SaleInput & { data: { promise?: { cta: string } } };
+  /** Texto do botão quando a venda está aberta. */
+  label?: string;
+  size?: 'md' | 'lg';
+  /** Variante do botão quando a venda está aberta (no pré-lançamento é sempre primário). */
+  variant?: 'primary' | 'secondary';
+  /** Alinhamento do conjunto botão + linha. */
+  align?: 'start' | 'center' | 'stretch';
+  /** Oculta a linha pequena do pré-lançamento (quando o contexto já diz a data). */
+  hideLine?: boolean;
+  id?: string;
+  class?: string;
+}
+const {
+  ebook,
+  label = ebook.data.promise?.cta ?? 'Quero o e-book',
+  size = 'lg',
+  variant = 'primary',
+  align = 'start',
+  hideLine = false,
+  id,
+  class: className = '',
+} = Astro.props;
+
+const state = saleState(ebook);
+const wrap = { start: 'items-start text-left', center: 'items-center text-center', stretch: 'items-stretch text-center' }[align];
+const buttonClass = align === 'stretch' ? 'w-full' : '';
+---
+
+{state === 'open' ? (
+  <div class:list={['flex flex-col', wrap, className]}>
+    <Button href={ebook.data.checkoutUrl} checkout size={size} variant={variant} class={buttonClass} id={id}>{label}</Button>
+  </div>
+) : (
+  <div class:list={['flex flex-col gap-3', wrap, className]} data-sale-state="prelaunch">
+    <Button href={PRELAUNCH_HREF} size={size} class={buttonClass} id={id}>{PRELAUNCH_CTA}</Button>
+    {!hideLine && <p class="text-sm text-muted">{prelaunchLine(ebook)}</p>}
+  </div>
+)}

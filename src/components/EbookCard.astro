@@ -3,12 +3,15 @@ import type { CollectionEntry } from 'astro:content';
 import { brl } from '../lib/format';
 import { resolveCover } from '../lib/assets';
 import BookMockup from './BookMockup.astro';
+import BuyCta from './BuyCta.astro';
+import { saleState } from '../lib/launch';
 
 interface Props { ebook: CollectionEntry<'ebooks'>; delay?: number }
 const { ebook, delay = 0 } = Astro.props;
 const { data } = ebook;
 const href = `/ebook/${ebook.id}/`;
 const cover = resolveCover(ebook.id, data.cover);
+const state = saleState(ebook);
 ---
 
 <article class="card reveal flex flex-col overflow-hidden" data-reveal-delay={delay}>
@@ -16,7 +19,7 @@ const cover = resolveCover(ebook.id, data.cover);
     <BookMockup title={data.title} subtitle={data.subtitle} cover={cover} coverAlt={data.coverAlt} width="11.5rem" />
   </a>
   <div class="flex flex-1 flex-col gap-3 border-t border-line p-7">
-    {data.featured && <span class="eyebrow text-[0.75rem]">Lançamento</span>}
+    {data.featured && <span class="eyebrow text-[0.75rem]">{state === 'open' ? 'Lançamento' : 'Em pré-lançamento'}</span>}
     <h3 class="text-xl sm:text-2xl"><a href={href} class="no-underline hover:text-muted">{data.title}</a></h3>
     <p class="text-muted">{data.excerpt}</p>
     <div class="mt-auto flex items-center justify-between pt-4">
@@ -26,5 +29,6 @@ const cover = resolveCover(ebook.id, data.cover);
       </p>
       <a href={href} class="text-sm font-medium text-accent no-underline hover:text-ink">Ver e-book →</a>
     </div>
+    <BuyCta ebook={ebook} label={`Comprar por ${brl(data.price, { cents: false })}`} size="md" align="stretch" class="mt-2" />
   </div>
 </article>

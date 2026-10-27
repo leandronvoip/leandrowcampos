@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
-import Button from '../../components/Button.astro';
 import FAQ from '../../components/FAQ.astro';
 import Testimonials from '../../components/Testimonials.astro';
 import AuthorBox from '../../components/AuthorBox.astro';
@@ -10,9 +9,11 @@ import BookMockup from '../../components/BookMockup.astro';
 import Pinned from '../../components/Pinned.astro';
 import AgentCard from '../../components/AgentCard.astro';
 import Icon from '../../components/Icon.astro';
+import BuyCta from '../../components/BuyCta.astro';
 import { site } from '../../config/site';
 import { brl } from '../../lib/format';
 import { resolveCover } from '../../lib/assets';
+import { saleState, prelaunchLine } from '../../lib/launch';
 
 export async function getStaticPaths() {
   const ebooks = await getCollection('ebooks', (e) => !e.data.draft);
@@ -28,6 +29,7 @@ const ogCover = cover ?? data.cover;
 const bonusTotal = data.bonuses.reduce((sum, b) => sum + b.value, 0);
 const discount = data.originalPrice ? Math.round((1 - data.price / data.originalPrice) * 100) : 0;
 const price = brl(data.price, { cents: false });
+const state = saleState(ebook);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -40,7 +42,7 @@ const schema = {
     '@type': 'Offer',
     price: data.price.toFixed(2),
     priceCurrency: 'BRL',
-    availability: 'https://schema.org/InStock',
+    availability: state === 'open' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
     url: new URL(`/ebook/${ebook.id}/`, site.url).toString(),
   },
 };
@@ -55,7 +57,7 @@ const schema = {
         <h1 class="display-2">{data.promise.headline}</h1>
         <p class="lead measure mt-8">{data.promise.support}</p>
         <div class="mt-10 flex flex-col items-start gap-4">
-          <Button href={data.checkoutUrl} checkout size="lg" id="cta-topo">{data.promise.cta}</Button>
+          <BuyCta ebook={ebook} id="cta-topo" />
           <p class="text-sm text-muted">Garantia de {data.guaranteeDays} dias · Acesso imediato · Pagamento seguro pela Hotmart</p>
         </div>
       </div>
@@ -187,7 +189,7 @@ const schema = {
       <p class="mt-2 font-display text-7xl font-semibold tracking-[-0.04em] sm:text-8xl">{price}</p>
       {data.installments && <p class="mt-3 text-muted">{data.installments}</p>}
       {data.pixDiscountText && <p class="mt-1 text-sm text-muted">{data.pixDiscountText}</p>}
-      <Button href={data.checkoutUrl} checkout size="lg" class="mt-10 w-full" id="cta-oferta">{data.promise.cta}</Button>
+      <BuyCta ebook={ebook} id="cta-oferta" align="stretch" class="mt-10" />
       <p class="mt-5 text-xs text-muted">Pix ou cartão de crédito, à vista ou em até 3x. Checkout e entrega pela Hotmart.</p>
     </div>
   </Section>
@@ -226,9 +228,11 @@ const schema = {
   <!-- 14. Botão final -->
   <Section id="cta-final" alt class="text-center">
     <h2 class="reveal display-2 mx-auto max-w-4xl">{data.promise.headline}</h2>
-    <p class="reveal mt-6 text-muted" data-reveal-delay="100">Garantia de {data.guaranteeDays} dias. Acesso imediato. {price}.</p>
+    <p class="reveal mt-6 text-muted" data-reveal-delay="100">
+      {state === 'open' ? `Garantia de ${data.guaranteeDays} dias. Acesso imediato. ${price}.` : `Garantia de ${data.guaranteeDays} dias. ${prelaunchLine(ebook)}.`}
+    </p>
     <div class="reveal mt-10" data-reveal-delay="180">
-      <Button href={data.checkoutUrl} checkout size="lg" id="cta-final-botao">{data.promise.cta}</Button>
+      <BuyCta ebook={ebook} id="cta-final-botao" align="center" hideLine />
     </div>
   </Section>
 

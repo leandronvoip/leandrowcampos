@@ -1,12 +1,11 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { getCollection } from 'astro:content';
 import { site } from '../config/site';
+import { getPublishedPosts } from '../lib/posts';
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection('posts', (p) => !p.data.draft)).sort(
-    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-  );
+  // Rascunhos nunca entram no RSS, nem em desenvolvimento.
+  const posts = await getPublishedPosts({ includeDrafts: false });
 
   return rss({
     title: `${site.name} — Blog`,

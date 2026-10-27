@@ -1,0 +1,42 @@
+## agente de ia
+  TOP: o que é agente de ia(100) | o que é um agente de ia(77) | como criar um agente de ia(72) | claude(38) | claude ia(38) | agentes de ia(34) | gemini ia(31) | n8n(30) | claude code(7) | codex(6) | openclaw(4) | antigravity(4)
+  EM ALTA: claude code(Aumento repentino) | openclaw(Aumento repentino) | antigravity(Aumento repentino) | opencode(Aumento repentino) | hostinger(Aumento repentino) | hermes agent(Aumento repentino) | moltbook(Aumento repentino) | o trecho da notícia que você leu usa majoritariamente a voz passiva para comunicar os fatos. explique o motivo da escolha do jornalista, tendo em vista a mudança de foco na voz passiva, do agente da ação para o sujeito paciente, ou seja, quem recebe a ação.(Aumento repentino) | codex(Mais 600%) | claude ia(Mais 450%)
+## n8n
+  TOP: n8n ai(100) | n8n whatsapp(57) | n8n docker(43) | n8n docs(42) | docker(42) | n8n news(37) | n8n documentation(37) | n8n cloud(34) | n8n free(34) | n8n github(30) | github(30) | n8n download(28)
+  EM ALTA: antigravity(Aumento repentino) | openclaw(Mais 2.150%) | n8n news(Mais 2.150%) | claude code(Mais 1.400%) | cloudfy(Mais 900%) | codex(Mais 900%) | n8n documentation(Mais 550%) | n8n docs(Mais 300%) | hashtag treinamentos(Mais 250%) | n8n é gratuito(Mais 180%)
+## chatgpt para empresas
+  TOP: ia(100) | gemini(79) | claude(31) | chatgpt gratuito(30) | chatgpt login(27) | chatgpt gratis(24) | linkedin(18) | claude ai(9)
+  EM ALTA: claude(Mais 650%) | claude ai(Mais 110%) | gemini(Mais 100%)
+## no code
+  TOP: qr code(100) | vs code(31) | claude code(21) | como gerar qr code(9) | como ler qr code(8) | visual studio(5) | visual studio code(5) | open code(4) | python(4) | como ler qr code no celular(4) | walmart near me(0) | what is a coupon code(0)
+  EM ALTA: walmart near me(Aumento repentino) | what is a coupon code(Aumento repentino) | code sailor piece(Aumento repentino) | how to scan a qr code(Aumento repentino) | free stock photos no attribution(Mais 4.000%) | claude code(Mais 1.850%) | new york times(Mais 450%) | open code(Mais 350%)
+## onboarding
+  TOP: employee onboarding(100) | onboarding o que é(51) | onboarding app(19) | customer onboarding(18) | kit onboarding(14) | onboarding digital(14) | onboarding empresa(12) | onboarding marketing(9) | onboarding meaning(7) | onboarding de clientes(7) | processo de onboarding(7) | onboarding o que significa(6)
+  EM ALTA: onboarding ugopass(Aumento repentino) | onboarding ugopass com br(Aumento repentino) | walmart near me(Aumento repentino) | onboarding ugopass com br bd(Aumento repentino) | onboarding ugo pass(Aumento repentino) | employee onboarding(Mais 1.150%) | onboarding app(Mais 300%) | onboarding meaning(Mais 170%) | onboarding digital(Mais 70%) | customer onboarding(Mais 50%)
+## descrição de cargo
+  TOP: o que é descrição de cargo(100) | modelo de descrição de cargo(44) | auxiliar administrativo descrição de cargo(17) | assistente administrativo descrição de cargo(17) | descrição de cargo auxiliar de serviços gerais(13) | descrição de cargo auxiliar de limpeza(11) | estoquista descrição de cargo(6) | descrição de cargo analista financeiro(5)
+  EM ALTA: o que é descrição de cargo(Mais 40%)
+## planilha de fluxo de caixa
+  TOP: planilha de fluxo de caixa excel(100) | excel(99) | planilha fluxo de caixa excel(99) | fluxo de caixa excel(98) | modelo de planilha de fluxo de caixa(42) | modelo planilha fluxo de caixa(40) | planilha de fluxo de caixa diário(38) | planilha de fluxo de caixa sebrae(36) | fluxo de caixa sebrae(35) | planilha de fluxo de caixa gratis(34) | planilha fluxo de caixa simples(34) | planilha fluxo de caixa gratis(33)
+  EM ALTA: 
+## funil de vendas
+  TOP: o que é funil de vendas(100) | funil de marketing(83) | funil de vendas marketing(82) | o que e funil de vendas(72) | crm(66) | crm vendas(65) | funil de vendas etapas(54) | o que é um funil de vendas(48) | criar funil de vendas(37) | funil de vendas marketing digital(32) | leads(32) | como criar um funil de vendas(18)
+  EM ALTA: dashboard funil de vendas(Mais 140%) | pipeline(Mais 60%) | funil de vendas b2b(Mais 50%) | crm(Mais 40%) | crm vendas(Mais 40%)
+## procedimento operacional padrão
+  TOP: pop(100) | procedimento operacional padrão pop(100) | modelo procedimento operacional padrão(32) | modelo de procedimento operacional padrão(23) | modelo de pop(16) | modelo de pop procedimento operacional padrão(16) | procedimento operacional padrão pdf(11) | procedimento operacional padrão exemplo(6)
+  EM ALTA: 
+## gpt personalizado
+  TOP: copo personalizado(100) | canva(70) | site gpt(69) | ia gpt(60) | chaveiro personalizado(39)
+  EM ALTA: 
+## chatgpt ou gemini
+  TOP: qual é melhor chatgpt ou gemini(100) | google gemini(58) | gemini ai(47) | gemini pro(41) | qual ia é melhor chatgpt ou gemini(38) | perplexity(11) | claude ai(9)
+  EM ALTA: claude ai(Mais 120%) | qual ia é melhor chatgpt ou gemini(Mais 80%) | qual é melhor chatgpt ou gemini(Mais 40%)
+## indicadores de gestão
+  TOP: 
+  EM ALTA: 
+## script de vendas
+  TOP: o que é script de vendas(100) | script de vendas para whatsapp(72) | script de vendas pronto whatsapp pdf(1)
+  EM ALTA: 
+## mapeamento de processos
+  TOP: ferramentas de mapeamento de processos(100) | mapeamento de processos exemplo(43) | bpmn(37) | fluxograma(32) | bpm(27)
+  EM ALTA: bpmn(Mais 50%)

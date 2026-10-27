@@ -1,0 +1,103 @@
+GRUPO ['agente de ia', 'prompts para empresas', 'inteligência artificial para pequenas empresas', 'como criar um agente de ia', 'prompts para vendas']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  prompts para empresas: média12m=0 | 1ºtrim=0 | últ.trim=0
+  inteligência artificial para pequenas empresas: média12m=0 | 1ºtrim=0 | últ.trim=0
+  como criar um agente de ia: média12m=5 | 1ºtrim=2 | últ.trim=6
+  prompts para vendas: média12m=0 | 1ºtrim=0 | últ.trim=0
+GRUPO ['agente de ia', 'prompts para atendimento ao cliente', 'prompts para rh', 'política de uso de ia', 'chatgpt ou gemini']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  prompts para atendimento ao cliente: média12m=0 | 1ºtrim=0 | últ.trim=0
+  prompts para rh: média12m=0 | 1ºtrim=0 | últ.trim=0
+  política de uso de ia: média12m=1 | 1ºtrim=0 | últ.trim=1
+  chatgpt ou gemini: média12m=22 | 1ºtrim=19 | últ.trim=24
+GRUPO ['agente de ia', 'automação com ia', 'n8n', 'como fazer um bom prompt', 'automatizar whatsapp']
+  agente de ia: média12m=10 | 1ºtrim=6 | últ.trim=12
+  automação com ia: média12m=1 | 1ºtrim=1 | últ.trim=2
+  n8n: média12m=56 | 1ºtrim=77 | últ.trim=30
+  como fazer um bom prompt: média12m=0 | 1ºtrim=0 | últ.trim=0
+  automatizar whatsapp: média12m=1 | 1ºtrim=1 | últ.trim=1
+MULTILINE FAIL ['agente de ia', 'indicadores de gestão', 'planejamento estratégico para pequenas empresas', 'okr', 'como delegar tarefas'] <html lang="pt-BR" dir=ltr><meta charset=utf-8><meta name=viewport content="init
+GRUPO ['agente de ia', 'erp para pequenas empresas', 'no code', 'automação de processos', 'script de vendas']
+  agente de ia: média12m=6 | 1ºtrim=4 | últ.trim=8
+  erp para pequenas empresas: média12m=0 | 1ºtrim=0 | últ.trim=0
+  no code: média12m=63 | 1ºtrim=53 | últ.trim=62
+  automação de processos: média12m=2 | 1ºtrim=2 | últ.trim=2
+  script de vendas: média12m=0 | 1ºtrim=0 | últ.trim=0
+GRUPO ['agente de ia', 'funil de vendas', 'procedimento operacional padrão', 'mapeamento de processos', 'onboarding']
+  agente de ia: média12m=24 | 1ºtrim=14 | últ.trim=29
+  funil de vendas: média12m=9 | 1ºtrim=10 | últ.trim=7
+  procedimento operacional padrão: média12m=4 | 1ºtrim=5 | últ.trim=4
+  mapeamento de processos: média12m=6 | 1ºtrim=6 | últ.trim=6
+  onboarding: média12m=50 | 1ºtrim=41 | últ.trim=53
+GRUPO ['agente de ia', 'prompts para instagram', 'planilha de fluxo de caixa', 'descrição de cargo', 'gpt personalizado']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  prompts para instagram: média12m=1 | 1ºtrim=1 | últ.trim=0
+  planilha de fluxo de caixa: média12m=10 | 1ºtrim=12 | últ.trim=7
+  descrição de cargo: média12m=28 | 1ºtrim=29 | últ.trim=25
+  gpt personalizado: média12m=6 | 1ºtrim=3 | últ.trim=6
+GRUPO ['agente de ia', 'chatbot com ia para whatsapp', 'ferramentas de ia para empresas', 'produtividade por funcionário', 'como escalar uma empresa']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  chatbot com ia para whatsapp: média12m=0 | 1ºtrim=0 | últ.trim=0
+  ferramentas de ia para empresas: média12m=1 | 1ºtrim=0 | últ.trim=3
+  produtividade por funcionário: média12m=1 | 1ºtrim=2 | últ.trim=1
+  como escalar uma empresa: média12m=0 | 1ºtrim=0 | últ.trim=0
+GRUPO ['agente de ia', 'ia para empreendedores', 'chatgpt para empresas', 'agentes de ia para empresas', 'prompts prontos']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  ia para empreendedores: média12m=0 | 1ºtrim=0 | últ.trim=0
+  chatgpt para empresas: média12m=13 | 1ºtrim=15 | últ.trim=9
+  agentes de ia para empresas: média12m=0 | 1ºtrim=0 | últ.trim=0
+  prompts prontos: média12m=1 | 1ºtrim=2 | últ.trim=1
+GRUPO ['agente de ia', 'indicadores de gestão', 'planejamento estratégico para pequenas empresas', 'okr', 'como delegar tarefas']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  indicadores de gestão: média12m=41 | 1ºtrim=38 | últ.trim=42
+  planejamento estratégico para pequenas empresas: média12m=0 | 1ºtrim=0 | últ.trim=0
+  okr: média12m=32 | 1ºtrim=38 | últ.trim=25
+  como delegar tarefas: média12m=1 | 1ºtrim=0 | últ.trim=1
+GRUPO ['agente de ia', 'fluxo de caixa', 'funil de vendas', 'script de vendas', 'onboarding']
+  agente de ia: média12m=24 | 1ºtrim=14 | últ.trim=29
+  fluxo de caixa: média12m=37 | 1ºtrim=37 | últ.trim=34
+  funil de vendas: média12m=9 | 1ºtrim=10 | últ.trim=7
+  script de vendas: média12m=0 | 1ºtrim=1 | últ.trim=0
+  onboarding: média12m=50 | 1ºtrim=41 | últ.trim=53
+GRUPO ['agente de ia', 'ia para pequenas empresas', 'ia na empresa', 'como usar ia', 'ia para contabilidade']
+  agente de ia: média12m=46 | 1ºtrim=27 | últ.trim=57
+  ia para pequenas empresas: média12m=0 | 1ºtrim=0 | últ.trim=1
+  ia na empresa: média12m=15 | 1ºtrim=10 | últ.trim=21
+  como usar ia: média12m=78 | 1ºtrim=61 | últ.trim=88
+  ia para contabilidade: média12m=2 | 1ºtrim=1 | últ.trim=2
+GRUPO ['agente de ia', 'análise swot', 'pauta de reunião', 'custo de funcionário', 'ia no atendimento ao cliente']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  análise swot: média12m=20 | 1ºtrim=20 | últ.trim=16
+  pauta de reunião: média12m=12 | 1ºtrim=10 | últ.trim=10
+  custo de funcionário: média12m=12 | 1ºtrim=12 | últ.trim=12
+  ia no atendimento ao cliente: média12m=0 | 1ºtrim=0 | últ.trim=0
+GRUPO ['agente de ia', 'automação de processos com ia', 'agente de ia para whatsapp', 'chatgpt para empresas', 'ia para clínicas']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  automação de processos com ia: média12m=1 | 1ºtrim=0 | últ.trim=3
+  agente de ia para whatsapp: média12m=1 | 1ºtrim=0 | últ.trim=2
+  chatgpt para empresas: média12m=13 | 1ºtrim=15 | últ.trim=9
+  ia para clínicas: média12m=0 | 1ºtrim=0 | últ.trim=0
+GRUPO ['agente de ia', 'faturamento por funcionário', 'análise swot', 'mapear processos', 'automatizar tarefas com ia']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  faturamento por funcionário: média12m=0 | 1ºtrim=0 | últ.trim=0
+  análise swot: média12m=20 | 1ºtrim=20 | últ.trim=16
+  mapear processos: média12m=5 | 1ºtrim=4 | últ.trim=3
+  automatizar tarefas com ia: média12m=0 | 1ºtrim=0 | últ.trim=0
+GRUPO ['agente de ia', 'prompts pdf', 'biblioteca de prompts', 'curso de ia', 'como criar um agente de ia no chatgpt']
+  agente de ia: média12m=46 | 1ºtrim=27 | últ.trim=57
+  prompts pdf: média12m=4 | 1ºtrim=4 | últ.trim=1
+  biblioteca de prompts: média12m=0 | 1ºtrim=0 | últ.trim=0
+  curso de ia: média12m=77 | 1ºtrim=62 | últ.trim=87
+  como criar um agente de ia no chatgpt: média12m=0 | 1ºtrim=0 | últ.trim=0
+GRUPO ['agente de ia', 'como organizar uma empresa', 'como reduzir custos', 'pauta de reunião', 'modelo de pop']
+  agente de ia: média12m=68 | 1ºtrim=41 | últ.trim=84
+  como organizar uma empresa: média12m=24 | 1ºtrim=16 | últ.trim=27
+  como reduzir custos: média12m=34 | 1ºtrim=25 | últ.trim=43
+  pauta de reunião: média12m=12 | 1ºtrim=10 | últ.trim=10
+  modelo de pop: média12m=16 | 1ºtrim=14 | últ.trim=14
+GRUPO ['agente de ia', 'prompts para instagram', 'prompts para marketing', 'prompts chatgpt', 'prompts']
+  agente de ia: média12m=15 | 1ºtrim=9 | últ.trim=18
+  prompts para instagram: média12m=0 | 1ºtrim=0 | últ.trim=0
+  prompts para marketing: média12m=0 | 1ºtrim=0 | últ.trim=0
+  prompts chatgpt: média12m=4 | 1ºtrim=4 | últ.trim=4
+  prompts: média12m=51 | 1ºtrim=52 | últ.trim=39

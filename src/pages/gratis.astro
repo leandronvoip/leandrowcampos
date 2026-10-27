@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import LeadForm from '../components/LeadForm.astro';
+import LeadTitle from '../components/LeadTitle.astro';
 import { site } from '../config/site';
 
 // Doze tarefas, uma por página do PDF, cada uma com o prompt pronto.
@@ -25,7 +26,7 @@ const tasks = [
     <div class="container-site grid items-start gap-12 pb-20 pt-14 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 lg:pb-32 lg:pt-28">
       <div>
         <p class="eyebrow mb-7">PDF gratuito</p>
-        <h1 class="display-1">{site.leadMagnet.title}.</h1>
+        <LeadTitle as="h1" class="display-1" />
         <p class="lead measure mt-8">{site.leadMagnet.description} Nenhuma exige programar ou contratar ferramenta nova.</p>
         <ol class="mt-10 grid gap-3 border-t border-line pt-8 text-ink/90 sm:grid-cols-2 sm:gap-x-8">
           {tasks.map((item, i) => (

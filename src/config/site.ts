@@ -70,7 +70,13 @@ export const site = {
   ],
   /** Isca gratuita: PDF curto, uma tarefa por página, com o prompt pronto. */
   leadMagnet: {
-    title: '12 tarefas da sua empresa que a IA já faz melhor que um estagiário',
+    title: '12 tarefas da sua empresa que a IA já faz melhor que um analista',
+    /** Título em partes, para riscar "estagiário" e mostrar "analista" (só nos títulos visuais). */
+    titleParts: {
+      prefix: '12 tarefas da sua empresa que a IA já faz melhor que um ',
+      struck: 'estagiário',
+      final: 'analista',
+    },
     shortTitle: 'as 12 tarefas',
     cta: 'Baixar as 12 tarefas',
     description:

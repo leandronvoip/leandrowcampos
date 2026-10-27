@@ -172,6 +172,19 @@
       radial-gradient(60% 55% at 50% 0%, rgba(212, 168, 87, 0.10), transparent 70%),
       radial-gradient(45% 40% at 50% 10%, rgba(245, 243, 238, 0.06), transparent 70%);
   }
+  /* Variante do herói: névoa laranja (laranja da Nvoip) atrás do retrato, à direita. */
+  .glow--ember::before {
+    inset: -10% -10% auto -10%;
+    height: 110%;
+    background:
+      radial-gradient(38% 52% at 76% 48%, rgba(240, 122, 31, 0.28), transparent 70%),
+      radial-gradient(60% 55% at 50% 0%, rgba(212, 168, 87, 0.06), transparent 70%);
+  }
+  @media (max-width: 1023px) {
+    .glow--ember::before {
+      background: radial-gradient(70% 40% at 50% 70%, rgba(240, 122, 31, 0.22), transparent 70%);
+    }
+  }
 
   /* Grão muito leve: SVG feTurbulence pequeno, repetido. */
   .grain {
@@ -398,4 +411,12 @@
   .prose-site :where(strong) { @apply font-semibold text-ink; }
   .prose-site :where(code) { @apply rounded bg-surface-2 px-1.5 py-0.5 text-[0.9em] text-ink; }
   .prose-site :where(hr) { @apply my-12 border-line; }
+}
+
+/* Riscado suave para o título da isca ("estagiário" → "analista"). */
+.strike-soft {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.08em;
+  text-decoration-color: var(--color-accent);
+  color: var(--color-dim);
 }

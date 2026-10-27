@@ -1,0 +1,10 @@
+---
+/** Título da isca com "estagiário" riscado e "analista" em destaque. */
+import { site } from '../config/site';
+interface Props { as?: 'h1' | 'h2'; class?: string }
+const { as: Tag = 'h2', class: className = '' } = Astro.props;
+const t = site.leadMagnet.titleParts;
+---
+<Tag class={className}>
+  {t.prefix}<s class="strike-soft">{t.struck}</s> <span class="text-accent">{t.final}</span>.
+</Tag>

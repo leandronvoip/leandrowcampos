@@ -54,8 +54,8 @@ export const site = {
     productId: '8764405',
   },
   launch: {
-    // Carrinho aberto de 10 a 12/11/2026 (horário de Brasília).
-    cartOpens: '2026-11-10T09:00:00-03:00',
+    // Vendas abertas em 27/10/2026 (decisão do Leandro); preço de lançamento até 12/11/2026.
+    cartOpens: '2026-10-27T20:30:00-03:00',
     cartCloses: '2026-11-12T23:59:00-03:00',
     featuredEbook: 'ia-no-negocio',
   },

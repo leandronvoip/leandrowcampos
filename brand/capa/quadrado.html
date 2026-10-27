@@ -2,33 +2,44 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Imagem do produto 1200×1200 — IA no Negócio</title>
+<title>Imagem do produto 1200×1200 — IA no Negócio (laranja)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0A0A0C;--ink:#F5F3EE;--muted:#A3A09A;--gold:#D4A857;--line:rgba(255,255,255,.14)}
-  html,body{margin:0;background:var(--bg)}
-  .q{position:relative;width:1200px;height:1200px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
-  .glow{position:absolute;inset:0;background:radial-gradient(800px 600px at 80% 15%, rgba(212,168,87,.16), transparent 60%)}
-  .frame{position:absolute;inset:56px;border:1.5px solid var(--line);border-radius:24px}
-  .eyebrow{position:absolute;left:110px;top:120px;font:500 22px/1 Inter;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-  .title{position:absolute;left:110px;right:110px;top:330px;font:600 164px/.95 'Inter Tight';letter-spacing:-.045em}
-  .title .dot{color:var(--gold)}
-  .sub{position:absolute;left:110px;right:110px;top:690px;font:500 48px/1.15 'Inter Tight';letter-spacing:-.02em}
-  .rule{position:absolute;left:110px;top:900px;width:100px;height:3px;background:var(--gold)}
-  .author{position:absolute;left:110px;top:940px;font:600 44px/1 'Inter Tight';letter-spacing:-.03em}
-  .author .dot{color:var(--gold)}
-  .role{position:absolute;left:110px;top:1000px;font:400 24px/1.4 Inter;color:var(--muted)}
+  :root{--or1:#F26A1B;--or2:#FF8D3C;--ink:#0A0A0C;--ink2:rgba(10,10,12,.72);--cream:#F5F3EE}
+  html,body{margin:0;background:var(--ink)}
+  .q{position:relative;width:1200px;height:1200px;overflow:hidden;color:var(--ink);font-family:Inter,system-ui,sans-serif;background:linear-gradient(160deg,var(--or2) 0%,var(--or1) 55%,#D9570F 100%)}
+  .glow{position:absolute;inset:0;background:radial-gradient(700px 600px at 85% 10%, rgba(255,255,255,.22), transparent 60%)}
+  .net{position:absolute;right:-30px;top:40px;width:640px;height:640px;opacity:.26}
+  .eyebrow{position:absolute;left:110px;top:120px;display:flex;align-items:center;gap:14px;font:600 22px/1 Inter;letter-spacing:.22em;text-transform:uppercase}
+  .eyebrow svg{width:26px;height:26px}
+  .title{position:absolute;left:110px;right:110px;top:340px;font:600 164px/.95 'Inter Tight';letter-spacing:-.045em}
+  .title .dot{color:var(--cream)}
+  .sub{position:absolute;left:110px;right:110px;top:700px;font:500 48px/1.15 'Inter Tight';letter-spacing:-.02em}
+  .rule{position:absolute;left:110px;top:900px;width:100px;height:3px;background:var(--ink)}
+  .author{position:absolute;left:110px;top:940px;font:600 44px/1 'Inter Tight';letter-spacing:-.035em}
+  .author .dot{color:var(--cream)}
+  .role{position:absolute;left:110px;top:1000px;font:400 24px/1.4 Inter;color:var(--ink2)}
+  .lc{position:absolute;right:100px;bottom:100px;width:96px;height:96px}
+  .lc text{font-family:'Inter Tight';font-weight:600;font-size:26px;letter-spacing:-1px}
 </style>
 </head>
 <body>
 <div class="q">
-  <div class="glow"></div><div class="frame"></div>
-  <div class="eyebrow">Primeira série · E-book</div>
+  <div class="glow"></div>
+  <svg class="net" viewBox="0 0 400 400" fill="none" stroke="#0A0A0C" stroke-width="1.2">
+    <path d="M60 80 L160 40 L260 70 L340 30"/><path d="M60 80 L120 170 L160 40"/><path d="M120 170 L260 70 L300 170 L340 30"/>
+    <path d="M120 170 L80 280 L190 250 L300 170"/><path d="M190 250 L260 340 L360 300 L300 170"/><path d="M80 280 L150 370 L260 340"/>
+    <path d="M190 250 L230 150 L260 70"/><path d="M230 150 L300 170"/><path d="M150 370 L190 250"/>
+    <g fill="#0A0A0C" stroke="none"><circle cx="60" cy="80" r="7"/><circle cx="160" cy="40" r="5"/><circle cx="260" cy="70" r="9"/><circle cx="340" cy="30" r="5"/><circle cx="120" cy="170" r="8"/><circle cx="300" cy="170" r="11"/><circle cx="230" cy="150" r="5"/><circle cx="80" cy="280" r="6"/><circle cx="190" cy="250" r="10"/><circle cx="260" cy="340" r="6"/><circle cx="360" cy="300" r="7"/><circle cx="150" cy="370" r="5"/></g>
+    <g opacity=".6"><circle cx="300" cy="170" r="22"/><circle cx="190" cy="250" r="20"/><circle cx="260" cy="70" r="18"/></g>
+  </svg>
+  <div class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Primeira série · E-book</div>
   <div class="title">IA no<br>Negócio<span class="dot">.</span></div>
   <div class="sub">O manual prático do empreendedor</div>
   <div class="rule"></div>
   <div class="author">Leandro Campos<span class="dot">.</span></div>
   <div class="role">Fundador da Nvoip · 15 anos empreendendo</div>
+  <svg class="lc" viewBox="0 0 64 64" fill="none" stroke="#0A0A0C"><rect x="2" y="2" width="60" height="60" rx="14" stroke-width="2.5"/><text x="32" y="41" text-anchor="middle" fill="#0A0A0C" stroke="none">LC</text></svg>
 </div>
 </body>
 </html>

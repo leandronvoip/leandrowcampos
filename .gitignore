@@ -26,3 +26,6 @@ pnpm-debug.log*
 # ambiente local
 .env.*
 !.env.example
+
+# Material do e-book fica no repositório privado leandrowcampos-ebook
+ebook/

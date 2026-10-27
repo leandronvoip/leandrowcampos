@@ -1,6 +1,6 @@
 # leandrowcampos.com.br
 
-Site da marca pessoal **Leandro W. Campos**: e-books sobre IA aplicada a pequenas e médias empresas.
+Site da marca pessoal **Leandro Campos**: o conhecimento de um empreendedor de quinze anos (empreendedorismo, tecnologia, marketing, financeiro, processos e gestão de pessoas) em conteúdo, cursos e consultoria. A IA é o tema da primeira série de e-books, não a base da marca. O domínio mantém o W (de Wesley, segundo nome) porque `leandrocampos.com.br` não estava livre; o nome exibido no site é sempre "Leandro Campos".
 Astro + Tailwind, 100% estático, hospedado na Cloudflare Pages. Checkout e área de membros ficam na Hotmart; captura de leads vai para um webhook do n8n.
 
 ## Rodar localmente
@@ -20,7 +20,7 @@ Requer Node 22.23+ (ver `engines` no `package.json`).
 
 | O quê | Onde |
 |---|---|
-| Nome, bio, links sociais, números da Nvoip, datas do lançamento | `src/config/site.ts` |
+| Nome, bio, posicionamento (`description`, `tagline`), frentes (`topics`), números da Nvoip, isca gratuita (`leadMagnet`), datas do lançamento | `src/config/site.ts` |
 | Cores, fontes, raio e sombra (tokens) e utilitários do sistema visual | `src/styles/global.css` (bloco `@theme`) |
 | E-books (um arquivo por produto; o nome do arquivo é o slug) | `src/content/ebooks/*.mdx` |
 | Posts do blog | `src/content/posts/*.md` |
@@ -51,6 +51,8 @@ Tipografia pelo Google Fonts (`display=swap`, link em `src/layouts/Base.astro`):
 Utilitários do sistema (definidos em `global.css`): `display-1/2/3` (títulos de tela), `eyebrow` (rótulo em versalete), `lead`, `measure`, `section-y`, `card`, `card-elevated`, `glow` (brilho radial atrás do herói), `reveal` (aparece na rolagem; `data-reveal-delay="120"` atrasa em ms) e a seção `pinned` (`src/components/Pinned.astro`).
 
 Componentes de marca: `Logo.astro` (monograma inline + nome), `BookMockup.astro` (livro em CSS; usa a capa real quando ela existir), `Portrait.astro` (retrato vertical com vinheta). Os desenhos originais do logotipo ficam em `brand/logo/`.
+
+Ícones: `Icon.astro` guarda um mapa de nomes para desenhos de linha (estilo Lucide/Feather, 24px, traço de 1.5px, `currentColor`), sem biblioteca. Uso: `<Icon name="message" />`. Ficam em `text-muted` e só ganham o dourado no primeiro item de uma lista ou no hover (`group-hover:text-accent`). Para um ícone novo, acrescente a entrada no mapa `paths`. Cada agente e cada "dor" do e-book declara o seu `icon` no frontmatter; as frentes do conteúdo declaram em `site.topics`.
 
 ### Fotos e capa
 
@@ -128,7 +130,7 @@ src/
   content/ebooks/         um .mdx por e-book
   content/posts/          um .md por post
   layouts/Base.astro      <head>, SEO, OG, analytics, header/footer
-  components/             LeadForm, Button, Section, Pinned, Logo, BookMockup, Portrait, FAQ, cards...
+  components/             LeadForm, Button, Section, Pinned, Logo, Icon, BookMockup, Portrait, FAQ, cards...
   lib/assets.ts           existência de arquivos em public/ (capa e retrato reais)
   lib/tracking.ts         UTMs, cookie, eventos
   lib/format.ts           moeda e datas em pt-BR

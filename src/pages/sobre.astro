@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
 import Portrait from '../components/Portrait.astro';
+import Icon from '../components/Icon.astro';
 import { site } from '../config/site';
 
 const schema = {
@@ -17,7 +18,7 @@ const schema = {
 };
 ---
 
-<Base title="Sobre" description={`Quem é ${site.author.name}: ${site.author.role.toLowerCase()} e autor de e-books sobre IA aplicada a pequenas e médias empresas.`} schema={schema}>
+<Base title="Sobre" description={`Quem é ${site.author.name}: ${site.author.role.toLowerCase()}, empreendedor há quinze anos, e o que ele ensina sobre negócios, tecnologia e IA.`} schema={schema}>
   <section class="glow overflow-hidden">
     <div class="container-site grid items-center gap-12 pb-16 pt-14 sm:pt-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:pb-28 lg:pt-28">
       <Portrait priority class="mx-auto w-full max-w-sm" ratio="3 / 4" />
@@ -34,18 +35,31 @@ const schema = {
 
   <Section narrow alt>
     <div class="prose-site reveal">
-      <h2>[PLACEHOLDER] A história</h2>
-      <p>[PLACEHOLDER] Como a Nvoip nasceu, o que foi construído e o que isso tem a ver com IA hoje. Três a cinco parágrafos em primeira pessoa.</p>
-      <h2>[PLACEHOLDER] Por que escrevo sobre IA para PMEs</h2>
-      <p>[PLACEHOLDER] A frustração com o excesso de hype, a experiência de aplicar na própria empresa e o compromisso com o que funciona na prática.</p>
-      <h2>[PLACEHOLDER] O que você encontra aqui</h2>
-      <ul>
-        <li>[PLACEHOLDER] E-books práticos, com passo a passo e exemplos reais.</li>
-        <li>[PLACEHOLDER] Blog e newsletter com o que rodou (e o que não rodou) na Nvoip.</li>
-        <li>[PLACEHOLDER] Conteúdo gratuito para começar hoje.</li>
-      </ul>
+      <h2>Quinze anos empreendendo</h2>
+      <p>Empreendo em tecnologia há quinze anos. Comecei em hardware, redes e consultoria; nos últimos oito anos estou à frente da Nvoip, uma startup 100% digital de telefonia e comunicação em nuvem, com mais de dez anos de operação e mais de 50 mil clientes atendidos. No caminho, captei mais de R$ 3 milhões em duas rodadas com três fundos de venture capital, desenvolvi sistemas complexos de telecom e atendimento, montei e coordenei projetos de tecnologia e fui mentor do Inovativa Brasil por quatro anos.</p>
+
+      <h2>O ano em que a IA mudou a minha empresa</h2>
+      <p>Uso IA há cerca de dois anos, mas 2026 foi o ano da virada. A Nvoip passou de 70 para 10 pessoas no time, com IA e automação de processos assumindo atendimento, cobrança, análise de contas e parte do desenvolvimento, sem perder clientes. As pessoas que ficaram cuidam do que exige julgamento.</p>
+      <p>Para mim, a IA tirou as correntes que me prendiam a determinados times e profissionais e que atrasavam a velocidade do meu pensamento em relação à velocidade de desenvolvimento da própria empresa. Hoje vivo o momento mais pleno da minha carreira como empreendedor, e foi por isso que decidi compartilhar o que aprendi.</p>
+
+      <h2>Por que escrevo</h2>
+      <p><em>IA no Negócio</em> é o meu primeiro e-book, depois de quinze anos empreendendo. A IA abre a série porque foi o que mais mudou a minha operação, mas o que eu passo adiante, em conteúdo, cursos e consultoria, é o conjunto: empreendedorismo, tecnologia, negócios, marketing, financeiro, processos e gestão de pessoas. Tudo com o critério de quem precisa que funcione na segunda-feira.</p>
     </div>
-    <div class="reveal mt-12 flex flex-col gap-3 sm:flex-row">
+  </Section>
+
+  <Section eyebrow="O que você encontra aqui" title="Seis frentes. Uma empresa inteira.">
+    <ul class="mx-auto grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {site.topics.map((t, i) => (
+        <li class="card reveal group p-7" data-reveal-delay={(i % 3) * 90}>
+          <span class:list={['transition-colors duration-300', t.icon === 'sparkles' ? 'text-accent' : 'text-muted group-hover:text-accent']}>
+            <Icon name={t.icon} />
+          </span>
+          <h3 class="mt-5 text-xl">{t.title}</h3>
+          <p class="mt-3 text-muted">{t.text}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="reveal mt-14 flex flex-col justify-center gap-3 sm:flex-row">
       <Button href="/ebooks">Ver os e-books</Button>
       <Button href="/newsletter" variant="secondary">Assinar a newsletter</Button>
     </div>

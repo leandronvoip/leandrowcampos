@@ -7,6 +7,7 @@ import Portrait from '../components/Portrait.astro';
 import BookMockup from '../components/BookMockup.astro';
 import Pinned from '../components/Pinned.astro';
 import AgentCard from '../components/AgentCard.astro';
+import Icon from '../components/Icon.astro';
 import { site } from '../config/site';
 import { brl } from '../lib/format';
 import { resolveCover } from '../lib/assets';
@@ -16,40 +17,43 @@ const featured =
   (await getCollection('ebooks', (e) => !e.data.draft))[0];
 const cover = featured ? resolveCover(featured.id, featured.data.cover) : null;
 
-// Três provas, uma por tela.
+// Três provas, uma por tela. Fatos confirmados por Leandro em 26/10/2026.
 const proofs = [
   {
-    eyebrow: 'Empresa real',
-    title: 'Fundador de uma empresa de tecnologia em operação.',
-    text: `A ${site.company.name} é uma plataforma de telefonia e comunicação em nuvem que paga folha todo mês há mais de dez anos. O que está nestes livros foi testado lá, não em slide.`,
+    icon: 'sparkles',
+    eyebrow: 'O dado mais forte',
+    title: 'De 70 para 10 pessoas no time, com IA e automação de processos.',
+    text: `A ${site.company.name}, plataforma de telefonia e comunicação em nuvem com mais de dez anos de operação e mais de 50 mil clientes atendidos, hoje roda com um time sete vezes menor. Não foi corte: foi IA e automação assumindo atendimento, cobrança, análise de contas e parte do desenvolvimento.`,
     link: { href: site.company.url, label: `Conheça a ${site.company.name}`, external: true },
     stats: site.company.proof,
   },
   {
-    eyebrow: 'Todos os dias',
-    title: 'IA no atendimento, nas vendas e no financeiro. Todos os dias.',
-    text: 'Não é laboratório nem demonstração. São agentes respondendo cliente, cobrando, conciliando e resumindo a semana, dentro de uma operação que não pode parar.',
+    icon: 'building',
+    eyebrow: 'Empresa real',
+    title: 'Fundador de uma empresa de tecnologia em operação, não de um curso.',
+    text: 'Captou mais de R$ 3 milhões em duas rodadas com três fundos de venture capital. Desenvolveu sistemas complexos de telecom e atendimento, montou e coordenou projetos de tecnologia. Mentor do Inovativa Brasil por quatro anos.',
   },
   {
-    eyebrow: 'Para quem decide',
-    title: 'Escrito para quem quer resultado, não demonstração.',
-    text: 'Frases curtas, passo a passo e o critério de quem precisa que funcione na segunda-feira. Sem hype, sem jargão e sem promessa que a sua empresa não consegue cumprir.',
+    icon: 'flag',
+    eyebrow: 'Trajetória',
+    title: 'Quinze anos empreendendo, oito à frente de uma empresa 100% digital.',
+    text: 'Antes da Nvoip, hardware, redes e consultoria. O que está aqui é o critério de quem precisa que funcione na segunda-feira: frases curtas, passo a passo, sem jargão e sem promessa que a sua empresa não consegue cumprir.',
   },
 ];
 ---
 
-<Base title={`${site.name} — IA aplicada a pequenas e médias empresas`} description={site.description}>
+<Base title={`${site.name} | ${site.tagline}`} description={site.description}>
   <!-- 1. Herói: afirmação e retrato -->
   <section class="glow overflow-hidden">
     <div class="container-site grid items-center gap-12 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:pb-24 lg:pt-28">
       <div>
         <p class="eyebrow mb-7">{site.author.name} · {site.author.role}</p>
-        <h1 class="display-1">IA aplicada à sua empresa, por quem construiu uma de verdade.</h1>
+        <h1 class="display-1">Quinze anos empreendendo. O que funciona, sem enfeite.</h1>
         <p class="lead measure mt-8">
-          E-books práticos para colocar inteligência artificial para trabalhar no atendimento, nas vendas e na operação da sua empresa.
+          Conteúdo, cursos e consultoria sobre negócios, tecnologia e gestão, por quem toca uma empresa todos os dias. Primeira série: IA no negócio.
         </p>
         <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Button href="/gratis" size="lg">Baixar o guia grátis</Button>
+          <Button href="/gratis" size="lg">{site.leadMagnet.cta}</Button>
           <Button href="/ebooks" variant="secondary" size="lg">Ver os e-books</Button>
         </div>
       </div>
@@ -62,6 +66,9 @@ const proofs = [
     <section id={i === 0 ? 'prova' : undefined} class:list={['section-y', i % 2 === 0 && 'border-t border-line']}>
       <div class="container-site">
         <div class="reveal mx-auto max-w-4xl text-center">
+          <span class:list={['mx-auto mb-6 flex size-12 items-center justify-center rounded-full border border-line', i === 0 ? 'text-accent' : 'text-muted']}>
+            <Icon name={p.icon} />
+          </span>
           <p class="eyebrow mb-6">{String(i + 1).padStart(2, '0')} · {p.eyebrow}</p>
           <h2 class="display-2">{p.title}</h2>
           <p class="lead measure mx-auto mt-8">{p.text}</p>
@@ -75,7 +82,7 @@ const proofs = [
           <dl class="reveal mx-auto mt-16 grid max-w-3xl gap-8 border-t border-line pt-10 sm:grid-cols-3" data-reveal-delay="150">
             {p.stats.map((s) => (
               <div class="text-center">
-                <dd class:list={['font-display font-semibold tracking-tight', s.value.includes('PLACEHOLDER') ? 'text-lg text-dim' : 'text-4xl sm:text-5xl']}>{s.value}</dd>
+                <dd class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">{s.value}</dd>
                 <dt class="mt-2 text-sm text-muted">{s.label}</dt>
               </div>
             ))}
@@ -85,16 +92,29 @@ const proofs = [
     </section>
   ))}
 
-  <!-- 3. Seis agentes, seis áreas (pinned) -->
-  {featured && featured.data.agents.length > 0 && (
-    <Pinned id="agentes" alt eyebrow="O que você monta" title="Seis agentes. Seis áreas." lead="Cada um cuida de uma parte da empresa e devolve tempo para quem decide. Você monta um por vez, sem equipe técnica.">
-      {featured.data.agents.map((a, i) => (
-        <AgentCard index={i + 1} name={a.name} text={a.what} area={a.area} delay={(i % 3) * 90} />
-      ))}
-    </Pinned>
-  )}
+  <!-- 3. O que você encontra aqui: as frentes do conteúdo -->
+  <section id="frentes" class="section-y bg-surface">
+    <div class="container-site">
+      <header class="reveal mx-auto mb-14 max-w-3xl text-center sm:mb-20">
+        <p class="eyebrow mb-5">O que você encontra aqui</p>
+        <h2 class="display-2">Seis frentes. Uma empresa inteira.</h2>
+        <p class="lead measure mx-auto mt-6">O que aprendi tocando uma empresa por quinze anos, organizado em conteúdo, cursos e consultoria. A IA entra em todas elas e abre a série.</p>
+      </header>
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {site.topics.map((t, i) => (
+          <li class="card reveal group p-7 sm:p-8" data-reveal-delay={(i % 3) * 90}>
+            <span class:list={['transition-colors duration-300', t.icon === 'sparkles' ? 'text-accent' : 'text-muted group-hover:text-accent']}>
+              <Icon name={t.icon} />
+            </span>
+            <h3 class="mt-5 text-xl sm:text-2xl">{t.title}</h3>
+            <p class="mt-3 text-muted">{t.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 
-  <!-- 4. O e-book em destaque -->
+  <!-- 4. O e-book em destaque: primeira série -->
   {featured && (
     <section id="ebook" class="glow section-y overflow-hidden border-t border-line">
       <div class="container-site">
@@ -103,11 +123,11 @@ const proofs = [
             <BookMockup title={featured.data.title} subtitle={featured.data.subtitle} cover={cover} coverAlt={featured.data.coverAlt} width="min(20rem, 70vw)" class="lg:mr-0" />
           </a>
           <div class="reveal" data-reveal-delay="120">
-            <p class="eyebrow mb-6">Lançamento · e-book</p>
+            <p class="eyebrow mb-6">Primeira série · IA no negócio</p>
             <h2 class="display-2">{featured.data.title}</h2>
             <p class="lead measure mt-6">{featured.data.subtitle}</p>
             <ul class="mt-8 space-y-3 border-t border-line pt-8">
-              {featured.data.chapters.slice(0, 3).map((c) => (
+              {featured.data.chapters.slice(1, 4).map((c) => (
                 <li class="flex gap-4 text-ink/90"><span aria-hidden="true" class="mt-0.5 text-accent">—</span><span>{c.result}</span></li>
               ))}
             </ul>
@@ -126,28 +146,37 @@ const proofs = [
     </section>
   )}
 
-  <!-- 5. A isca gratuita -->
-  <section id="gratis" class="section-y bg-surface">
+  <!-- 5. Seis agentes para começar (pinned) -->
+  {featured && featured.data.agents.length > 0 && (
+    <Pinned id="agentes" alt eyebrow="O que você monta" title="Seis agentes para começar." lead="Os seis que mais devolvem tempo. O manual cobre as dez áreas da empresa; você monta um por vez, sem equipe técnica.">
+      {featured.data.agents.map((a, i) => (
+        <AgentCard index={i + 1} name={a.name} text={a.what} area={a.area} icon={a.icon} highlight={i === 0} delay={(i % 3) * 90} />
+      ))}
+    </Pinned>
+  )}
+
+  <!-- 6. A isca gratuita -->
+  <section id="gratis" class="section-y border-t border-line">
     <div class="container-site">
       <div class="mx-auto grid max-w-5xl items-start gap-12 lg:grid-cols-2 lg:gap-20">
         <div class="reveal">
           <p class="eyebrow mb-6">Comece de graça</p>
-          <h2 class="display-2">[PLACEHOLDER] Cinco automações com IA para esta semana.</h2>
-          <p class="lead measure-sm mt-6">[PLACEHOLDER] Um PDF curto com cinco automações que qualquer PME consegue montar em uma tarde. Chega no seu e-mail em minutos.</p>
+          <h2 class="display-2">{site.leadMagnet.title}.</h2>
+          <p class="lead measure-sm mt-6">{site.leadMagnet.description} Chega no seu e-mail em minutos.</p>
         </div>
         <div class="card-elevated reveal p-7 sm:p-9" data-reveal-delay="120">
-          <LeadForm origem="home-isca" cta="Quero o guia grátis" />
+          <LeadForm origem="home-isca" cta={site.leadMagnet.cta} />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 6. Fecho -->
-  <section class="section-y border-t border-line">
+  <!-- 7. Fecho -->
+  <section class="section-y border-t border-line bg-surface">
     <div class="container-site">
       <p class="reveal display-2 mx-auto max-w-4xl text-center">Menos promessa. Mais operação.</p>
       <p class="reveal mx-auto mt-8 max-w-xl text-center text-muted" data-reveal-delay="120">
-        Se a IA não devolver tempo ou dinheiro para a sua empresa, ela não está pronta. Aqui você aprende a pedir isso dela.
+        Tudo o que está aqui foi testado numa empresa que paga folha todo mês. Se não devolver tempo ou dinheiro, não entra.
       </p>
     </div>
   </section>

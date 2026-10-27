@@ -13,6 +13,8 @@
  *   enviado_em         // ISO 8601
  * }
  */
+import { site } from '../config/site';
+
 export interface Props {
   /** Identificador da captura, vai no campo `origem`. */
   origem: string;
@@ -109,7 +111,7 @@ const id = `lead-${origem.replace(/[^a-z0-9]/gi, '-')}-${Math.random().toString(
     <label class="flex items-start gap-2">
       <input type="checkbox" name="consent_email" required class="checkbox" />
       <span>
-        Aceito receber e-mails com conteúdos e ofertas de {`Leandro W. Campos`}, conforme a
+        Aceito receber e-mails com conteúdos e ofertas de {site.name}, conforme a
         <a href="/privacidade" class="text-ink underline decoration-ink/40">política de privacidade</a>.
       </span>
     </label>

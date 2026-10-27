@@ -1,18 +1,17 @@
 ---
 title: "IA no Negócio: o manual prático do empreendedor"
-subtitle: "Como colocar inteligência artificial para trabalhar na sua pequena ou média empresa, sem equipe técnica e sem hype."
-excerpt: "[PLACEHOLDER] O guia direto para usar IA no atendimento, nas vendas e na operação da sua empresa, com exemplos reais."
+subtitle: "Os prompts e agentes que uso para operar minha empresa, prontos para a sua."
+excerpt: "Crescer sem contratar: os agentes de IA que um empreendedor usa todos os dias nas 10 áreas da empresa, com instrução completa para você copiar."
 cover: "/images/capa-placeholder.svg"
 coverAlt: "Capa do e-book IA no Negócio: o manual prático do empreendedor"
 price: 47
 originalPrice: 97
-installments: "ou 5x de R$ 9,88 no cartão"
+installments: "ou 3x de R$ 16,77 no cartão"
 pixDiscountText: "À vista no Pix ou no cartão, acesso imediato"
-# [PLACEHOLDER] Trocar pela URL real do checkout da Hotmart (produto 8764405).
+# [PLACEHOLDER] Trocar pela URL real do checkout da Hotmart (produto 8764405), disponível após finalizar o cadastro.
 checkoutUrl: "https://pay.hotmart.com/PLACEHOLDER"
 guaranteeDays: 15
-# [PLACEHOLDER] URL de embed do vídeo de vendas (YouTube: https://www.youtube.com/embed/ID). Apague a linha para esconder a seção.
-videoUrl: "https://www.youtube.com/embed/PLACEHOLDER"
+# Sem `videoUrl`: a seção de vídeo fica oculta até o vídeo existir (YouTube: https://www.youtube.com/embed/ID).
 featured: true
 draft: false
 publishedAt: 2026-11-10
@@ -20,107 +19,135 @@ cartOpens: 2026-11-10T09:00:00-03:00
 cartCloses: 2026-11-12T23:59:00-03:00
 
 promise:
-  headline: "[PLACEHOLDER] Coloque a IA para trabalhar no seu negócio em 7 dias, mesmo sem saber programar"
-  support: "[PLACEHOLDER] Um manual prático, escrito por quem usa IA todos os dias numa empresa real, para você aplicar no atendimento, nas vendas e na operação ainda esta semana."
+  headline: "Crescer sem contratar: coloque agentes de IA para trabalhar nas 10 áreas da sua empresa."
+  support: "Escrito por quem reduziu o time de 70 para 10 pessoas com IA, sem perder clientes. Em um fim de semana você monta seu primeiro agente; em um mês, a empresa inteira roda diferente. Sem programar, sem consultor."
   cta: "Quero o manual por R$ 47"
 
 pains:
-  - title: "[PLACEHOLDER] Você perde cliente enquanto responde devagar"
-    text: "[PLACEHOLDER] A mensagem chega às 21h, você responde às 9h e o cliente já fechou com o concorrente."
-  - title: "[PLACEHOLDER] Tarefas repetitivas comem o seu dia"
-    text: "[PLACEHOLDER] Orçamento, follow-up, relatório, cobrança. Sempre as mesmas tarefas e nunca sobra tempo para pensar no negócio."
-  - title: "[PLACEHOLDER] Você já testou IA e não saiu do lugar"
-    text: "[PLACEHOLDER] Abriu o ChatGPT, pediu umas coisas, achou legal e voltou para a planilha. Faltou método."
+  - title: "Você responde devagar e perde o cliente"
+    text: "A mensagem chega às 21h, você responde às 9h e o concorrente já fechou."
+    icon: clock
+  - title: "Contratar virou a única saída"
+    text: "Toda demanda nova vira uma vaga, e a folha cresce mais rápido que a receita."
+    icon: user-plus
+  - title: "Você já usou o ChatGPT e não mudou nada"
+    text: "Perguntar à IA não é contratar a IA. Faltou instrução, contexto e rotina."
+    icon: refresh
 
 chapters:
-  - title: "[PLACEHOLDER] Capítulo 1 — O mapa da IA para PMEs"
-    result: "[PLACEHOLDER] Você sai sabendo exatamente onde a IA dá retorno no seu negócio e onde é perda de tempo."
-  - title: "[PLACEHOLDER] Capítulo 2 — Atendimento que não dorme"
-    result: "[PLACEHOLDER] Um assistente respondendo dúvidas frequentes no WhatsApp e no site, com o seu tom de voz."
-  - title: "[PLACEHOLDER] Capítulo 3 — Vendas com follow-up automático"
-    result: "[PLACEHOLDER] Nenhum lead esquecido: sequência de contato montada e rodando."
-  - title: "[PLACEHOLDER] Capítulo 4 — Operação e financeiro"
-    result: "[PLACEHOLDER] Relatórios, cobranças e conciliação em minutos, não em tardes."
-  - title: "[PLACEHOLDER] Capítulo 5 — Plano de 7 dias"
-    result: "[PLACEHOLDER] Um checklist diário para implementar tudo sem travar."
+  - title: "Por que um empreendedor escreveu isto"
+    result: "Os números da Nvoip e o que o livro não é."
+  - title: "Equipe enxuta: o que a IA faz no lugar de uma contratação"
+    result: "Uma tabela função × IA × humano × custo evitado, para decidir antes de abrir a vaga."
+  - title: "IA como funcionário, não como buscador"
+    result: "Os cinco elementos de uma instrução que funciona: papel, contexto, regras, formato e revisão."
+  - title: "Monte seu primeiro agente em 20 minutos"
+    result: "Passo a passo em ChatGPT, Gemini e Claude, com o seu primeiro agente rodando."
+  - title: "Atendimento"
+    result: "Triagem, primeira resposta, resumo da conversa e passagem para um humano."
+  - title: "Vendas"
+    result: "Qualificação, proposta, follow-up e resposta a objeções."
+  - title: "Marketing e conteúdo"
+    result: "Calendário, roteiros, anúncios e reaproveitamento de um conteúdo em vários."
+  - title: "Financeiro: cobrança, caixa e fornecedores"
+    result: "Régua de cobrança, previsão de caixa e contestação de contas de fornecedor."
+  - title: "Contabilidade e auditoria"
+    result: "Conferir o contador, cruzar o extrato e fechar o mês sem surpresa."
+  - title: "Jurídico sem hora/homem"
+    result: "Contratos e termos rascunhados pela IA; o advogado só valida."
+  - title: "Pessoas"
+    result: "Vaga, triagem de currículos, onboarding e feedback."
+  - title: "Desenvolvimento e produto"
+    result: "O que pedir, os custos invisíveis de nuvem e CI, e QA e UX para o produto não virar Frankenstein."
+  - title: "O dono"
+    result: "Reuniões resumidas, decisões preparadas e uma segunda opinião antes de agir."
+  - title: "A semana com os agentes; limites, dados e LGPD"
+    result: "A rotina semanal com os agentes rodando e o que não entregar à IA."
 
 agents:
-  # Seis agentes, seis áreas. Os nomes e descrições são provisórios até o manual fechar.
-  - name: "[PLACEHOLDER] Agente de Atendimento"
+  - name: "Atendente de WhatsApp"
     area: "Atendimento"
-    what: "[PLACEHOLDER] Responde dúvidas, qualifica e encaminha para um humano quando precisa."
-  - name: "[PLACEHOLDER] Agente de Vendas"
+    icon: message
+    what: "Responde em segundos, tira dúvidas pela base de conhecimento, resume a conversa e passa para um humano quando precisa."
+  - name: "Assistente comercial"
     area: "Vendas"
-    what: "[PLACEHOLDER] Faz follow-up, manda proposta e avisa você quando o cliente esquenta."
-  - name: "[PLACEHOLDER] Agente Financeiro"
-    area: "Financeiro"
-    what: "[PLACEHOLDER] Lembra cobranças, concilia pagamentos e resume o caixa da semana."
-  - name: "[PLACEHOLDER] Agente de Conteúdo"
+    icon: handshake
+    what: "Qualifica o lead, escreve a proposta, faz o follow-up de quem sumiu e responde objeções."
+  - name: "Redator da marca"
     area: "Marketing"
-    what: "[PLACEHOLDER] Transforma uma ideia em post, e-mail e roteiro, no seu tom."
-  - name: "[PLACEHOLDER] Agente de Operação"
-    area: "Operação"
-    what: "[PLACEHOLDER] Organiza pedidos, agenda e estoque e avisa antes de algo travar."
-  - name: "[PLACEHOLDER] Agente de Gestão"
+    icon: pen
+    what: "Transforma um áudio seu em post, reel, e-mail e anúncio, no seu tom."
+  - name: "Analista financeiro"
+    area: "Financeiro"
+    icon: coins
+    what: "Roda a régua de cobrança, lê contratos e contas de fornecedor e aponta o que contestar."
+  - name: "Parceiro de RH"
+    area: "Pessoas"
+    icon: users
+    what: "Escreve a vaga, tria currículos, monta onboarding e prepara feedback."
+  - name: "Conselheiro do dono"
     area: "Gestão"
-    what: "[PLACEHOLDER] Reúne os números da semana e aponta onde você precisa decidir."
+    icon: compass
+    what: "Resume reuniões, distribui tarefas e dá a segunda opinião antes de uma decisão."
 
 caseStudy:
-  title: "[PLACEHOLDER] Como aplicamos isso na Nvoip"
-  text: "[PLACEHOLDER] Descrever o caso real com contexto, o que foi feito e em quanto tempo. Números confirmados antes de publicar."
+  title: "Como fiz isso na Nvoip"
+  text: "A Nvoip atende mais de 50 mil clientes com uma equipe que passou de 70 para 10 pessoas. Não foi corte: foi IA e automação assumindo atendimento, cobrança, análise de contas e parte do desenvolvimento, com as pessoas cuidando do que exige julgamento. Cada capítulo mostra um pedaço desse caminho, com o prompt e a instrução que usamos."
   metrics:
-    - value: "[PLACEHOLDER] -40%"
-      label: "tempo de resposta no suporte"
-    - value: "[PLACEHOLDER] 3x"
-      label: "mais leads respondidos no mesmo dia"
-    - value: "[PLACEHOLDER] 12 h"
-      label: "economizadas por semana na operação"
+    - value: "70 → 10"
+      label: "pessoas no time"
+    - value: "50 mil+"
+      label: "clientes atendidos"
+    - value: "10+"
+      label: "anos de operação"
   disclaimer: "Resultados de um caso específico. Não são garantia de resultado para o seu negócio."
 
 forWho:
-  - "[PLACEHOLDER] Dono de pequena ou média empresa que quer resultado prático com IA"
-  - "[PLACEHOLDER] Gestor que precisa fazer mais com o mesmo time"
-  - "[PLACEHOLDER] Quem já tentou usar IA e não conseguiu transformar em rotina"
+  - "Dono ou sócio de pequena ou média empresa que precisa crescer sem inchar a folha"
+  - "Gestor que quer fazer mais com o mesmo time"
+  - "Quem já usa o ChatGPT no básico e quer resultado operacional"
 notForWho:
-  - "[PLACEHOLDER] Quem procura curso de programação ou de engenharia de prompt avançada"
-  - "[PLACEHOLDER] Quem espera resultado sem implementar nada"
-  - "[PLACEHOLDER] Grandes empresas com time de dados dedicado"
+  - "Quem procura curso de programação ou engenharia de prompt avançada"
+  - "Quem espera resultado sem implementar nada"
+  - "Grandes empresas com time de dados dedicado"
 
 bonuses:
-  - title: "[PLACEHOLDER] Biblioteca de prompts para PMEs"
-    description: "[PLACEHOLDER] 50 prompts prontos para atendimento, vendas e gestão."
-    value: 97
-  - title: "[PLACEHOLDER] Planilha de priorização"
-    description: "[PLACEHOLDER] Decida em 10 minutos qual processo automatizar primeiro."
+  - title: "Biblioteca de prompts copiável"
+    description: "Todos os prompts do manual em uma página privada, com botão de copiar."
     value: 47
-  - title: "[PLACEHOLDER] Atualizações por 12 meses"
-    description: "[PLACEHOLDER] Toda nova versão do manual chega grátis na sua área de membros."
+  - title: "Os 6 agentes prontos para importar"
+    description: "Instruções completas para ChatGPT, Gemini e Claude."
+    value: 97
+  - title: "Planilha de ferramentas de IA para PME"
+    description: "40 ferramentas, com preço, para que serve e nota do autor."
+    value: 27
+  - title: "Aula ao vivo de implantação"
+    description: "60 minutos montando um agente junto. Fica gravada depois."
+    value: 97
+  - title: "Atualizações por 12 meses"
+    description: "Toda versão nova chega grátis na área de membros."
     value: 0
 
-testimonials:
-  - name: "[PLACEHOLDER] Nome Sobrenome"
-    role: "[PLACEHOLDER] Dona de clínica, São Paulo"
-    text: "[PLACEHOLDER] Depoimento real, com autorização, de quem aplicou o conteúdo."
-  - name: "[PLACEHOLDER] Nome Sobrenome"
-    role: "[PLACEHOLDER] Sócio de agência, Belo Horizonte"
-    text: "[PLACEHOLDER] Depoimento real, com autorização, de quem aplicou o conteúdo."
-  - name: "[PLACEHOLDER] Nome Sobrenome"
-    role: "[PLACEHOLDER] Fundador de e-commerce, Curitiba"
-    text: "[PLACEHOLDER] Depoimento real, com autorização, de quem aplicou o conteúdo."
+# Vazio de propósito: a seção só aparece quando houver depoimentos reais, com autorização.
+testimonials: []
 
 faq:
   - q: "Preciso saber programar?"
-    a: "[PLACEHOLDER] Não. O manual foi escrito para quem toca o negócio, não para desenvolvedores."
+    a: "Não. O manual foi escrito para quem toca o negócio. Todo agente vem com a instrução pronta para colar no ChatGPT, no Gemini ou no Claude."
+  - q: "Funciona no plano gratuito das ferramentas?"
+    a: "Sim para a maior parte; onde uma assinatura faz diferença, o manual diz qual e quanto custa."
   - q: "Como recebo o e-book?"
     a: "Logo após a confirmação do pagamento você recebe um e-mail da Hotmart com o acesso à área de membros, onde o PDF e os bônus ficam disponíveis."
   - q: "E se eu não gostar?"
     a: "Você tem 15 dias de garantia incondicional. Basta pedir o reembolso na própria Hotmart e o valor volta integralmente."
   - q: "Quais formas de pagamento?"
-    a: "Pix, cartão de crédito (à vista ou parcelado) e boleto, pela Hotmart."
+    a: "Pix e cartão de crédito, à vista ou em até 3x, pela Hotmart."
+  - q: "Recebo nota fiscal?"
+    a: "Sim, emitida em nome do MEI que publica o manual; peça pelo e-mail de contato informando CPF ou CNPJ."
   - q: "Serve para a minha área?"
-    a: "[PLACEHOLDER] Os exemplos cobrem serviços, comércio e indústria leve. O método é o mesmo; o que muda é o processo que você escolhe automatizar primeiro."
+    a: "Os exemplos vêm de uma empresa de tecnologia e atendimento, mas as dez áreas cobertas (atendimento, vendas, marketing, financeiro, contabilidade, jurídico, pessoas, desenvolvimento, gestão e rotina) existem em serviços, comércio e indústria leve. O que muda é por qual área você começa."
 ---
 
-{/* Conteúdo opcional em MDX. É renderizado logo após a seção "O que você recebe". */}
+{/* Renderizado logo após a seção "O que você recebe". */}
 
-[PLACEHOLDER] Texto complementar sobre o conteúdo do e-book: formato (PDF, número de páginas), como foi escrito, o que o diferencia de um curso genérico de IA.
+Este é o primeiro e-book de um empreendedor com quinze anos de estrada, escrito depois do ano em que a IA mudou a forma de operar a própria empresa. São catorze capítulos curtos em PDF, cada um terminando com um prompt ou uma instrução de agente pronta para colar no ChatGPT, no Gemini ou no Claude. Não é curso de IA nem teoria sobre o futuro do trabalho: é o que está rodando hoje na Nvoip, organizado para você repetir na sua empresa, uma área por vez.

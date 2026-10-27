@@ -36,7 +36,9 @@ const ebooks = defineCollection({
       support: z.string(),
       cta: z.string().default('Quero o e-book'),
     }),
-    pains: z.array(z.object({ title: z.string(), text: z.string() })).length(3),
+    pains: z
+      .array(z.object({ title: z.string(), text: z.string(), /** Nome do ícone em Icon.astro. */ icon: z.string().optional() }))
+      .length(3),
     chapters: z.array(z.object({ title: z.string(), result: z.string() })).min(1),
     agents: z.array(
       z.object({

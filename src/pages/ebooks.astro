@@ -4,23 +4,24 @@ import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import EbookCard from '../components/EbookCard.astro';
 import LeadForm from '../components/LeadForm.astro';
+import { site } from '../config/site';
 
 const ebooks = (await getCollection('ebooks', (e) => !e.data.draft)).sort(
   (a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
 ---
 
-<Base title="E-books" description="E-books práticos de IA aplicada a pequenas e médias empresas. Sem hype, com passo a passo.">
-  <Section eyebrow="Biblioteca" title="E-books." lead="Manuais práticos para colocar IA no atendimento, nas vendas e na operação da sua empresa." class="glow overflow-hidden">
+<Base title="E-books" description="Manuais práticos de um empreendedor com quinze anos de estrada. A linha começa por IA no negócio e vai cobrir gestão, tecnologia, marketing, financeiro e pessoas.">
+  <Section eyebrow="Biblioteca" title="E-books." lead="Manuais curtos, com passo a passo e o critério de quem toca uma empresa todos os dias. A linha começa pela IA no negócio, o tema que mais mudou a minha operação, e vai cobrir as outras frentes: empreendedorismo e gestão, tecnologia e produto, marketing e vendas, financeiro e processos, pessoas." class="glow overflow-hidden">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {ebooks.map((ebook, i) => <EbookCard ebook={ebook} delay={i * 100} />)}
     </div>
     {ebooks.length === 0 && <p class="text-center text-muted">Nenhum e-book publicado ainda.</p>}
   </Section>
 
-  <Section alt eyebrow="Ainda não decidiu?" title="Comece pelo guia gratuito." lead="Veja se o jeito de ensinar faz sentido para você antes de comprar qualquer coisa." narrow level={3}>
+  <Section alt eyebrow="Ainda não decidiu?" title="Comece pelas 12 tarefas grátis." lead={`${site.leadMagnet.title}: um PDF curto para ver se o jeito de ensinar faz sentido para você antes de comprar qualquer coisa.`} narrow level={3}>
     <div class="card-elevated reveal mx-auto max-w-lg p-7 sm:p-9">
-      <LeadForm origem="ebooks-isca" cta="Quero o guia grátis" compact />
+      <LeadForm origem="ebooks-isca" cta={site.leadMagnet.cta} compact />
     </div>
   </Section>
 </Base>

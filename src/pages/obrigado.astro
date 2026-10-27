@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
 import { site } from '../config/site';
+import { shortDate } from '../lib/format';
 ---
 
 <Base title="Obrigado" description="Inscrição confirmada." noindex>
@@ -10,7 +11,8 @@ import { site } from '../config/site';
       <p class="eyebrow mb-7">Inscrição recebida</p>
       <h1 class="display-2">Obrigado. Agora confira seu e-mail.</h1>
       <p class="lead mx-auto mt-8">
-        Em poucos minutos chega uma mensagem de <strong class="font-medium text-ink">{site.author.email}</strong>.
+        Em poucos minutos chega uma mensagem de <strong class="font-medium text-ink">{site.author.email}</strong>
+        <span data-only="gratis home-isca ebooks-isca"> com o PDF das 12 tarefas</span>.
         Se não aparecer, olhe a caixa de promoções ou o spam e marque como “não é spam”.
       </p>
       <p data-wa class="mt-4 hidden text-muted">Você também vai receber um “oi” no WhatsApp para confirmar o número.</p>
@@ -18,8 +20,8 @@ import { site } from '../config/site';
       <div class="card reveal mt-14 p-7 text-left sm:p-9" data-reveal-delay="180">
         <h2 class="text-xl sm:text-2xl">Enquanto espera</h2>
         <ul class="mt-5 space-y-4 text-muted">
-          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/blog" class="text-ink no-underline hover:text-accent">Leia o blog</a>: artigos curtos sobre IA no dia a dia da empresa.</span></li>
-          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/lancamento" class="text-ink no-underline hover:text-accent">Veja o lançamento</a>: o e-book abre carrinho de 10 a 12 de novembro.</span></li>
+          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/sobre" class="text-ink no-underline hover:text-accent">Conheça a história</a>: quinze anos empreendendo e o ano em que a IA mudou a empresa.</span></li>
+          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/lancamento" class="text-ink no-underline hover:text-accent">Veja o lançamento</a>: o e-book abre carrinho de {shortDate(site.launch.cartOpens)} a {shortDate(site.launch.cartCloses)}.</span></li>
           <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href={site.social.linkedin} rel="noopener" target="_blank" class="text-ink no-underline hover:text-accent">Siga no LinkedIn</a> para acompanhar os bastidores.</span></li>
         </ul>
       </div>
@@ -28,7 +30,13 @@ import { site } from '../config/site';
   </section>
 
   <script>
+    // Ajusta a mensagem pela origem do formulário (?origem=) e mostra o aviso do WhatsApp (?wa=1).
     const params = new URLSearchParams(location.search);
     if (params.get('wa') === '1') document.querySelector('[data-wa]')?.classList.remove('hidden');
+    const origem = params.get('origem') ?? '';
+    document.querySelectorAll<HTMLElement>('[data-only]').forEach((el) => {
+      const allowed = (el.dataset.only ?? '').split(' ');
+      if (!allowed.includes(origem)) el.remove();
+    });
   </script>
 </Base>

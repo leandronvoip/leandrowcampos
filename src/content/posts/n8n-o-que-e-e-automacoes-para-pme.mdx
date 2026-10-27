@@ -1,0 +1,444 @@
+---
+title: "n8n: o que é, para que serve e 7 automações para PME"
+description: "n8n o que é, quanto custa e 7 automações que um dono de PME monta sem programar: lead do site no WhatsApp, lembrete de boleto por SMS, follow-up de orçamento e mais, com JSON para importar."
+publishedAt: 2026-10-27T17:00:00-03:00
+tags: ["n8n", "automação", "tecnologia", "whatsapp"]
+draft: false
+---
+
+n8n é uma ferramenta de automação em que você liga caixinhas numa tela: um gatilho (chegou um lead, deu 9h, venceu um boleto), uma ou mais ações (consultar planilha, perguntar à IA, decidir por regra) e uma saída (mandar WhatsApp, SMS, e-mail, gravar no CRM). Cada caixinha é um nó, cada desenho é um fluxo, e o n8n executa o fluxo sozinho, sem ninguém clicar. Ele pode ser usado na nuvem da própria n8n ou instalado num servidor seu.
+
+Eu uso n8n e ferramentas parecidas há anos na Nvoip, a empresa que fundei, e elas são parte do que permitiu reduzir o time de 70 para 10 pessoas sem perder clientes: as mensagens de rotina, os lembretes, os resumos e as conferências rodam em fluxos, não em pessoas. Mas também já vi n8n virar dívida técnica: fluxo que ninguém sabe mexer, parando em silêncio num feriado. Vou falar dos dois lados.
+
+Quase todo conteúdo sobre n8n em português fala para programador. Este artigo fala para o dono de empresa de 2 a 50 pessoas: o que é, quanto custa de verdade, quando basta e quando não, e sete automações que fazem sentido numa PME, descritas nó a nó. Duas delas vêm com o JSON pronto para importar.
+
+Para os canais, uso a Nvoip, que fundei e recomendo: a [API de comunicação](https://www.nvoip.com.br/api/) manda WhatsApp, SMS e ligação com o mesmo token, e há uma [página de integração com n8n](https://www.nvoip.com.br/integracoes/automacao/n8n/) com o passo a passo da credencial. Os fluxos abaixo usam essa API pelo nó HTTP Request, que é o nó mais útil do n8n e o único que você precisa aprender bem.
+
+## n8n: o que é, em termos de dono de empresa
+
+Pense no n8n como um funcionário que só sabe seguir fluxograma, mas segue 24 horas por dia, sem errar o passo e sem esquecer. Você desenha o fluxograma uma vez; ele executa toda vez que o gatilho acontece.
+
+Três conceitos bastam:
+
+- Nó: uma caixinha que faz uma coisa. Há nós prontos para centenas de ferramentas (Google Sheets, Gmail, CRMs, modelos de IA) e nós genéricos, como o HTTP Request, que fala com qualquer API, e o IF, que decide por regra.
+- Fluxo (workflow): a sequência de nós ligados por setas. Começa sempre num gatilho: um webhook (alguém mandou dados para uma URL), um horário, um e-mail novo, uma linha nova na planilha.
+- Execução: cada vez que o fluxo roda. É a unidade em que a n8n cobra na nuvem.
+
+A diferença entre o n8n e concorrentes como Make e Zapier, para quem toca uma PME: o n8n pode ser instalado no seu servidor sem licença, o que zera a mensalidade de software em troca de alguém para cuidar do servidor; e ele tem nós de IA nativos, para colocar um modelo de linguagem no meio do fluxo com pouca configuração. A Nvoip integra com os três; o guia [como integrar n8n com canais de atendimento](https://www.nvoip.com.br/blog/como-integrar-n8n-com-canais-de-atendimento/) mostra a diferença na prática.
+
+Se você nunca viu uma ferramenta dessas, leia antes [como criar um sistema sem programar (no-code)](/blog/como-criar-um-sistema-sem-programar-no-code/): o n8n é uma das peças daquele quebra-cabeça, a que liga as outras.
+
+## Quanto custa o n8n de verdade
+
+Há dois jeitos de usar, e o custo real é diferente do preço de tabela nos dois.
+
+### n8n Cloud
+
+A n8n hospeda para você. Em outubro de 2026, o plano Starter custa 20 € por mês, cobrado anualmente, com 2,5 mil execuções mensais, e o Pro custa 50 € por mês, também anual, com 10 mil execuções, segundo a [página de preços](https://n8n.io/pricing/). Os dois têm fluxos ativos ilimitados.
+
+O que a tabela não diz: 2,5 mil execuções por mês dá cerca de 80 por dia. Um fluxo que roda a cada 5 minutos para "ver se tem algo novo" consome 288 execuções por dia sozinho. Por isso, nos fluxos abaixo, eu prefiro gatilho por webhook (roda só quando acontece) a gatilho por horário com verificação.
+
+### n8n instalado no seu servidor
+
+A versão Community do n8n roda sem chave de licença, como diz a [documentação de hospedagem](https://docs.n8n.io/hosting/), e não tem limite de execuções. O que você paga é o servidor, em geral uma máquina pequena em qualquer nuvem, e a pessoa que instala, atualiza e olha quando para.
+
+É aqui que mora o custo invisível. O servidor custa pouco; a pessoa, não. Se você não tem ninguém técnico na empresa nem um parceiro de confiança, a conta do n8n Cloud sai mais barata que a primeira madrugada tentando entender por que o fluxo parou.
+
+### A terceira linha da conta: os canais e a IA
+
+O n8n não manda WhatsApp nem SMS; ele chama uma API que manda. Então a conta tem a mensalidade do n8n, mais a API de comunicação (na Nvoip, consulte a página de planos; as mensagens de WhatsApp têm ainda a cobrança por mensagem da Meta), mais o modelo de IA quando o fluxo usa um, pago por uso. Para 20 a 50 mensagens por dia, as três linhas somadas custam uma fração de meia vaga, que é o que elas substituem.
+
+## Quando o n8n basta e quando vira dívida técnica
+
+O n8n basta quando a regra é simples, o volume é moderado e alguém na empresa é dono do fluxo. Mandar o WhatsApp de boas-vindas quando chega um lead, lembrar o boleto que venceu, resumir as conversas do dia: tudo isso é fluxo de cinco a oito nós que uma pessoa organizada monta e mantém.
+
+O n8n vira dívida técnica em três situações que eu já vivi:
+
+1. Fluxo que ninguém mais entende. A pessoa que montou saiu, o fluxo tem 40 nós e para numa segunda-feira. Regra da casa: todo fluxo tem dono, nome descritivo e uma nota no primeiro nó explicando o que faz. Mais de 15 nós, divida em dois.
+2. Lógica de negócio importante só no n8n. A régua de cobrança inteira, com regra de desconto e negativação, vivendo num fluxo visual sem versão nem teste. O que é regra central do negócio merece sistema, ou pelo menos a plataforma de comunicação, que já tem a régua pronta; o n8n liga as pontas.
+3. Falha silenciosa. O fluxo deu erro às 3h e ninguém soube. Todo fluxo meu termina com um nó de erro que me manda mensagem. O n8n tem o "Error Workflow" para isso; configure no primeiro dia.
+
+Minha regra para decidir: se a automação fala com o cliente e é crítica (cobrança, confirmação, atendimento), eu uso primeiro o que a plataforma de comunicação já faz pronto, como as [automações da Nvoip](https://www.nvoip.com.br/automacoes/), e deixo o n8n para ligar o que a plataforma não alcança: a planilha interna, o ERP, a IA que resume.
+
+## Antes dos fluxos: a credencial da API e o nó HTTP Request
+
+Todos os sete fluxos usam o mesmo par: uma credencial OAuth2 e o nó HTTP Request apontando para a API da Nvoip. Configure uma vez.
+
+No painel da Nvoip, crie uma credencial de API (client ID e client secret) com as permissões que vai usar: enviar SMS, enviar WhatsApp, realizar chamadas. No n8n, em Credentials, crie uma credencial do tipo "OAuth2 API" com Grant Type "Client Credentials", Access Token URL `https://api.nvoip.com.br/auth/oauth2/token`, o client ID e o secret, e os escopos separados por espaço, por exemplo `sms:send whatsapp:send`. Dê o nome "Nvoip OAuth2": os JSONs abaixo referenciam esse nome. Nunca cole o secret dentro do fluxo nem em nota; a credencial fica guardada criptografada no n8n.
+
+Depois, em qualquer fluxo, o nó HTTP Request com método POST, URL do endpoint, autenticação "Generic Credential Type" e tipo "OAuth2 API" com a credencial acima, e o corpo em JSON. Os três endpoints usados aqui:
+
+- WhatsApp por template: `POST https://api.nvoip.com.br/v3/wa/sendTemplates` com `idTemplate`, `instance`, `language`, `destination` e `bodyVariables`. O template precisa estar aprovado pela Meta e ativo na sua conta; é assim que a mensagem sai fora da janela de 24 horas sem risco de bloqueio.
+- SMS com texto livre: `POST https://api.nvoip.com.br/v3/sms` com `numberPhone` e `message`. Texto livre exige liberação na conta; sem ela, use `POST /v3/sms/sendTemplate` com um template de SMS. Detalhes em [API de SMS](https://www.nvoip.com.br/blog/api-de-sms/).
+- Mensagem de voz: `POST https://api.nvoip.com.br/v3/torpedo/` com `caller` (um ramal da conta), `called` e `audio` (texto que vira voz ou URL de áudio).
+
+Toda chamada dessas envia mensagem real e pode gerar cobrança. Teste com o seu próprio número antes de ligar o gatilho.
+
+## As 7 automações, nó a nó
+
+### 1. Lead do site vira WhatsApp de boas-vindas em 30 segundos (JSON abaixo)
+
+O problema: o lead preenche o formulário às 21h, você vê às 9h e o concorrente já respondeu. A automação responde em segundos, com template aprovado, e ainda avisa o vendedor.
+
+1. Webhook: recebe o POST do formulário do site com nome e telefone. Quase todo construtor de site e de formulário permite enviar os dados para uma URL.
+2. Edit Fields (Set): monta os campos que a API espera: telefone com DDI, nome, identificador do template, instância e idioma.
+3. HTTP Request: `POST /v3/wa/sendTemplates` com o template de boas-vindas e o nome como variável.
+4. Opcional: um segundo HTTP Request que envia SMS ou WhatsApp para o vendedor com "lead novo: nome e telefone", para ele ligar em cinco minutos.
+
+### 2. Boleto vencido no financeiro vira lembrete por SMS (JSON abaixo)
+
+O problema: alguém olha a lista de vencidos quando lembra. A automação manda o lembrete no dia certo, entre o 1º e o 5º dia de atraso, e para quando o cliente paga.
+
+1. Webhook: o seu sistema financeiro ou ERP envia um POST quando um boleto fica vencido, com nome, telefone, valor, dias de atraso e link de pagamento. A maioria dos sistemas financeiros tem webhook ou integração que faz isso; se o seu não tem, o gatilho pode ser uma linha nova numa planilha.
+2. IF: segue só se dias de atraso estiver entre 1 e 5. Depois do 5º dia, a cobrança sai do fluxo automático e vai para a pessoa.
+3. HTTP Request: `POST /v3/sms` com a mensagem curta: nome, valor, link.
+4. Saída "false" do IF: nada acontece, ou um registro na planilha de "passou de 5 dias".
+
+A régua completa, com quatro mensagens em canais diferentes e regras de parada, eu prefiro deixar na plataforma de comunicação, que já tem a régua pronta; este fluxo é a versão mínima para quem ainda não tem régua nenhuma.
+
+### 3. Confirmação de agendamento no dia anterior, com resposta
+
+O problema: cliente que não aparece. A confirmação na véspera, com botão de sim ou não, reduz a falta e libera o horário a tempo.
+
+1. Schedule Trigger: roda uma vez por dia, às 17h.
+2. Google Sheets ou nó do seu sistema de agenda: lê os agendamentos de amanhã.
+3. Loop: para cada agendamento, HTTP Request `POST /v3/wa/sendTemplates` com template de confirmação que tem dois botões, "Confirmar" e "Reagendar", e as variáveis nome, data e hora.
+4. Segundo fluxo, com Webhook: a plataforma de WhatsApp avisa a resposta do cliente. IF: se "Reagendar", HTTP Request para o vendedor ou atendente, ou abertura de tarefa; se "Confirmar", atualiza a planilha.
+
+### 4. Resumo diário das conversas do WhatsApp para o dono
+
+O problema: você não lê as 80 conversas do dia, mas precisa saber o que aconteceu. A IA lê e resume em dez linhas.
+
+1. Schedule Trigger: roda às 19h.
+2. HTTP Request ou nó da plataforma: busca as conversas do dia na plataforma de atendimento, já sem dados pessoais desnecessários.
+3. Nó de IA (OpenAI, Anthropic ou Google, conforme a ferramenta que você usa): recebe as conversas e o prompt abaixo.
+4. Gmail ou HTTP Request de WhatsApp: envia o resumo para o dono.
+
+```text
+# Prompt: resumo diário das conversas de atendimento
+
+Você é assistente do dono da [nome da empresa]. Vou colar as conversas de atendimento de hoje, anonimizadas. Produza um resumo em até 12 linhas com:
+1. Quantas conversas houve e quantas foram resolvidas sem transferência para humano.
+2. Os três assuntos mais frequentes, com a quantidade de cada.
+3. Toda reclamação, pedido de cancelamento ou menção a concorrente, em uma linha cada, com a hora.
+4. Perguntas que o agente de IA não soube responder, para entrar na base de conhecimento.
+5. Uma sugestão de melhoria, em uma linha, baseada no que você leu.
+Não invente dados. Se algo não estiver nas conversas, não mencione.
+
+CONVERSAS:
+[cole aqui as conversas do dia]
+```
+
+Este é o fluxo que mais mudou a minha rotina: dez minutos de leitura substituem a sensação de que "o atendimento está bem" por fatos. O item 4 alimenta o agente de atendimento, cuja montagem está em [como criar um agente de IA para WhatsApp](/blog/como-criar-agente-de-ia-para-whatsapp/).
+
+### 5. Follow-up de orçamento: 3 dias sem resposta, mensagem; 7 dias, ligação
+
+O problema: metade dos orçamentos morre por falta de segunda mensagem. A automação faz a cadência e entrega o lead quente para o vendedor ligar.
+
+1. Gatilho: linha nova na planilha ou no CRM com status "orçamento enviado" e a data.
+2. Wait: espera 3 dias.
+3. HTTP Request ao CRM ou planilha: confere se o status mudou. IF: se virou "fechado" ou "perdido", encerra.
+4. HTTP Request `POST /v3/wa/sendTemplates` com template de follow-up: "ficou alguma dúvida sobre a proposta?".
+5. Wait: mais 4 dias. IF igual ao passo 3.
+6. HTTP Request `POST /v3/calls/click-to-call` com `caller` igual ao ramal do vendedor e `called` igual ao telefone do cliente: o telefone do vendedor toca primeiro e, quando ele atende, a ligação é conectada ao cliente. Alternativa mais leve: `POST /v3/torpedo/` com uma mensagem de voz curta.
+
+Os textos da cadência, com a regra de uma pergunta por mensagem, estão em [script de vendas para WhatsApp](/blog/script-de-vendas-whatsapp/).
+
+### 6. Pesquisa de satisfação depois do atendimento
+
+O problema: você só ouve quem reclama. A pesquisa de uma pergunta, uma hora depois do atendimento encerrado, ouve todo mundo.
+
+1. Webhook: a plataforma de atendimento avisa que uma conversa foi encerrada, com o telefone e o atendente.
+2. Wait: uma hora.
+3. HTTP Request `POST /v3/sms` ou `POST /v3/wa/sendTemplates` com a pergunta: "De 0 a 10, como foi o atendimento de hoje? Responda com o número."
+4. Segundo fluxo, com Webhook: recebe a resposta. IF: nota 6 ou menos, HTTP Request avisando o dono na hora, com o resumo da conversa; nota 9 ou 10, registra e, se quiser, pede indicação.
+5. Google Sheets: grava nota, atendente e data, para o painel semanal.
+
+Uma pergunta só, com escala de 0 a 10, responde mais que um formulário de cinco; a nota baixa vale mais pelo aviso imediato do que pela média do mês.
+
+### 7. Conferência de fatura de fornecedor com IA
+
+O problema: fatura de software, nuvem e telefonia chega por e-mail e é paga sem conferência. A IA lê, compara com o contratado e aponta diferença.
+
+1. Gmail Trigger: e-mail novo de um remetente da lista de fornecedores, com PDF anexo.
+2. Extract from File: transforma o PDF em texto.
+3. Google Sheets: lê a linha do fornecedor na planilha "o que contratamos", com itens e valores.
+4. Nó de IA: recebe o texto da fatura e a linha do contrato, com a instrução "liste cada item cobrado, o item correspondente no contrato e a diferença; marque o que não tem correspondência".
+5. IF: se houver diferença acima de um valor que você define, HTTP Request de WhatsApp ou e-mail para o financeiro com a tabela; se não, grava "conferida" na planilha.
+
+Este fluxo não fala com cliente, não tem risco de bloqueio e costuma se pagar na primeira fatura errada que encontra.
+
+## Os dois fluxos para importar
+
+Copie o JSON, abra o n8n, crie um fluxo novo e use "Import from file" ou cole direto na tela com Ctrl+V. Antes de ativar: crie a credencial "Nvoip OAuth2" como descrito acima; no nó "Configuração", troque o identificador do template e a instância pelos da sua conta; e teste com o seu número.
+
+### Fluxo 1: lead do site vira WhatsApp de boas-vindas
+
+O formulário do site deve enviar um POST para a URL do webhook com os campos `nome` e `telefone` (com DDI, por exemplo 5511999990000). Os valores `boas_vindas_lead` e `5511999990000` em "Configuração" são exemplos: use o identificador do seu template aprovado e a sua instância de WhatsApp.
+
+```json
+{
+  "name": "Lead do site vira WhatsApp de boas-vindas",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-site",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "lead-site-boas-vindas"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1",
+              "name": "telefone",
+              "value": "={{ $json.body.telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "f2",
+              "name": "nome",
+              "value": "={{ $json.body.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "f3",
+              "name": "idTemplate",
+              "value": "boas_vindas_lead",
+              "type": "string"
+            },
+            {
+              "id": "f4",
+              "name": "instance",
+              "value": "5511999990000",
+              "type": "string"
+            },
+            {
+              "id": "f5",
+              "name": "language",
+              "value": "pt_BR",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000002",
+      "name": "Configuração",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.nvoip.com.br/v3/wa/sendTemplates",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ idTemplate: $json.idTemplate, instance: $json.instance, language: $json.language, destination: $json.telefone, bodyVariables: [$json.nome] }) }}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000003",
+      "name": "Enviar WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 0],
+      "credentials": {
+        "oAuth2Api": {
+          "id": "1",
+          "name": "Nvoip OAuth2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Configuração",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configuração": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+```
+
+### Fluxo 2: boleto vencido vira lembrete por SMS
+
+O sistema financeiro deve enviar um POST para a URL do webhook com `nome`, `telefone` (com DDI), `valor`, `diasAtraso` (número) e `link`. O IF deixa passar só atrasos entre 1 e 5 dias; do sexto em diante, a cobrança é de pessoa.
+
+```json
+{
+  "name": "Boleto vencido vira lembrete por SMS",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "boleto-vencido",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000001",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "boleto-vencido-sms"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.body.diasAtraso }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.body.diasAtraso }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000002",
+      "name": "Entre 1 e 5 dias de atraso",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.nvoip.com.br/v3/sms",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ numberPhone: $json.body.telefone, message: 'Oi, ' + $json.body.nome + '. Seu boleto de R$ ' + $json.body.valor + ' venceu. Pague pelo link: ' + $json.body.link + '. Se ja pagou, desconsidere.', flashSms: false }) }}",
+        "options": {}
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000003",
+      "name": "Enviar SMS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, -100],
+      "credentials": {
+        "oAuth2Api": {
+          "id": "1",
+          "name": "Nvoip OAuth2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Entre 1 e 5 dias de atraso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Entre 1 e 5 dias de atraso": {
+      "main": [
+        [
+          {
+            "node": "Enviar SMS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+```
+
+Repare que a mensagem do SMS está sem acentos de propósito: SMS com caracteres especiais pode ser cobrado como duas mensagens em algumas rotas. Para WhatsApp isso não vale.
+
+## Perguntas frequentes
+
+### n8n é gratuito?
+
+A versão Community é gratuita para instalar no seu próprio servidor, sem limite de execuções; você paga o servidor e o tempo de quem cuida dele. A versão na nuvem da n8n é paga por plano, a partir de 20 € por mês no plano anual em outubro de 2026. Confira sempre a [página de preços](https://n8n.io/pricing/).
+
+### n8n ou Make ou Zapier: qual escolher?
+
+Para quem tem alguém técnico e quer custo fixo baixo, n8n instalado. Para quem não tem e quer começar hoje, qualquer um dos três na nuvem resolve; eu olharia o preço por execução no volume que você tem e se a ferramenta tem nó pronto para os seus sistemas. A Nvoip integra com os três, e a página de integrações dela, linkada no início do artigo, mostra as diferenças.
+
+### Preciso saber programar para usar o n8n?
+
+Para os sete fluxos deste artigo, não. Você precisa entender o que é um webhook, saber ler um JSON simples e ter paciência para testar. Expressões como "pegue o campo telefone do que chegou" são a parte mais técnica. Quando o fluxo exige código, é sinal de que a lógica deveria estar num sistema.
+
+### O n8n manda WhatsApp sozinho?
+
+Não. Ele chama uma API que manda. Use uma API oficial, com template aprovado pela Meta, para não arriscar o número da empresa. Soluções que simulam o WhatsApp Web funcionam até o dia em que o número é banido.
+
+### Quantas execuções minha empresa vai usar?
+
+Conte os eventos, não os fluxos. Cada lead, cada boleto vencido, cada atendimento encerrado é uma execução. Uma empresa com 30 leads, 20 boletos e 60 atendimentos por dia gasta cerca de 3,3 mil por mês, mais os fluxos agendados. Evite fluxos que rodam a cada poucos minutos "para verificar": eles consomem o plano sem produzir nada.
+
+## Por onde começar
+
+Hoje: crie uma conta no n8n Cloud ou peça para alguém técnico instalar a versão Community, e configure a credencial OAuth2 da API de comunicação. Envie um SMS de teste para o seu número com o nó HTTP Request.
+
+Esta semana: importe o fluxo 1, aponte o formulário do site para o webhook e receba você mesmo o WhatsApp de boas-vindas. Depois, o fluxo 2 com um boleto de teste.
+
+Este mês: escolha a automação 4 ou a 7, as duas que usam IA e não falam com cliente, e coloque uma pessoa como dona de cada fluxo, com o Error Workflow configurado. Onde a IA entra no meio do fluxo, o plano de [como usar IA na minha empresa](/blog/como-usar-ia-na-minha-empresa/) diz por qual área começar.
+
+Os fluxos deste artigo são a camada de automação por baixo dos agentes do [e-book IA no Negócio](/ebook/ia-no-negocio/): lá estão as instruções de cada agente, e aqui está como ligá-los aos canais. Se quiser ver antes quais tarefas repetitivas valem a automação, baixe [as 12 tarefas que a IA já faz melhor que um analista](/gratis/).

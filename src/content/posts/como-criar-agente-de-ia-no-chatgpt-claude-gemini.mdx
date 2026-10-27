@@ -1,0 +1,170 @@
+---
+title: "Como criar um agente de IA no ChatGPT, Claude ou Gemini sem código"
+description: "Como criar um agente de IA no ChatGPT, no Claude e no Gemini: o mesmo agente de resposta a orçamento montado nas três ferramentas, com a instrução completa e o critério de escolha."
+publishedAt: 2026-10-27T12:00:00-03:00
+tags: ["ia", "agentes", "prompts", "vendas"]
+draft: false
+---
+
+Para criar um agente de IA no ChatGPT, no Claude ou no Gemini você não precisa de código: as três ferramentas têm um recurso para salvar uma instrução fixa, anexar arquivos de referência e conversar com esse "funcionário" quantas vezes quiser. No ChatGPT chama GPT personalizado, no Claude chama Projeto e no Gemini chama Gem. O trabalho de verdade é escrever a instrução, e ela é a mesma nas três.
+
+Eu uso agentes assim todos os dias na Nvoip, a empresa que fundei, e eles foram parte do caminho que levou o time de 70 para 10 pessoas sem perder clientes. Não são robôs autônomos: são instruções bem escritas, com uma pessoa revisando a saída, que fazem em dois minutos o que levava vinte.
+
+Neste artigo eu monto um único agente, o assistente de resposta a orçamento, nas três ferramentas, passo a passo, e entrego a instrução completa para você copiar. Escolhi esse agente porque toda empresa de 2 a 50 pessoas responde orçamento, a regra cabe numa página e o erro é barato de revisar. No fim, o critério que uso para decidir em qual ferramenta cada agente vive.
+
+Se você ainda não sabe qual tarefa automatizar primeiro, leia antes [como usar IA na minha empresa: plano de 30 dias](/blog/como-usar-ia-na-minha-empresa/). Este artigo começa no passo 4 daquele plano.
+
+## O que é um agente de IA (e por que o prompt solto não resolve)
+
+Um agente de IA, no sentido que importa para quem toca uma empresa, é uma instrução fixa que define papel, contexto, regras, formato de saída e revisão, salva numa ferramenta para ser reutilizada sem reescrever nada. Você abre, cola o pedido do cliente, recebe a resposta no formato combinado.
+
+A diferença para o prompt solto é consistência. Quando cada pessoa da equipe digita o pedido do seu jeito, a IA responde de um jeito diferente a cada vez, e ninguém confia. Quando a instrução é fixa, a saída é previsível, dá para revisar por amostra e dá para corrigir a instrução quando algo vem errado, em vez de corrigir a resposta toda vez.
+
+Os cinco elementos que uma instrução precisa ter, e que eu detalho no capítulo "IA como funcionário, não como buscador" do [e-book IA no Negócio](/ebook/ia-no-negocio/):
+
+1. Papel: quem a IA é e para quem trabalha.
+2. Contexto: a tabela de preços, o processo, as exceções, tudo o que um funcionário novo precisaria saber.
+3. Regras: o que nunca fazer e o que fazer em caso de dúvida.
+4. Formato: exatamente como a saída deve vir.
+5. Revisão: quem confere e o que a IA deve sinalizar para o revisor.
+
+## A instrução do agente de resposta a orçamento
+
+Esta é a instrução que vai ser colada nas três ferramentas. Preencha os campos entre colchetes com os dados da sua empresa. Onde está "tabela de preços", cole a sua tabela em texto ou anexe como arquivo, conforme a ferramenta.
+
+```text
+# Instrução do agente: assistente de orçamentos da [nome da empresa]
+
+PAPEL
+Você é o assistente de orçamentos da [nome da empresa], que vende [produto ou serviço] para [tipo de cliente] em [cidade, região ou todo o Brasil]. Você prepara a resposta a pedidos de orçamento para que [nome ou cargo do revisor] revise e envie.
+
+CONTEXTO
+Tabela de preços e prazos:
+[cole aqui a tabela: item, unidade, preço, prazo de entrega ou execução]
+
+Condições comerciais:
+- Formas de pagamento: [ex.: Pix à vista com 5% de desconto; cartão em até 3 vezes sem juros; boleto para CNPJ com 30 dias]
+- Frete ou deslocamento: [regra, ex.: grátis acima de R$ 500 na capital; fora, calcular por km]
+- Validade do orçamento: [ex.: 7 dias]
+- Pedido mínimo: [valor ou quantidade]
+- O que não fazemos: [lista curta]
+
+Tom da empresa: [ex.: cordial, direto, sem gírias, trata o cliente por "você"]
+
+REGRAS
+1. Use somente preços, prazos e condições do CONTEXTO. Se o cliente pedir algo que não está na tabela, não invente valor: escreva "[A CONFIRMAR: item fora da tabela]" no lugar do preço.
+2. Se faltar informação para orçar (quantidade, medida, prazo, endereço), não chute. Liste as perguntas que precisam ser feitas ao cliente, uma por linha, no máximo três.
+3. Nunca ofereça desconto, parcelamento ou prazo fora das condições comerciais.
+4. Não prometa data de entrega; informe o prazo em dias úteis a partir da confirmação do pagamento.
+5. Escreva em português do Brasil, frases curtas, sem emojis, sem "prezado".
+6. Se o pedido contiver reclamação, cancelamento ou disputa, não responda; escreva apenas "ENCAMINHAR PARA HUMANO" e o motivo.
+
+FORMATO DE SAÍDA
+Produza exatamente estas quatro partes, nesta ordem:
+
+1) RESUMO DO PEDIDO (2 linhas): o que o cliente quer, em quais quantidades.
+2) ORÇAMENTO: tabela com colunas Item, Quantidade, Valor unitário, Valor total, Prazo. Linha final com o total geral.
+3) MENSAGEM PARA O CLIENTE: texto pronto para enviar por [WhatsApp ou e-mail], com até 10 linhas, incluindo total, forma de pagamento, validade e uma pergunta final que leve ao fechamento.
+4) PONTOS PARA O REVISOR CONFERIR: lista de até 5 itens com o que você teve dúvida ou marcou como A CONFIRMAR.
+
+REVISÃO
+Nenhuma mensagem é enviada sem a leitura de [nome ou cargo do revisor]. Se o revisor pedir ajuste, refaça apenas a parte pedida e mantenha o restante igual.
+```
+
+Sobre a regra 6: ela existe porque orçamento e reclamação chegam pelo mesmo canal, e o agente de orçamento não é o lugar de responder reclamação. Quando o agente roda dentro do WhatsApp da empresa, essa marca vira a regra de transbordo, como mostro em [como criar um agente de IA para WhatsApp](/blog/como-criar-agente-de-ia-para-whatsapp/).
+
+## Como criar o agente de IA no ChatGPT (GPT personalizado)
+
+No ChatGPT, o agente é um GPT personalizado. Criar GPTs exige plano pago; os preços estão na [página oficial de planos](https://openai.com/chatgpt/pricing/), que não consegui acessar para confirmar os valores em outubro de 2026, então confira lá antes de assinar.
+
+1. No menu lateral, abra "GPTs" (ou "Explorar GPTs") e clique em "Criar".
+2. A tela abre em duas abas: "Criar", que é um assistente de conversa que monta a configuração por você, e "Configurar", que é o formulário. Vá direto em "Configurar". O assistente é bom para quem está começando, mas tende a escrever instruções genéricas.
+3. Em "Nome", escreva algo que a equipe reconheça: "Orçamentos [nome da empresa]". Em "Descrição", uma linha: "Prepara respostas a pedidos de orçamento para revisão".
+4. Em "Instruções", cole a instrução completa acima, já preenchida.
+5. Em "Conhecimento", envie a tabela de preços como arquivo, se ela for grande. Para tabela de até 50 linhas, prefiro colar no próprio texto da instrução: a IA erra menos.
+6. Em "Recursos", desligue o que não precisa. Para este agente, desligue navegação na web e geração de imagem: menos distração, menos chance de inventar.
+7. Em "Iniciadores de conversa", escreva dois: "Cole aqui o pedido do cliente" e "Refaça apenas a mensagem para o cliente".
+8. Clique em "Criar" e escolha "Somente eu" ou "Qualquer pessoa com o link" para a equipe. Não publique na loja: a tabela de preços é sua.
+
+Teste com três pedidos reais do histórico. Se a saída vier fora do formato, volte em "Configurar" e reforce a regra que falhou. No ChatGPT, a instrução tem limite de caracteres; se a sua tabela for grande, ela vai para "Conhecimento".
+
+## Como criar o agente de IA no Claude (Projeto)
+
+No Claude, o agente vive num Projeto, que é uma pasta com instruções fixas e arquivos de referência compartilhados por todas as conversas abertas dentro dela. Em outubro de 2026, o plano Pro custa US$ 20 por mês no pagamento mensal e o Team US$ 25 por assento, segundo a [página de preços](https://claude.com/pricing); confira os limites do plano gratuito na mesma página.
+
+1. No menu lateral, clique em "Projetos" e depois em "Novo projeto".
+2. Dê o nome "Orçamentos [nome da empresa]" e uma descrição de uma linha.
+3. No painel do projeto, abra "Instruções do projeto" (também aparece como "Definir instruções personalizadas") e cole a instrução completa.
+4. Em "Conhecimento do projeto", adicione a tabela de preços e as condições comerciais como arquivos de texto ou PDF, se forem longas. O Claude trabalha bem com arquivos grandes de referência, e é por isso que eu deixo contratos e tabelas extensas aqui.
+5. Abra uma conversa nova dentro do projeto e cole um pedido de orçamento real. Cada conversa nova já nasce com a instrução e os arquivos carregados.
+6. Se usar o plano Team, compartilhe o projeto com a equipe de vendas. Todo mundo passa a usar a mesma instrução, e a correção feita por um vale para todos.
+
+Um detalhe que faz diferença: no Claude, a conversa dentro do projeto pode ficar longa sem perder o contexto, então eu uso uma conversa por cliente e volto nela quando o cliente responde. No ChatGPT eu abro conversa nova por pedido.
+
+## Como criar o agente de IA no Gemini (Gem)
+
+No Gemini, o agente chama Gem. Em outubro de 2026, o Google AI Pro custa R$ 96,99 por mês e o Google AI Plus R$ 24,99 por mês no Brasil, segundo a [página de assinaturas](https://gemini.google/subscriptions/); há também uso gratuito com conta Google, com limites. O preço em reais e a integração com Gmail, Drive e Planilhas são os dois argumentos mais fortes do Gemini para a pequena empresa brasileira.
+
+1. No menu lateral do Gemini, clique em "Gems" e depois em "Novo Gem" (ou "Criar Gem").
+2. Em "Nome", "Orçamentos [nome da empresa]".
+3. Em "Instruções", cole a instrução completa. O Gemini oferece um botão para "melhorar" a instrução com IA; eu não uso, porque ele tende a deixar o texto mais genérico. Sua instrução já está completa.
+4. Em "Conhecimento" (ou "Arquivos"), anexe a tabela de preços. Se a tabela vive numa planilha do Google, você pode anexar a planilha e atualizar lá: o Gem passa a ler a versão nova.
+5. Clique em "Salvar" e teste com um pedido real na própria tela de prévia, antes de fechar.
+6. O Gem aparece no menu lateral para você e, nas contas Workspace, pode ser compartilhado com a equipe.
+
+Se a sua empresa já vive no Google Workspace, é aqui que eu começaria: o agente lê a planilha de preços direto e a mensagem pode ser rascunhada no Gmail com um clique.
+
+## Qual ferramenta escolher para cada agente
+
+As três fazem o agente de orçamento bem. A escolha, para mim, é por tarefa e por onde a empresa já trabalha, e não pela marca. A tabela abaixo é o critério que uso; a comparação completa, com 12 tarefas e custo mensal, está em [ChatGPT, Gemini ou Claude: qual IA usar na sua empresa](/blog/chatgpt-gemini-ou-claude-qual-ia-usar-na-empresa/).
+
+| Critério | ChatGPT (GPT) | Claude (Projeto) | Gemini (Gem) |
+|---|---|---|---|
+| Sua empresa vive no Google Workspace | Bom | Bom | Melhor: lê Planilhas e rascunha no Gmail |
+| Arquivos longos de referência (contratos, tabelas grandes) | Bom, via Conhecimento | Melhor: contexto longo e estável | Bom |
+| Equipe compartilhando o mesmo agente | Bom, por link | Melhor no plano Team | Bom nas contas Workspace |
+| Preço em reais | Em dólar, confira a página | Em dólar | Em reais no Brasil |
+| Agente que gera imagem ou vídeo junto | Melhor | Não é o foco | Bom |
+| Texto para cliente, revisão e escrita longa | Bom | Melhor, na minha experiência | Bom |
+
+Minha posição: se você vai ter um agente só, use a ferramenta que já paga. Se vai ter cinco, escolha uma para a equipe inteira, porque a economia de manter uma instrução em um lugar só vale mais que qualquer diferença entre modelos.
+
+## O que fazer quando o agente precisa agir, não só escrever
+
+O agente de orçamento deste artigo escreve; uma pessoa envia. É o nível certo para começar. O próximo nível é o agente que executa: manda a mensagem no WhatsApp, agenda a ligação, registra no CRM.
+
+Para isso o agente precisa de uma ponte com os seus canais. Eu uso a Nvoip, que fundei, e recomendo. A [API de comunicação da Nvoip](https://www.nvoip.com.br/api/) permite que uma automação envie WhatsApp, SMS e ligação com o mesmo token, e o [MCP Server da Nvoip](https://www.nvoip.com.br/mcp-server/) liga o Claude e outras ferramentas de IA diretamente à telefonia, para o agente consultar o histórico de chamadas ou disparar uma mensagem a partir da conversa. Expliquei o conceito em [o que é MCP Server](https://www.nvoip.com.br/blog/o-que-e-mcp-server/).
+
+A regra que eu sigo para subir de nível: só dou poder de agir ao agente que passou duas semanas acertando na revisão humana. E mesmo assim com limites: ele manda a mensagem de orçamento; a de desconto continua passando por mim.
+
+## Perguntas frequentes
+
+### Dá para criar um agente de IA gratuito?
+
+Dá para testar. O Gemini tem Gems com conta Google gratuita, com limites de uso, e o Claude tem plano gratuito com limites. No ChatGPT, criar GPTs exige plano pago. Para uso diário de uma equipe, a conta paga se paga na primeira semana pelo tempo economizado.
+
+### A instrução é a mesma nas três ferramentas?
+
+Sim. Os cinco elementos, papel, contexto, regras, formato e revisão, valem igual. O que muda é onde colar e o limite de tamanho. No ChatGPT, tabelas grandes vão para Conhecimento; no Claude e no Gemini, para os arquivos do projeto ou do Gem.
+
+### Como faço o agente aprender com as correções?
+
+Ele não aprende sozinho. Quando a saída vem errada, você corrige a instrução, não a resposta. Mantenha um arquivo de "casos que deram errado" e, a cada cinco casos, revise a instrução. É assim que a taxa de acerto sobe de semana em semana.
+
+### Posso colocar dados de clientes na instrução?
+
+Na instrução, não: ela é lida em toda conversa e dados pessoais não têm o que fazer ali. Nos pedidos que você cola, anonimize o que não for necessário para orçar. E ative, na conta paga, a opção de não usar seus dados para treinar o modelo. Escrevi as regras em [política de uso de IA na empresa](/blog/politica-de-uso-de-ia-na-empresa-modelo/).
+
+### Quantos agentes uma empresa pequena precisa?
+
+Comece com um. Na Nvoip rodam seis que uso todos os dias, um por área: atendimento, vendas, marketing, financeiro, pessoas e gestão. O de orçamento deste artigo é o primeiro passo do agente de vendas.
+
+## Por onde começar
+
+Hoje: copie a instrução, preencha a tabela de preços e as condições comerciais e cole na ferramenta que você já tem. Teste com três pedidos reais do histórico.
+
+Esta semana: defina quem revisa e peça para essa pessoa anotar cada saída que precisou de edição. Corrija a instrução duas vezes.
+
+Este mês: quando passar uma semana sem correção, leve o agente para a equipe e comece o segundo, que no meu roteiro é o de follow-up de quem pediu orçamento e sumiu. Os prompts dessa cadência estão em [prompts para vendas](/blog/prompts-para-vendas/).
+
+Este agente de orçamento é um dos seis do [e-book IA no Negócio](/ebook/ia-no-negocio/); lá estão os outros cinco, com as instruções completas para ChatGPT, Claude e Gemini. E se quiser ver, antes, quais tarefas valem a pena entregar à IA, baixe [as 12 tarefas que a IA já faz melhor que um analista](/gratis/).

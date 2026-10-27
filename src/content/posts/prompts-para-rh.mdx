@@ -1,0 +1,252 @@
+---
+title: "Prompts para RH: 30 modelos para contratar sem departamento"
+description: "30 prompts para RH organizados por rotina: vaga, triagem de currículos, entrevista, onboarding, feedback e avaliação, com a regra de LGPD para não expor dados de candidatos."
+publishedAt: 2026-10-29T10:00:00-03:00
+tags: ["prompts", "pessoas", "ia", "gestão"]
+draft: false
+---
+
+Prompts para RH resolvem um problema específico da pequena empresa: ela precisa contratar, integrar, dar feedback e avaliar pessoas, mas não tem ninguém cujo cargo seja fazer isso. Quem faz é o dono, ou o sócio, ou a pessoa do administrativo, no intervalo entre duas outras tarefas.
+
+Na Nvoip, somos 10 pessoas e não temos departamento de RH. Quando éramos 70, tínhamos. O que mudou não foi a importância de cuidar de gente, foi a forma: hoje há uma pessoa responsável, com processo escrito e IA fazendo a parte repetitiva. Chamo isso de "RH de uma pessoa", e é o modelo que recomendo para empresas de 2 a 50 funcionários.
+
+Este artigo traz os 30 prompts que sustentam esse modelo, organizados pela rotina em que você vai usá-los: abrir a vaga, triar currículos, entrevistar, integrar, dar feedback e avaliar. Antes deles, uma regra que não é opcional: a de proteção de dados. Triagem de currículo com IA é exatamente o tipo de uso que a LGPD regula, e eu explico o que fazer para ficar do lado certo.
+
+## O RH de uma pessoa: o que a IA faz e o que a pessoa decide
+
+O modelo é simples. Uma pessoa da empresa, geralmente quem já cuida do administrativo, assume a responsabilidade por pessoas. Ela não escreve vaga do zero, não lê 80 currículos um por um, não monta checklist de onboarding de memória. A IA faz o rascunho de tudo isso em minutos; a pessoa revisa, decide e conversa com gente.
+
+A divisão que uso:
+
+| Tarefa | IA faz | Pessoa faz |
+|---|---|---|
+| Vaga | Rascunho da descrição e do anúncio | Define o que o cargo precisa de verdade |
+| Triagem | Organiza currículos por critérios objetivos | Decide quem entrevistar |
+| Entrevista | Roteiro de perguntas e resumo das respostas | Conduz a conversa e julga |
+| Onboarding | Plano de 30 dias e materiais | Acompanha e corrige o rumo |
+| Feedback | Estrutura e rascunho da conversa | Fala olho no olho |
+| Avaliação | Compila evidências e escreve o rascunho | Avalia e decide consequências |
+
+A coluna da direita nunca vai para a IA. Decisão sobre pessoas é humana, e no caso de triagem isso não é só opinião minha: é o que a lei pede. O artigo sobre [descrição de cargo](/blog/descricao-de-cargo-modelo/) mostra como escrevemos cada função deixando claro o que a IA faz e o que a pessoa supervisiona.
+
+## Antes dos prompts para RH: a regra de LGPD
+
+Currículo é dado pessoal. Nome, telefone, endereço, idade, foto, histórico profissional. Alguns trazem dados sensíveis: estado civil, filhos, religião, saúde. Colar isso numa ferramenta de IA pública é compartilhar dado pessoal com um terceiro, e a Lei Geral de Proteção de Dados tem regras para isso. O blog da Nvoip tem um resumo claro do [que é a LGPD](https://www.nvoip.com.br/blog/o-que-e-lgpd/) para quem precisa do básico.
+
+As quatro regras que adotamos na Nvoip e que recomendo:
+
+1. **Anonimize antes de colar.** Tire nome, contato, foto, idade, endereço e qualquer dado que não seja formação, experiência e habilidades. Substitua por um código (Candidato 01, 02). A planilha com a correspondência fica com você, fora da IA.
+2. **Avise no anúncio da vaga.** Uma frase basta: "Os currículos recebidos são analisados com apoio de ferramentas de inteligência artificial e revisados por uma pessoa da empresa". Transparência é um dos princípios da lei.
+3. **Critérios objetivos, escritos antes.** A IA só organiza currículos pelos requisitos que você definiu (experiência em X, conhecimento de Y). Nunca peça para ela "escolher os melhores": isso é decisão automatizada sobre pessoa, e o candidato tem direito de pedir revisão humana.
+4. **Apague depois.** Currículos de quem não foi contratado não ficam guardados por tempo indefinido, nem na sua pasta, nem no histórico da IA. Defina um prazo (por exemplo, seis meses) e cumpra.
+
+Se a sua empresa tem uma [política de uso de IA](/blog/politica-de-uso-de-ia-na-empresa-modelo/), essas quatro regras entram nela. Se não tem, este é um bom motivo para escrever.
+
+Com isso resolvido, vamos aos prompts. Em todos, cole antes este contexto:
+
+```text
+# Prompt: contexto de pessoas (colar no início da conversa)
+Você é meu parceiro de RH. Empresa: [nome], [segmento], [número] pessoas, cultura [descreva em 3 características reais: ex. direta, autônoma, orientada a cliente]. Não temos departamento de RH; eu sou o responsável por pessoas além da minha função principal. Regras: nunca sugerir decisões baseadas em idade, gênero, aparência, estado civil, origem ou qualquer dado pessoal fora de formação, experiência e habilidades; sempre separar fato de interpretação; linguagem direta e respeitosa; respostas em português do Brasil. Guarde este contexto.
+```
+
+## Prompts para RH: abrir a vaga certa
+
+O erro mais caro em contratação acontece antes do anúncio: abrir vaga para um problema que não precisava de uma pessoa. O primeiro prompt decide se contrata.
+
+```text
+# Prompt: 1. Preciso contratar ou preciso de processo?
+A demanda que me faz pensar em contratar é: [descreva o trabalho acumulado]. Hoje quem faz é [quem] gastando [horas por semana]. Analise: quanto dessa demanda é repetitiva e documentável, quanto exige julgamento humano e quanto poderia ser eliminada. Me dê um parecer em 10 linhas com uma recomendação clara: contratar, automatizar com processo e IA, ou redistribuir. Liste o que eu precisaria documentar em cada caso.
+```
+
+```text
+# Prompt: 2. Descrição de cargo em uma página
+Preciso de uma descrição de cargo para [nome do cargo]. Responsabilidades principais: [liste 5 a 8]. Resultados esperados em 90 dias: [liste]. Para cada responsabilidade, indique o que a pessoa faz e o que será feito com apoio de IA sob supervisão dela. Requisitos obrigatórios: [liste]. Desejáveis: [liste]. Reporta a: [cargo]. Formato: título, missão do cargo em 2 linhas, responsabilidades, resultados, requisitos, a quem reporta.
+```
+
+```text
+# Prompt: 3. Anúncio da vaga para redes sociais e grupos
+Transforme esta descrição de cargo [cole] em um anúncio de vaga de até 180 palavras para LinkedIn e grupos de WhatsApp. Comece pelo problema que a pessoa vai resolver, não pela empresa. Inclua faixa salarial [valor ou "a combinar"], modelo de trabalho [presencial, híbrido, remoto], cidade e como se candidatar. Inclua a frase de transparência sobre uso de IA na triagem. Sem "estamos em busca de um talento", sem adjetivos vazios.
+```
+
+```text
+# Prompt: 4. Faixa salarial com referência
+Para o cargo de [cargo] em [cidade ou região], com os requisitos [cole], sugira uma faixa salarial de referência explicando a lógica (nível de experiência, responsabilidade, mercado local) e liste 3 fontes públicas onde eu posso confirmar o valor. Deixe claro que é estimativa e que preciso validar com o contador o custo total com encargos.
+```
+
+```text
+# Prompt: 5. Perguntas de triagem para o formulário de candidatura
+Crie 5 perguntas objetivas para um formulário de candidatura à vaga de [cargo], que me ajudem a filtrar pelos requisitos obrigatórios [liste] sem pedir nenhum dado pessoal além de nome e contato. Inclua uma pergunta aberta curta que revele como a pessoa pensa sobre [situação comum do cargo].
+```
+
+## Prompts para triagem de currículos com IA (com a LGPD em dia)
+
+Anonimize os currículos, use critérios escritos e decida você. A IA organiza; você escolhe quem entrevistar. Para o custo da contratação com encargos, veja [quanto custa um funcionário para a empresa](/blog/quanto-custa-um-funcionario-para-a-empresa/).
+
+```text
+# Prompt: 6. Matriz de critérios antes de olhar qualquer currículo
+Para a vaga de [cargo], com estes requisitos obrigatórios [liste] e desejáveis [liste], monte uma matriz de avaliação com peso para cada critério (soma 100), uma definição objetiva do que conta como "atende", "atende parcialmente" e "não atende", e um exemplo de evidência no currículo para cada um. Não inclua nenhum critério ligado a idade, gênero, aparência ou dados pessoais.
+```
+
+```text
+# Prompt: 7. Organizar currículos anonimizados pela matriz
+Aqui estão [número] currículos anonimizados, identificados como Candidato 01 a [número], com apenas formação, experiência e habilidades [cole]. Usando a matriz [cole a matriz do prompt anterior], preencha uma tabela com a evidência encontrada para cada critério e a classificação (atende, parcial, não atende). Não ordene nem recomende candidatos; apenas organize as evidências. Onde a informação não estiver no currículo, escreva "não informado".
+```
+
+```text
+# Prompt: 8. Perguntas para esclarecer lacunas
+Com base na tabela de evidências [cole], liste, para cada candidato, as informações que faltam para avaliar os critérios obrigatórios e escreva uma pergunta curta e neutra que eu possa enviar por e-mail ou WhatsApp para esclarecer. Mesma pergunta para a mesma lacuna em todos os candidatos.
+```
+
+```text
+# Prompt: 9. Mensagem para quem não segue no processo
+Escreva uma mensagem de retorno para candidatos que não seguirão para a entrevista da vaga de [cargo]. Até 6 linhas, respeitosa, sem justificativa individual, agradecendo o tempo, informando que o currículo será excluído em [prazo] conforme nossa política de dados e deixando aberta a candidatura em vagas futuras. Versões para e-mail e para WhatsApp.
+```
+
+```text
+# Prompt: 10. Convite para a entrevista
+Escreva o convite para entrevista para a vaga de [cargo]: formato [presencial, vídeo], duração [minutos], quem vai conduzir [cargo], o que levar ou preparar [se houver], 2 opções de horário e uma única pergunta para confirmar. Até 8 linhas. Versões para e-mail e WhatsApp.
+```
+
+## Prompts para a entrevista
+
+Entrevista é conversa humana, mas a preparação pode ser quase toda feita pela IA. E o resumo depois também. Se você grava a entrevista com consentimento do candidato, a transcrição vira insumo para o prompt 14; o blog da Nvoip explica como funciona a [transcrição de áudio](https://www.nvoip.com.br/blog/transcricao-de-audio/) e por que o texto é mais útil que a gravação.
+
+```text
+# Prompt: 11. Roteiro de entrevista de 40 minutos
+Monte um roteiro de entrevista de 40 minutos para [cargo]. Blocos: abertura (5 min), trajetória (10 min), perguntas comportamentais sobre [3 competências do cargo] (15 min), caso prático curto sobre [situação real do cargo] (7 min), perguntas do candidato e próximos passos (3 min). Para cada pergunta comportamental, use o formato "me conte uma situação em que..." e liste o que uma boa resposta contém. Nenhuma pergunta sobre vida pessoal, família, saúde, religião ou planos de ter filhos.
+```
+
+```text
+# Prompt: 12. Caso prático para o candidato resolver
+Crie um caso prático de 10 minutos para a vaga de [cargo], baseado nesta situação real da empresa, sem dados confidenciais: [descreva]. Inclua o enunciado que entrego ao candidato, o que observar na resposta e três níveis de qualidade de resposta (básica, boa, excelente).
+```
+
+```text
+# Prompt: 13. Ficha de avaliação da entrevista
+Monte uma ficha de avaliação para a entrevista de [cargo] com as competências [liste], escala de 1 a 4 com descrição objetiva de cada nível, campo para evidência (o que o candidato disse ou fez) separado do campo de impressão, e uma pergunta final: "contrataria? sim, não, dúvida; por quê?".
+```
+
+```text
+# Prompt: 14. Resumo da entrevista a partir das anotações
+Aqui estão minhas anotações ou a transcrição da entrevista com o Candidato [código], sem dados pessoais [cole]. Organize em: fatos relatados pelo candidato, evidências por competência conforme a ficha [cole], pontos a confirmar com referências e perguntas que ficaram sem resposta. Não dê nota nem recomendação; separe o que foi dito do que eu interpretei.
+```
+
+```text
+# Prompt: 15. Roteiro para checar referências
+Escreva um roteiro de 10 minutos para conversa com referência profissional do Candidato [código] para a vaga de [cargo]. Perguntas abertas sobre o período trabalhado, responsabilidades, pontos fortes, o que a pessoa precisaria desenvolver e se contrataria de novo. Nenhuma pergunta sobre vida pessoal. Inclua a frase de abertura explicando o motivo da ligação.
+```
+
+## Prompts para onboarding de quem acabou de chegar
+
+Na Nvoip, onboarding é um plano escrito de 30 dias. Quem chega sabe o que vai aprender em cada semana e quem procurar. Isso foi o que permitiu reduzir o time sem perder qualidade: a pessoa nova fica produtiva em semanas, não em meses. O artigo sobre [como organizar uma empresa pequena](/blog/como-organizar-uma-empresa-pequena/) mostra onde o onboarding entra no conjunto.
+
+```text
+# Prompt: 16. Plano de onboarding de 30 dias
+Crie um plano de onboarding de 30 dias para [cargo], dividido por semana. Semana 1: empresa, cultura, ferramentas e pessoas. Semana 2: processos do cargo [liste os principais]. Semana 3: execução acompanhada. Semana 4: execução autônoma com revisão. Para cada semana: objetivos, atividades, quem acompanha e como sabemos que a semana foi cumprida. Inclua um check-in de 15 minutos a cada sexta-feira com 3 perguntas fixas.
+```
+
+```text
+# Prompt: 17. E-mail de boas-vindas antes do primeiro dia
+Escreva um e-mail para [nome], que começa em [data] como [cargo]. Inclua: horário e local ou link do primeiro dia, o que levar, quem vai recebê-la, o que acontece na primeira semana em 4 linhas e um tom de acolhimento direto, sem exagero. Até 15 linhas.
+```
+
+```text
+# Prompt: 18. Guia de ferramentas e acessos
+Monte um checklist de acessos e ferramentas para o cargo de [cargo]: [liste as ferramentas]. Para cada uma: para que serve no dia a dia, quem libera o acesso, até quando deve estar pronto e onde está o material de referência. Formato de tabela, para eu só preencher os responsáveis.
+```
+
+```text
+# Prompt: 19. Material de treinamento a partir de um processo
+Aqui está o procedimento operacional padrão de [processo] [cole]. Transforme em um material de treinamento para quem está chegando: objetivo do processo em 2 linhas, passo a passo numerado em linguagem simples, 3 erros comuns e como evitar, e 5 perguntas de verificação com resposta para eu checar se a pessoa entendeu.
+```
+
+```text
+# Prompt: 20. Conversa de 30 dias
+Prepare a conversa de fechamento do primeiro mês de [nome], [cargo]. Perguntas para a pessoa: o que foi mais difícil, o que faltou, o que ela mudaria no onboarding. Perguntas para eu me responder antes: ela entregou os objetivos do plano? em quais pontos precisa de apoio? Formato: roteiro de 20 minutos com as perguntas em ordem e espaço para anotação.
+```
+
+## Prompts para feedback que não vira briga
+
+Feedback mal dado é a principal razão de saída silenciosa em time pequeno. A IA tira o calor e o achismo: você entra com fatos, sai com estrutura.
+
+```text
+# Prompt: 21. Estruturar um feedback difícil
+Preciso dar um feedback para [nome ou cargo] sobre [situação, com fatos e datas, sem julgamento]. Impacto observado: [descreva]. Monte a conversa na estrutura: contexto (o que aconteceu), impacto (no cliente, no time ou no resultado), pergunta (como a pessoa vê), acordo (o que muda e até quando). Escreva as frases de abertura e de fechamento. Tom direto e respeitoso, sem "sanduíche de elogios".
+```
+
+```text
+# Prompt: 22. Separar fato de interpretação
+Aqui está o que eu escrevi sobre o comportamento de [nome ou cargo]: [cole]. Separe em duas colunas: fatos observáveis (o que aconteceu, quando, quantas vezes) e interpretações minhas. Reescreva só os fatos em frases que eu possa dizer na conversa, e aponte quais interpretações eu deveria transformar em pergunta para a pessoa.
+```
+
+```text
+# Prompt: 23. Feedback positivo específico
+Quero reconhecer [nome ou cargo] por [o que a pessoa fez, com detalhe]. Escreva um feedback positivo de até 5 linhas que diga exatamente o que ela fez, qual foi o efeito e por que isso importa para a empresa. Sem superlativos genéricos, sem "você é incrível".
+```
+
+```text
+# Prompt: 24. Roteiro de conversa individual quinzenal
+Crie um roteiro fixo de 25 minutos para conversas individuais quinzenais com cada pessoa do time: 5 perguntas sempre iguais (prioridades, bloqueios, o que precisa de mim, o que está aprendendo, como está a carga), espaço para o que a pessoa trouxer e um fechamento com 1 compromisso de cada lado. Inclua um modelo de registro de 5 linhas para eu preencher depois.
+```
+
+```text
+# Prompt: 25. Pedir feedback sobre mim como gestor
+Escreva 6 perguntas anônimas para o time avaliar a minha gestão, cobrindo clareza de prioridades, disponibilidade, qualidade do feedback que dou, autonomia e o que eu deveria parar de fazer. Perguntas em escala de 1 a 5 com uma aberta no fim. Inclua o texto de introdução do formulário explicando por que estou pedindo e o que farei com as respostas.
+```
+
+## Prompts para avaliação e desligamento
+
+Avaliação numa empresa de 10 pessoas não precisa de sistema caro: precisa de evidências ao longo do período e de uma conversa honesta. O desligamento também merece processo, e os prompts 29 e 30 não substituem contador nem advogado trabalhista.
+
+```text
+# Prompt: 26. Compilar evidências do período
+Aqui estão os registros das conversas individuais, entregas e feedbacks de [nome ou cargo] nos últimos [meses] [cole, sem dados pessoais sensíveis]. Organize por competência da descrição de cargo [cole]: evidências positivas, evidências de atenção, tendência ao longo do período. Não dê nota; só organize o que aconteceu com datas.
+```
+
+```text
+# Prompt: 27. Rascunho da avaliação de desempenho
+Com as evidências organizadas [cole], escreva o rascunho da avaliação de [cargo] no formato: resultados entregues contra o combinado, competências (o que sustenta, o que precisa desenvolver, com exemplos), plano de desenvolvimento com 3 ações concretas e prazo, e 3 perguntas para a autoavaliação da pessoa. Deixe claro que a nota e a decisão final são minhas.
+```
+
+```text
+# Prompt: 28. Plano de desenvolvimento individual
+Para [cargo], com estes pontos a desenvolver [liste] e esta aspiração da pessoa [descreva], monte um plano de 90 dias com 3 objetivos, as atividades práticas de cada um (no trabalho, não em curso), como vamos medir e em quais conversas individuais vamos revisar.
+```
+
+```text
+# Prompt: 29. Conversa de alinhamento antes de um desligamento
+A pessoa em [cargo] não está entregando [descreva com fatos e datas] apesar de [feedbacks anteriores com datas]. Antes de decidir desligamento, monte uma conversa de alinhamento final: fatos, impacto, o que precisa mudar em [prazo], como vamos medir e o que acontece se não mudar. Tom firme e respeitoso. Liste também o que eu devo documentar e o que preciso confirmar com o contador e com um advogado trabalhista antes.
+```
+
+```text
+# Prompt: 30. Checklist de desligamento
+Monte um checklist de desligamento para [cargo] cobrindo: comunicação à pessoa (roteiro de 10 minutos, respeitoso e direto), comunicação ao time (mensagem de até 5 linhas sem expor motivos), devolução de acessos e equipamentos, transferência de tarefas e clientes, e documentos a solicitar ao contador. Indique o que é obrigação legal e deve ser confirmado com o contador ou advogado.
+```
+
+O conjunto completo, com a instrução do agente Parceiro de RH que carrega essas regras e roda em qualquer das três ferramentas, está no capítulo de Pessoas do [e-book IA no Negócio](/ebook/ia-no-negocio/).
+
+## Perguntas frequentes
+
+### Posso usar IA para triar currículos sem violar a LGPD?
+
+Pode, desde que anonimize os currículos antes de colar, informe os candidatos de que há IA no processo, use critérios objetivos escritos antes e mantenha a decisão com uma pessoa. O que a lei veda é decisão automatizada sem revisão humana e tratamento de dado sem finalidade e sem transparência.
+
+### Preciso do ChatGPT pago para usar esses prompts?
+
+Não. Todos funcionam na versão gratuita do ChatGPT, do Gemini e do Claude. A assinatura ajuda quando você quer salvar o contexto de pessoas como um agente fixo e anexar arquivos maiores, como o conjunto de currículos anonimizados.
+
+### A IA pode escolher o candidato por mim?
+
+Não deve, e eu não deixaria. Ela organiza evidências pela sua matriz de critérios. A escolha de quem entrevistar e de quem contratar é sua, e o candidato tem direito de pedir revisão humana de qualquer decisão automatizada.
+
+### Quanto tempo o "RH de uma pessoa" consome por semana?
+
+Na Nvoip, com 10 pessoas e processo rodando, fica em torno de duas a três horas por semana da pessoa responsável, concentradas nas conversas individuais. O rascunho de tudo o que é texto sai da IA em minutos. Sem processo e sem IA, essa conta era de um cargo inteiro.
+
+## Por onde começar
+
+1. Hoje: escreva as quatro regras de LGPD para currículos num documento de uma página e combine com quem recebe candidaturas na sua empresa.
+2. Esta semana: use os prompts 2 e 3 para a próxima vaga, ou para reescrever a descrição de um cargo que já existe e nunca foi documentado.
+3. Este mês: implante as conversas individuais quinzenais do prompt 24. É a rotina que mais previne problema de gente em empresa pequena.
+
+Triagem de currículos e rascunho de feedback estão entre as [12 tarefas que a IA já faz melhor que um analista](/gratis/), um PDF gratuito. E o agente completo de Pessoas, com as outras nove áreas, está no [IA no Negócio](/ebook/ia-no-negocio/).

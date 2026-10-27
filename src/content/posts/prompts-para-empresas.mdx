@@ -1,0 +1,628 @@
+---
+title: "Prompts para empresas: 40 modelos prontos por área"
+description: "40 prompts para empresas, 4 por área: atendimento, vendas, marketing, financeiro, contabilidade, jurídico, pessoas, produto, gestão e rotina. Para que serve cada um e quanto tempo economiza."
+publishedAt: 2026-10-28T09:00:00-03:00
+tags: ["prompts", "ia", "gestão", "processos"]
+draft: false
+---
+
+Prompts para empresas funcionam quando descrevem um trabalho, não quando fazem uma pergunta. A diferença entre "me dê ideias de post" e "você é o redator da [nome da empresa], escreva três posts para o público X, no tom Y, com este tamanho" é a diferença entre brincar com a IA e colocá-la para trabalhar.
+
+Eu uso IA todos os dias há cerca de dois anos. Na Nvoip, a empresa de telefonia e comunicação em nuvem que fundei, o time foi de 70 para 10 pessoas sem perder clientes, e boa parte disso veio de processos documentados rodando com IA e uma pessoa supervisionando. Nenhum desses processos começou com um agente sofisticado. Todos começaram com um prompt bem escrito, repetido até virar rotina.
+
+Este artigo reúne 40 prompts prontos, 4 para cada uma das 10 áreas que existem em qualquer empresa de 2 a 50 pessoas: atendimento, vendas, marketing, financeiro, contabilidade, jurídico, pessoas, desenvolvimento e produto, o dono e a rotina. Cada prompt vem com uma linha dizendo para que serve e uma estimativa conservadora do tempo que economiza por semana.
+
+Sobre essa estimativa: é a minha conta, baseada no que vi acontecer em uma empresa de serviços e tecnologia. O seu número vai ser diferente. Use como ordem de grandeza para decidir por onde começar, não como promessa.
+
+Copie, troque os campos entre colchetes pelos dados da sua empresa e cole no ChatGPT, no Gemini ou no Claude. Funciona nos três.
+
+## Como usar estes prompts para empresas sem perder tempo
+
+Todo prompt desta lista segue a mesma estrutura, a mesma que uso nas instruções dos agentes do [e-book IA no Negócio](/ebook/ia-no-negocio/): papel, contexto, regras, formato e revisão. Papel diz quem a IA é. Contexto diz o que ela precisa saber sobre a sua empresa. Regras dizem o que ela não pode fazer. Formato diz como a resposta deve sair. Revisão lembra que uma pessoa confere antes de usar.
+
+Três cuidados antes de começar:
+
+1. **Cole o contexto uma vez e reaproveite.** Escreva um parágrafo com o que a sua empresa faz, para quem vende, tíquete médio e tom de voz. Guarde num bloco de notas. Toda vez que abrir um prompt, cole esse parágrafo no lugar de [contexto da empresa].
+2. **Nunca cole dado identificável de cliente.** CPF, telefone, endereço, nome completo junto de dívida. Troque por "cliente A" ou use uma versão de equipe da ferramenta, com contrato que proíbe treinar com os seus dados. Escrevi as regras da casa em [política de uso de IA na empresa](/blog/politica-de-uso-de-ia-na-empresa-modelo/).
+3. **Peça para a IA perguntar antes de responder.** Vários prompts abaixo terminam com "se faltar informação, pergunte antes". Isso evita a resposta genérica que você teria que jogar fora.
+
+Se você ainda não sabe por qual área da empresa começar, leia antes [como usar IA na minha empresa](/blog/como-usar-ia-na-minha-empresa/), que é o plano de 30 dias. Aqui o foco é a biblioteca.
+
+## Atendimento e vendas: 8 prompts
+
+### Atendimento
+
+**1. Primeira resposta no WhatsApp**
+
+Para que serve: responder em segundos a mensagem que chega, com o tom da sua empresa, sem inventar prazo nem preço.
+Tempo que economiza: estimo 2 a 3 horas por semana para quem recebe 20 mensagens por dia.
+
+```text
+# Prompt: primeira resposta no WhatsApp
+Você é atendente da [nome da empresa], que [o que a empresa faz, para quem].
+Tom: [cordial e direto / formal / descontraído], frases curtas, sem emoji.
+Regras: não prometa prazo, preço ou desconto que não estejam nesta lista: [lista de preços e prazos oficiais].
+Se a pergunta não estiver coberta, diga que vai confirmar com a equipe e peça o melhor horário para retorno.
+Mensagem recebida do cliente: [colar mensagem]
+Escreva a resposta em até 4 linhas e termine com uma pergunta que faça a conversa avançar.
+```
+
+Na Nvoip esse prompt virou um agente ligado à [API oficial do WhatsApp](https://www.nvoip.com.br/whatsapp/), com regra de passar para um humano quando o cliente pede. Eu uso a Nvoip, que fundei, e recomendo. Mas o prompt sozinho, colado no ChatGPT, já muda o seu tempo de resposta hoje.
+
+**2. Resumo de conversa para passar o bastão**
+
+Para que serve: transformar uma conversa longa em cinco linhas para o colega que vai assumir.
+Tempo que economiza: 1 hora por semana por pessoa que faz transferência de atendimento.
+
+```text
+# Prompt: resumo de atendimento
+Resuma a conversa abaixo para um colega que vai assumir o atendimento.
+Formato: 1) o que o cliente quer, 2) o que já foi dito ou prometido, 3) o que falta resolver, 4) humor do cliente (calmo, impaciente, irritado), 5) próxima ação sugerida.
+Máximo de 6 linhas. Não invente nada que não esteja na conversa.
+Conversa: [colar conversa]
+```
+
+**3. Resposta a reclamação pública**
+
+Para que serve: responder avaliação negativa no Google ou em site de reclamações sem brigar e sem admitir culpa que não existe.
+Tempo que economiza: 30 minutos por reclamação, e evita o dano de uma resposta mal escrita.
+
+```text
+# Prompt: resposta a reclamação pública
+Você responde em nome da [nome da empresa]. Escreva uma resposta pública à reclamação abaixo.
+Regras: agradecer o relato, reconhecer o incômodo sem confirmar fatos que não conseguimos verificar, explicar em uma frase o que será feito, convidar para continuar em canal privado ([e-mail ou WhatsApp oficial]).
+Tom: calmo, humano, sem jargão, sem "pedimos desculpas por qualquer inconveniente".
+Tamanho: até 5 linhas.
+Reclamação: [colar texto]
+```
+
+**4. Base de conhecimento a partir de dúvidas repetidas**
+
+Para que serve: transformar 20 conversas em uma lista de perguntas e respostas que a equipe e a IA usam depois.
+Tempo que economiza: 2 horas por semana depois da primeira montagem, porque a mesma dúvida deixa de ser respondida do zero.
+
+```text
+# Prompt: base de conhecimento
+Abaixo estão [número] conversas de atendimento da [nome da empresa]. Identifique as perguntas que se repetem e escreva, para cada uma, a melhor resposta curta, usando só informações que aparecem nas conversas.
+Formato: tabela com colunas Pergunta, Resposta, Quantas vezes apareceu.
+Marque com "CONFIRMAR" toda resposta em que as conversas se contradizem.
+Conversas: [colar conversas sem nome, telefone ou documento dos clientes]
+```
+
+### Vendas
+
+**5. Qualificação de lead em três perguntas**
+
+Para que serve: descobrir em uma troca de mensagens se vale uma reunião.
+Tempo que economiza: 2 horas por semana de reunião com quem não ia comprar.
+
+```text
+# Prompt: qualificação de lead
+Você é assistente comercial da [nome da empresa], que vende [produto ou serviço] para [perfil de cliente].
+Cliente ideal: [tamanho, segmento, problema que resolvemos, orçamento mínimo].
+Com base na mensagem abaixo, escreva uma resposta curta com uma única pergunta de qualificação por vez, nesta ordem: 1) qual problema quer resolver, 2) quantas pessoas ou unidades envolve, 3) quando pretende decidir.
+Depois da terceira resposta, classifique o lead como Quente, Morno ou Frio e justifique em uma linha.
+Mensagem do lead: [colar]
+```
+
+**6. Proposta comercial a partir de anotações**
+
+Para que serve: sair da reunião com a proposta pronta em 10 minutos.
+Tempo que economiza: 3 horas por semana para quem envia 3 propostas por semana.
+
+```text
+# Prompt: proposta comercial
+Escreva uma proposta comercial da [nome da empresa] para [nome do cliente, segmento].
+Anotações da reunião: [colar anotações]
+Estrutura: 1) o problema do cliente nas palavras dele, 2) o que entregamos (lista objetiva), 3) o que não está incluso, 4) investimento: [valores e condições], 5) prazo e próximos passos, 6) validade da proposta: [dias].
+Tom: direto, sem adjetivos, sem "soluções inovadoras". Até 1 página.
+```
+
+**7. Follow-up para quem sumiu**
+
+Para que serve: retomar a conversa com quem pediu proposta e não respondeu, sem parecer cobrança.
+Tempo que economiza: 1 hora por semana e recupera negócios que estavam parados.
+
+```text
+# Prompt: follow-up de proposta
+Escreva 3 mensagens curtas de follow-up para WhatsApp, para serem enviadas com 3, 7 e 14 dias de intervalo, a um cliente que recebeu proposta de [produto ou serviço] e não respondeu.
+Cada mensagem: até 3 linhas, uma pergunta por mensagem, sem "só passando para lembrar", sem desconto na primeira.
+A terceira mensagem deve encerrar o ciclo com elegância e deixar a porta aberta.
+Contexto da proposta: [valor, o que foi discutido, objeção que apareceu].
+```
+
+**8. Resposta a objeção de preço**
+
+Para que serve: ter uma resposta pronta e honesta quando o cliente diz "está caro".
+Tempo que economiza: 30 minutos por semana e, principalmente, fecha negócios que o improviso perdia.
+
+```text
+# Prompt: objeção de preço
+O cliente disse: "[colar objeção]".
+Nosso produto: [o que é, preço, o que inclui]. O que o cliente perde sem ele: [custo do problema não resolvido].
+Escreva 3 respostas possíveis, cada uma com até 4 linhas: 1) reenquadrando o custo pelo resultado, 2) oferecendo uma versão menor sem desconto, 3) perguntando o que ele comparou.
+Sem baixar o preço. Sem atacar concorrente.
+```
+
+Os scripts completos de venda por WhatsApp, por etapa do funil, estão em [script de vendas para WhatsApp](/blog/script-de-vendas-whatsapp/).
+
+## Marketing e financeiro: 8 prompts
+
+### Marketing e conteúdo
+
+**9. Calendário de conteúdo do mês**
+
+Para que serve: decidir de uma vez o que publicar nas próximas quatro semanas.
+Tempo que economiza: 2 horas por semana que iam embora escolhendo tema na hora.
+
+```text
+# Prompt: calendário de conteúdo
+Você é o redator da [nome da empresa]: [contexto da empresa, público, tom].
+Monte um calendário de 4 semanas com 3 publicações por semana para [Instagram / LinkedIn / blog].
+Para cada publicação: data, formato (post, carrossel, vídeo curto), tema, objetivo (atrair, educar, vender), ideia de gancho na primeira linha.
+Distribua: 50% educativo, 30% bastidores e prova, 20% oferta. Nenhum tema repetido.
+```
+
+**10. Um áudio vira cinco conteúdos**
+
+Para que serve: você grava 3 minutos falando de um assunto e sai post, e-mail, roteiro de vídeo, anúncio e legenda.
+Tempo que economiza: 3 horas por semana para quem publica toda semana.
+
+```text
+# Prompt: reaproveitar um conteúdo
+Abaixo está a transcrição de um áudio meu sobre [tema]. Mantenha as minhas palavras e expressões sempre que possível.
+Produza: 1) post de LinkedIn com até 1.200 caracteres, 2) legenda de Instagram com até 300 caracteres, 3) roteiro de vídeo de 60 segundos com as falas, 4) e-mail curto para a base com assunto e 3 parágrafos, 5) texto de anúncio com título, descrição e chamada.
+Transcrição: [colar]
+```
+
+**11. Anúncio com três variações**
+
+Para que serve: testar três abordagens sem depender de agência.
+Tempo que economiza: 1 hora por campanha.
+
+```text
+# Prompt: anúncio em três variações
+Produto: [nome, o que faz, para quem, preço]. Público do anúncio: [descrição]. Objetivo: [mensagem no WhatsApp / cadastro / compra].
+Escreva 3 anúncios: um focado em dor, um em resultado, um em prova (número, caso, garantia).
+Cada anúncio: título com até 40 caracteres, texto com até 125 caracteres, chamada para ação com até 20 caracteres.
+Sem superlativos, sem promessa de ganho garantido.
+```
+
+**12. Página de produto ou serviço**
+
+Para que serve: escrever a página que vende quando você não está olhando.
+Tempo que economiza: 4 horas na montagem e evita contratar redator para uma página.
+
+```text
+# Prompt: página de produto
+Escreva o texto de uma página de vendas para [produto ou serviço] da [nome da empresa].
+Público: [descrição]. Problema que resolve: [descrição]. Diferenciais reais: [lista]. Preço e condições: [dados]. Objeções comuns: [lista].
+Estrutura: título com a promessa concreta, subtítulo, 3 blocos de benefício com uma frase cada, como funciona em 3 passos, perguntas frequentes (5), chamada final.
+Tom: [tom da marca]. Sem "revolucionário", sem "transforme".
+```
+
+### Financeiro
+
+**13. Régua de cobrança em quatro mensagens**
+
+Para que serve: cobrar com educação, no prazo certo, sem a pessoa do financeiro escrever uma mensagem por vez.
+Tempo que economiza: 2 horas por semana para quem tem mais de 30 boletos por mês.
+
+```text
+# Prompt: régua de cobrança
+Escreva 4 mensagens de cobrança para WhatsApp da [nome da empresa], para serem enviadas 3 dias antes do vencimento, no dia, 3 dias depois e 10 dias depois.
+Cada mensagem: até 4 linhas, tom cordial e firme, com [forma de pagamento, link ou código], sem ameaça, sem "evite transtornos".
+A última deve informar a consequência prevista em contrato: [suspensão do serviço / juros de X%] e oferecer negociação.
+Use [nome do cliente] e [valor] como campos.
+```
+
+Nossa régua tem quatro mensagens e roda sozinha pela API da Nvoip. Como montar a cadência e o que a lei permite está em [cobrança pelo WhatsApp](https://www.nvoip.com.br/blog/cobranca-whatsapp-business-outubro-2026/) e em [régua de cobrança](https://www.nvoip.com.br/blog/regua-de-cobranca/), no blog da Nvoip.
+
+**14. Previsão de caixa das próximas oito semanas**
+
+Para que serve: saber hoje se falta dinheiro daqui a um mês.
+Tempo que economiza: 1 hora por semana e tira a surpresa do fim do mês.
+
+```text
+# Prompt: previsão de caixa
+Abaixo estão: saldo atual, contas a receber com datas, contas a pagar com datas e a média de vendas das últimas 8 semanas.
+Monte uma projeção semanal de caixa para as próximas 8 semanas em tabela: semana, entradas previstas, saídas previstas, saldo final.
+Destaque toda semana em que o saldo fica abaixo de [valor mínimo de segurança] e sugira 3 ações para cada uma (antecipar recebível, negociar prazo, cortar despesa).
+Dados: [colar dados sem nomes de clientes]
+```
+
+**15. Conferência de conta de fornecedor**
+
+Para que serve: achar cobrança indevida em conta de telefonia, nuvem, software ou energia.
+Tempo que economiza: 30 minutos por conta, e o dinheiro recuperado costuma pagar o mês da ferramenta.
+
+```text
+# Prompt: conferir conta de fornecedor
+Abaixo está a fatura de [fornecedor] deste mês e a do mês anterior, além do contrato ou do plano contratado.
+Liste: 1) itens que subiram mais de 10%, 2) itens que não existem no contrato, 3) cobranças duplicadas, 4) serviços que aparecem com uso zero.
+Para cada achado, escreva uma frase que eu possa enviar ao fornecedor pedindo esclarecimento.
+Faturas e contrato: [colar]
+```
+
+**16. Precificação de um serviço novo**
+
+Para que serve: chegar a um preço defensável antes de perguntar ao concorrente.
+Tempo que economiza: 2 horas por produto lançado.
+
+```text
+# Prompt: precificação
+Quero precificar [serviço ou produto novo]. Custos diretos por unidade: [lista]. Horas de trabalho por unidade: [número] a [valor da hora]. Custos fixos mensais da empresa: [valor]. Volume esperado por mês: [número]. Margem desejada: [percentual]. Regime tributário: [Simples Nacional anexo X / Lucro Presumido].
+Calcule o preço mínimo, o preço com a margem desejada e um preço âncora 25% acima. Mostre a conta passo a passo e aponte qual premissa, se estiver errada, muda mais o resultado.
+```
+
+## Contabilidade e jurídico: 8 prompts
+
+### Contabilidade e auditoria
+
+**17. Checklist de fechamento do mês**
+
+Para que serve: fechar o mês com o contador sem esquecer documento.
+Tempo que economiza: 1 hora por mês e várias trocas de e-mail.
+
+```text
+# Prompt: fechamento do mês
+Minha empresa é [tipo: comércio / serviço / indústria], regime [Simples / Presumido / Real], com [número] funcionários e [número] notas emitidas por mês.
+Monte um checklist de fechamento mensal em ordem cronológica, com o responsável (eu, equipe ou contador), o documento necessário e o prazo. Inclua impostos, folha, conciliação bancária, notas de entrada e saída, e o que o contador costuma pedir e ninguém manda.
+```
+
+**18. Conciliação de extrato com lançamentos**
+
+Para que serve: achar o que entrou no banco e não foi lançado, e vice-versa.
+Tempo que economiza: 2 horas por mês.
+
+```text
+# Prompt: conciliação bancária
+Abaixo estão o extrato bancário do mês e a lista de lançamentos do meu controle financeiro, ambos com data, valor e descrição.
+Liste: 1) lançamentos que aparecem no extrato e não no controle, 2) os que aparecem no controle e não no extrato, 3) valores iguais com datas diferentes em mais de 3 dias.
+Formato: três tabelas. Não tente adivinhar a classificação; só aponte as diferenças.
+Dados: [colar]
+```
+
+**19. Tradução do relatório do contador**
+
+Para que serve: entender o balancete que chega todo mês e você não lê.
+Tempo que economiza: 1 hora por mês e, principalmente, decisões melhores.
+
+```text
+# Prompt: traduzir relatório contábil
+Abaixo está o balancete ou DRE que meu contador enviou. Explique em português simples, para um dono de empresa sem formação em contabilidade: 1) a empresa deu lucro ou prejuízo e quanto, 2) as 3 contas que mais pesaram, 3) o que mudou em relação ao mês anterior, 4) 3 perguntas que eu deveria fazer ao contador.
+Não use termos técnicos sem explicar entre parênteses.
+Relatório: [colar]
+```
+
+**20. Separação de despesas pessoais e da empresa**
+
+Para que serve: limpar a mistura de cartão que todo dono de empresa pequena já fez.
+Tempo que economiza: 1 hora por mês e evita problema fiscal.
+
+```text
+# Prompt: classificar despesas
+Abaixo está a lista de despesas do cartão da empresa com data, estabelecimento e valor.
+Classifique cada uma em: Operacional, Marketing, Pessoal (dono), Dúvida. Use o nome do estabelecimento como pista e marque como Dúvida quando não tiver certeza.
+Ao final, some cada categoria e liste as despesas da categoria Pessoal para eu reembolsar a empresa.
+Dados: [colar]
+```
+
+### Jurídico
+
+**21. Rascunho de contrato de prestação de serviços**
+
+Para que serve: chegar ao advogado com a minuta pronta e pagar pela revisão, não pela redação.
+Tempo que economiza: 3 horas por contrato novo.
+
+```text
+# Prompt: minuta de contrato
+Rascunhe um contrato de prestação de serviços entre [nome da empresa, CNPJ fictício para a minuta] e [cliente], para [descrição do serviço].
+Cláusulas: objeto, prazo e renovação, valor e forma de pagamento, reajuste, obrigações de cada parte, confidencialidade, proteção de dados conforme a LGPD, rescisão com aviso de [dias], multa, foro.
+Linguagem clara, sem latim, numeração por cláusula. Ao final, liste os pontos que um advogado precisa validar antes da assinatura.
+```
+
+**22. Leitura de contrato de fornecedor**
+
+Para que serve: saber o que você está assinando antes de assinar.
+Tempo que economiza: 1 hora por contrato e evita renovação automática indesejada.
+
+```text
+# Prompt: analisar contrato recebido
+Abaixo está um contrato que [fornecedor] me enviou para assinar.
+Liste: 1) prazo e regra de renovação automática, 2) multa e condições de rescisão, 3) reajuste e índice, 4) obrigações minhas que podem ser difíceis de cumprir, 5) cláusulas incomuns ou desequilibradas.
+Para cada ponto, sugira uma redação alternativa que eu possa propor. Diga claramente o que exige um advogado.
+Contrato: [colar]
+```
+
+**23. Termos de uso e política de privacidade**
+
+Para que serve: ter o rascunho do que todo site precisa, para o advogado revisar.
+Tempo que economiza: 4 horas na primeira versão.
+
+```text
+# Prompt: termos de uso e privacidade
+A [nome da empresa] oferece [serviço] pelo site [domínio]. Coletamos: [nome, e-mail, telefone, dados de pagamento, cookies]. Usamos para: [lista]. Compartilhamos com: [processador de pagamento, ferramenta de e-mail]. Guardamos por: [prazo].
+Escreva Termos de Uso e Política de Privacidade separados, em linguagem simples, adequados à LGPD, com as seções que a lei pede (base legal, direitos do titular, contato do encarregado).
+Marque com "VALIDAR" cada trecho que depende de decisão jurídica.
+```
+
+**24. Resposta a notificação ou cobrança indevida**
+
+Para que serve: responder com firmeza e sem erro a uma carta que assusta.
+Tempo que economiza: 2 horas e muita ansiedade.
+
+```text
+# Prompt: responder notificação
+Recebi a notificação abaixo de [empresa ou pessoa]. Os fatos, do meu lado, são: [descrição objetiva].
+Escreva uma resposta formal, educada e firme, que: 1) acuse o recebimento, 2) apresente a minha versão com datas, 3) peça os documentos que comprovem a alegação, 4) deixe claro que não reconheço o débito ou a obrigação até a comprovação.
+Sem ameaças. Ao final, diga se este caso deve passar por um advogado antes do envio e por quê.
+Notificação: [colar]
+```
+
+## Pessoas e desenvolvimento: 8 prompts
+
+### Pessoas
+
+**25. Descrição de vaga que atrai a pessoa certa**
+
+Para que serve: publicar uma vaga que descreve o trabalho real, inclusive o que a IA já faz na função.
+Tempo que economiza: 2 horas por vaga.
+
+```text
+# Prompt: descrição de vaga
+Escreva a descrição da vaga de [cargo] na [nome da empresa]: [contexto da empresa].
+Rotina real da função: [lista de atividades]. O que a IA já faz nessa função: [lista]. O que a pessoa supervisiona e decide: [lista]. Requisitos obrigatórios (máximo 4) e desejáveis (máximo 3). Faixa salarial: [valor] e benefícios: [lista]. Modelo: [presencial / híbrido / remoto].
+Tom: direto, honesto sobre os desafios. Até 350 palavras. Sem "proativo", sem "dinâmico".
+```
+
+O modelo completo está em [descrição de cargo: modelo pronto](/blog/descricao-de-cargo-modelo/).
+
+**26. Triagem de currículos**
+
+Para que serve: ordenar 40 currículos pelos critérios da vaga em minutos.
+Tempo que economiza: 3 horas por processo seletivo.
+
+```text
+# Prompt: triagem de currículos
+Critérios da vaga de [cargo], em ordem de importância: [critério 1], [critério 2], [critério 3], [critério 4].
+Abaixo estão [número] currículos, identificados apenas por código. Para cada um, dê nota de 0 a 10 por critério, uma nota final ponderada e uma linha de justificativa.
+Não considere idade, gênero, endereço, foto ou nome. Liste separadamente os currículos em que faltou informação para avaliar.
+Currículos: [colar sem dados pessoais além da experiência e formação]
+```
+
+**27. Roteiro de entrevista por competência**
+
+Para que serve: fazer a mesma entrevista com todos os candidatos e comparar de verdade.
+Tempo que economiza: 1 hora por processo e entrevistas mais curtas.
+
+```text
+# Prompt: roteiro de entrevista
+Para a vaga de [cargo], com as competências [lista], monte um roteiro de entrevista de 40 minutos.
+Para cada competência: 2 perguntas sobre situações reais já vividas ("conte uma vez em que..."), o que uma resposta boa contém e o que é sinal de alerta.
+Inclua 5 minutos finais para o candidato perguntar e uma tabela de avaliação de 1 a 5.
+```
+
+**28. Preparação de conversa de feedback**
+
+Para que serve: dar um feedback difícil sem rodeio e sem machucar.
+Tempo que economiza: 1 hora de preparação e evita a conversa adiada por meses.
+
+```text
+# Prompt: preparar feedback
+Preciso dar um feedback a [função da pessoa, sem nome] sobre [comportamento ou resultado observado, com 2 exemplos concretos e datas].
+Monte o roteiro da conversa: abertura em 2 frases, descrição dos fatos sem julgamento, impacto no time ou no cliente, pergunta aberta para ouvir a pessoa, acordo de mudança com prazo e como vamos acompanhar.
+Tom: respeitoso e direto. Me avise se algum trecho soar como ataque pessoal.
+```
+
+### Desenvolvimento e produto
+
+**29. Especificação de uma melhoria para o desenvolvedor ou a agência**
+
+Para que serve: pedir a mudança certa, uma vez só, sem retrabalho.
+Tempo que economiza: 2 horas por pedido e semanas de ida e volta.
+
+```text
+# Prompt: especificar uma melhoria
+Quero pedir ao [desenvolvedor / agência / fornecedor do sistema] a seguinte mudança: [descrição informal].
+Transforme em especificação: 1) problema atual com exemplo, 2) comportamento esperado passo a passo, 3) quem usa e quando, 4) o que não muda, 5) como vamos testar que ficou pronto (3 cenários), 6) prioridade e prazo desejado.
+Me pergunte o que faltar antes de escrever.
+```
+
+**30. Roteiro de teste antes de publicar**
+
+Para que serve: não descobrir no cliente que o site ou o sistema quebrou.
+Tempo que economiza: 1 hora por publicação e o custo de um erro em produção.
+
+```text
+# Prompt: roteiro de teste
+Vamos publicar uma mudança em [sistema, site ou aplicativo]: [descrição da mudança].
+Escreva um roteiro de testes manuais em tabela: passo, o que fazer, resultado esperado, resultado obtido (vazio). Cubra: o caminho principal, 3 erros comuns de usuário, celular e computador, e o que pode ter quebrado em volta.
+Máximo de 20 passos, do mais crítico ao menos crítico.
+```
+
+**31. Conferência da conta de nuvem e ferramentas**
+
+Para que serve: achar os custos invisíveis de servidor, SaaS e licença que ninguém olha.
+Tempo que economiza: 1 hora por mês e, com frequência, uma economia direta.
+
+```text
+# Prompt: auditar custos de tecnologia
+Abaixo está a lista de assinaturas e contas de tecnologia da empresa com nome, valor mensal, quantidade de licenças e quem usa.
+Classifique cada item: Essencial, Útil, Duplicado (faz o mesmo que outro da lista), Sem uso aparente.
+Para os três últimos grupos, calcule a economia anual se cancelar ou reduzir e sugira a ordem de ataque.
+Dados: [colar]
+```
+
+**32. Entrevista com cliente sobre o produto**
+
+Para que serve: descobrir o que melhorar perguntando certo, em vez de adivinhar.
+Tempo que economiza: 1 hora por rodada de entrevistas.
+
+```text
+# Prompt: roteiro de entrevista com cliente
+Quero entender por que clientes de [produto ou serviço] [cancelam / não usam o recurso X / não indicam].
+Monte um roteiro de 20 minutos com 8 perguntas abertas, sem induzir resposta, começando pela rotina do cliente e chegando ao problema. Inclua a frase de abertura, como pedir permissão para gravar e como encerrar.
+Depois, me dê um prompt para resumir as respostas de 10 entrevistas em padrões.
+```
+
+## O dono e a rotina da empresa: 8 prompts
+
+### O dono
+
+**33. Resumo de reunião com tarefas**
+
+Para que serve: sair da reunião com ata e responsáveis sem ninguém escrever.
+Tempo que economiza: 2 horas por semana para quem tem 4 reuniões semanais.
+
+```text
+# Prompt: ata de reunião
+Abaixo está a transcrição de uma reunião da [nome da empresa].
+Produza: 1) decisões tomadas, 2) tarefas com responsável e prazo (se não houver prazo, escreva "definir"), 3) assuntos adiados, 4) dúvidas em aberto.
+Formato: listas curtas. Use as palavras ditas na reunião. Não invente responsável.
+Transcrição: [colar]
+```
+
+Reuniões por telefone ou videochamada gravadas podem ser transcritas antes de passar por este prompt; escrevi sobre isso em [transcrição de áudio](https://www.nvoip.com.br/blog/transcricao-de-audio/), no blog da Nvoip.
+
+**34. Segunda opinião antes de uma decisão**
+
+Para que serve: ouvir o contra antes de assinar, contratar ou cortar.
+Tempo que economiza: difícil medir em horas; evita decisões caras.
+
+```text
+# Prompt: segunda opinião
+Estou prestes a decidir: [decisão]. Motivos a favor: [lista]. O que me preocupa: [lista]. Contexto da empresa: [faturamento aproximado, time, caixa].
+Faça o papel de um sócio experiente e cético. Liste: 1) os 3 maiores riscos que não mencionei, 2) o que eu precisaria saber antes e ainda não sei, 3) uma alternativa menor e reversível, 4) a pergunta que eu deveria me fazer.
+Seja direto. Não me elogie.
+```
+
+**35. Relatório semanal de indicadores**
+
+Para que serve: transformar a planilha de indicadores em três parágrafos que você lê em dois minutos.
+Tempo que economiza: 1 hora por semana.
+
+```text
+# Prompt: relatório semanal
+Abaixo está a planilha com os indicadores da semana e das 4 semanas anteriores: [lista dos indicadores].
+Escreva um relatório de até 12 linhas: 1) o que melhorou e o que piorou, com os números, 2) o indicador que mais preocupa e uma hipótese de causa, 3) 3 ações sugeridas para a semana. Sem introdução, sem elogio, sem adjetivos.
+Dados: [colar]
+```
+
+Os sete indicadores que uso toda semana, com fórmula e planilha, estão em [indicadores de gestão para pequenas empresas](/blog/indicadores-de-gestao-para-pequenas-empresas/).
+
+**36. Plano de delegação de uma tarefa**
+
+Para que serve: tirar da sua mesa uma tarefa que só você faz.
+Tempo que economiza: cada tarefa delegada devolve o tempo dela para sempre.
+
+```text
+# Prompt: delegar uma tarefa
+Hoje só eu faço: [tarefa], que leva [horas] por semana. Passos que eu sigo: [lista informal]. Erros possíveis e como percebo: [lista].
+Monte: 1) o procedimento passo a passo em linguagem simples, 2) o que pode ser feito por IA com um prompt (e escreva o prompt), 3) o que uma pessoa precisa decidir, 4) como vou conferir o resultado em 5 minutos por semana.
+```
+
+### Rotina e operações
+
+**37. Procedimento operacional padrão a partir de um áudio**
+
+Para que serve: documentar um processo em 15 minutos falando, não em 3 horas escrevendo.
+Tempo que economiza: 2 horas por processo documentado.
+
+```text
+# Prompt: POP a partir de áudio
+Abaixo está a transcrição de um áudio em que explico como fazemos [processo] na [nome da empresa].
+Transforme em um Procedimento Operacional Padrão com: objetivo, quem executa, quando, materiais e sistemas usados, passos numerados com o que fazer e o resultado esperado de cada um, erros comuns e o que fazer quando algo dá errado.
+Mantenha as minhas palavras. Marque com "CONFIRMAR" qualquer passo que ficou ambíguo.
+Transcrição: [colar]
+```
+
+O passo a passo completo e o modelo estão em [modelo de POP](/blog/modelo-de-pop-procedimento-operacional-padrao/).
+
+**38. Triagem da caixa de e-mail**
+
+Para que serve: começar o dia sabendo o que responder, o que delegar e o que apagar.
+Tempo que economiza: 30 minutos por dia, 2 horas e meia por semana.
+
+```text
+# Prompt: triagem de e-mails
+Abaixo estão os assuntos e as primeiras linhas de [número] e-mails recebidos.
+Classifique cada um: Responder hoje (eu), Delegar (para quem, pela função), Arquivar, Lixo. Para os de "Responder hoje", escreva um rascunho de resposta com até 3 linhas.
+Critérios: cliente sempre vem antes de fornecedor; nada de newsletter em "Responder".
+E-mails: [colar sem dados pessoais]
+```
+
+**39. Checklist de abertura e fechamento**
+
+Para que serve: padronizar o começo e o fim do dia de uma loja, clínica, escritório ou operação.
+Tempo que economiza: 1 hora por semana em retrabalho e esquecimento.
+
+```text
+# Prompt: checklist de rotina
+Minha operação é [tipo: loja / clínica / escritório / oficina] com [número] pessoas e funciona de [horário].
+Monte dois checklists, de abertura e de fechamento, em ordem, com a tarefa, quem faz, quanto tempo leva e como registrar que foi feito. Inclua segurança, caixa, limpeza, sistemas e comunicação com o cliente.
+Máximo de 15 itens cada.
+```
+
+**40. Comunicado interno curto**
+
+Para que serve: avisar o time de uma mudança sem gerar 30 perguntas.
+Tempo que economiza: 30 minutos por comunicado e menos ruído depois.
+
+```text
+# Prompt: comunicado interno
+Preciso avisar o time sobre: [mudança, data, motivo].
+Escreva um comunicado para WhatsApp ou e-mail com: o que muda, a partir de quando, por que, o que cada pessoa precisa fazer, a quem perguntar.
+Até 10 linhas, tom direto e respeitoso. Depois, liste as 5 perguntas que o time provavelmente vai fazer e a resposta de cada uma.
+```
+
+## Quanto tempo os prompts para empresas economizam por semana
+
+Somei as estimativas acima por área. Repito: são estimativas conservadoras, feitas por mim a partir de uma empresa de serviços e tecnologia. O seu número depende do volume, de quem executa e de quanto do processo já estava organizado.
+
+| Área | Prompts | Horas por semana (estimativa) | Por onde começar |
+|---|---|---|---|
+| Atendimento | 1 a 4 | 5 a 6 | Primeira resposta no WhatsApp |
+| Vendas | 5 a 8 | 6 a 7 | Follow-up de proposta |
+| Marketing | 9 a 12 | 6 a 7 | Um áudio vira cinco conteúdos |
+| Financeiro | 13 a 16 | 3 a 5 | Régua de cobrança |
+| Contabilidade | 17 a 20 | 1 a 2 | Tradução do relatório do contador |
+| Jurídico | 21 a 24 | 2 a 3 (quando há contrato) | Leitura de contrato de fornecedor |
+| Pessoas | 25 a 28 | 1 a 3 (em meses com vaga) | Triagem de currículos |
+| Desenvolvimento e produto | 29 a 32 | 1 a 2 | Especificação de melhoria |
+| O dono | 33 a 36 | 3 a 4 | Ata de reunião |
+| Rotina | 37 a 40 | 4 a 5 | Triagem de e-mails |
+
+Mesmo descontando metade, para uma empresa de 10 pessoas, são dezenas de horas por mês que voltam para vender, atender melhor ou simplesmente ir embora no horário. Esse é o raciocínio por trás da tese de crescer sem contratar, que detalhei em [como reduzir custos na empresa sem demitir](/blog/como-reduzir-custos-na-empresa-sem-demitir/): a demanda nova não precisa virar vaga quando o processo está escrito e a IA executa a parte repetitiva.
+
+O que os prompts não fazem: decidir por você, assumir responsabilidade pelo que foi enviado ao cliente e substituir o contador ou o advogado. Em todos os 40, há uma pessoa revisando antes de usar. Quando essa revisão fica rápida e previsível, o prompt está pronto para virar agente, com instrução fixa e rotina. Esse é o passo seguinte, e é o conteúdo do e-book.
+
+## Perguntas frequentes
+
+### Qual ferramenta usar para estes prompts para empresas?
+
+Os 40 funcionam no ChatGPT, no Gemini e no Claude, inclusive nas versões gratuitas, com limite de uso. Para rotina diária com dados da empresa, prefira um plano pago de equipe, que não usa os seus dados para treinar o modelo. Comparei as três por tarefa e preço em [ChatGPT, Gemini ou Claude: qual IA usar na empresa](/blog/chatgpt-gemini-ou-claude-qual-ia-usar-na-empresa/).
+
+### Posso colar dados de clientes nos prompts?
+
+Evite. Troque nome por código, remova telefone, documento e endereço, e nunca cole cartão ou senha. Em planos de equipe, leia o contrato sobre uso dos dados. Para cobrança e atendimento com dado real, o caminho é um agente conectado por API, com regras, não um chat aberto.
+
+### Quanto tempo leva para ver resultado?
+
+O primeiro prompt economiza tempo no mesmo dia. O ganho que aparece no fim do mês vem quando a mesma pessoa usa o mesmo prompt toda semana, com o contexto salvo. Dê 30 dias para uma área antes de abrir outra.
+
+### Prompt e agente são a mesma coisa?
+
+Não. O prompt você cola toda vez. O agente tem a instrução gravada, o contexto da empresa fixo e, muitas vezes, uma conexão com WhatsApp, e-mail ou planilha. Todo agente nasce de um prompt que funcionou dez vezes. Mostro como fazer essa passagem em [como criar um agente de IA no ChatGPT, Claude ou Gemini](/blog/como-criar-agente-de-ia-no-chatgpt-claude-gemini/).
+
+### A IA erra. Como confio no resultado?
+
+Não confie; confira. Cada prompt pede formato fixo justamente para a conferência levar dois minutos. Comece pelas tarefas em que um erro custa pouco (rascunho de post, ata, triagem de e-mail) e deixe as de risco (cobrança, contrato) para quando a rotina de revisão estiver firme.
+
+## Por onde começar
+
+1. **Hoje:** escolha um prompt da área que mais dói e use com dados reais, anonimizados. Guarde o parágrafo de contexto da empresa para reaproveitar.
+2. **Esta semana:** repita o mesmo prompt todos os dias e ajuste as regras até a resposta sair pronta sem edição. Anote quanto tempo levava antes e quanto leva agora.
+3. **Este mês:** escolha uma segunda área. Quando um prompt rodar sem surpresa por quatro semanas, ele está pronto para virar agente.
+
+Os 40 prompts deste artigo são a amostra. No [e-book IA no Negócio](/ebook/ia-no-negocio/) cada uma das dez áreas tem o capítulo completo, com a instrução dos seis agentes que rodam na minha empresa: atendente de WhatsApp, assistente comercial, redator da marca, analista financeiro, parceiro de RH e conselheiro do dono. E se você quer um ponto de partida gratuito, baixe [as 12 tarefas que a IA já faz melhor que um analista](/gratis/), em PDF, para decidir qual delas tirar da sua mesa primeiro.

@@ -1,0 +1,320 @@
+---
+title: "Prompts para atendimento ao cliente: 25 modelos por situação"
+description: "25 prompts para atendimento ao cliente no WhatsApp, e-mail e reclamações: primeira resposta, atraso, cliente irritado, cobrança, pós-venda e transcrição de ligação. Prontos para copiar."
+publishedAt: 2026-10-28T10:00:00-03:00
+tags: ["prompts", "atendimento", "whatsapp", "ia"]
+draft: false
+---
+
+Prompts para atendimento ao cliente resolvem o problema mais caro de uma empresa pequena: a demora. A mensagem chega às 21h, a resposta sai às 9h e, nesse intervalo, o cliente já comprou do concorrente ou já escreveu a reclamação pública.
+
+Passei os últimos anos operando atendimento em escala na Nvoip, a empresa de telefonia e comunicação em nuvem que fundei: mais de 50 mil clientes atendidos, com um time que foi de 70 para 10 pessoas sem perder clientes. O que permitiu isso não foi um chatbot comprado pronto. Foi uma sequência de prompts que o time usou todo dia até virar instrução de agente.
+
+Este artigo tem 25 desses prompts, organizados por situação: primeira resposta, dúvida sobre produto, atraso, reclamação, cliente irritado, cobrança, pós-venda e trabalho interno do time, como resumir chamado e analisar transcrição de ligação. Cada um está pronto para copiar, com os campos entre colchetes para você preencher.
+
+Funcionam no ChatGPT, no Gemini e no Claude. E, quando um deles rodar sem edição por algumas semanas, está pronto para virar o agente que responde sozinho, com regra de passar para um humano.
+
+## Como usar prompts para atendimento ao cliente sem errar o tom
+
+Três regras valem para todos os prompts abaixo.
+
+**Primeira: cole o contexto da empresa uma vez só.** Escreva um parágrafo com o que vocês vendem, para quem, horário de atendimento, prazos oficiais, política de troca e tom de voz. Esse parágrafo entra no lugar de [contexto da empresa] em todos os prompts. Sem ele, a IA inventa prazo e promete o que vocês não entregam.
+
+**Segunda: nunca cole dado identificável do cliente.** Nome completo, telefone, CPF, endereço e número de pedido ligado a pessoa ficam fora do chat aberto. Troque por "cliente" e "pedido X". Quando o atendimento precisar de dado real, o caminho é um agente conectado por API, com contrato que proíbe usar seus dados para treino. As regras completas estão em [política de uso de IA na empresa](/blog/politica-de-uso-de-ia-na-empresa-modelo/).
+
+**Terceira: um humano revisa antes de enviar, até a rotina ficar previsível.** No começo, todo texto passa por alguém. Quando a mesma situação sai certa dez vezes, a revisão vira amostragem. Quando sai certa por um mês, vira agente.
+
+Se você ainda está no zero, leia antes [como usar IA na minha empresa](/blog/como-usar-ia-na-minha-empresa/). Atendimento costuma ser a melhor área para começar, porque o ganho aparece no mesmo dia.
+
+## Primeira resposta e dúvidas (prompts 1 a 6)
+
+**1. Primeira resposta no WhatsApp**
+
+```text
+# Prompt: primeira resposta no WhatsApp
+Você é atendente da [nome da empresa]: [contexto da empresa].
+Tom: [cordial e direto], frases curtas, sem emoji, sem "olá, tudo bem?" seguido de silêncio.
+Regras: só use prazos, preços e condições desta lista: [lista oficial]. Se a pergunta não estiver coberta, diga que vai confirmar e pergunte o melhor horário para retorno.
+Mensagem do cliente: [colar]
+Responda em até 4 linhas, terminando com uma pergunta que faça a conversa avançar.
+```
+
+**2. Resposta fora do horário**
+
+```text
+# Prompt: mensagem fora do horário
+Escreva a resposta automática da [nome da empresa] para mensagens recebidas fora do horário de atendimento ([horário]).
+Deve: confirmar que a mensagem foi recebida, dizer quando a resposta chega, oferecer 2 caminhos imediatos (link de [perguntas frequentes / segunda via / rastreio]) e pedir que o cliente já descreva o que precisa para ganhar tempo.
+Até 5 linhas. Sem promessa de "retorno imediato".
+```
+
+**3. Dúvida sobre produto ou serviço**
+
+```text
+# Prompt: dúvida sobre produto
+Você é atendente da [nome da empresa]. Informações oficiais do produto: [descrição, o que inclui, o que não inclui, preço, prazo, garantia].
+Pergunta do cliente: [colar]
+Responda com base apenas nas informações oficiais. Se a resposta não estiver nelas, diga "vou confirmar com a equipe" em vez de supor. Até 5 linhas, sem repetir a pergunta.
+```
+
+**4. Pedido de orçamento**
+
+```text
+# Prompt: resposta a pedido de orçamento
+O cliente pediu orçamento de [produto ou serviço]. Para orçar, preciso saber: [lista de 3 informações].
+Escreva uma resposta que agradeça, faça essas perguntas uma por vez em ordem (só a primeira nesta mensagem) e explique em uma frase por que preciso delas. Diga o prazo em que o orçamento sai depois das respostas: [prazo].
+Até 4 linhas.
+```
+
+**5. Cliente pergunta algo que não vendemos**
+
+```text
+# Prompt: não vendemos isso
+O cliente pediu [item ou serviço que não oferecemos]. O que oferecemos de parecido: [alternativa ou nada].
+Escreva uma resposta honesta e curta: diga que não trabalhamos com isso, ofereça a alternativa se existir e, se não existir, agradeça o contato sem indicar concorrente.
+Até 3 linhas.
+```
+
+**6. Perguntas frequentes a partir das conversas**
+
+```text
+# Prompt: montar perguntas frequentes
+Abaixo estão [número] conversas de atendimento, sem dados pessoais. Identifique as 10 perguntas mais repetidas e escreva a melhor resposta curta para cada uma, usando só o que aparece nas conversas.
+Formato: tabela com Pergunta, Resposta, Vezes que apareceu. Marque "CONFIRMAR" onde as conversas se contradizem.
+Conversas: [colar]
+```
+
+Essa base de perguntas e respostas é o que alimenta o agente de atendimento depois. Na Nvoip, o agente que responde no WhatsApp consulta uma base assim antes de responder e passa para uma pessoa quando não encontra. Eu uso a [API oficial do WhatsApp da Nvoip](https://www.nvoip.com.br/whatsapp/), que fundei, e recomendo; o roteiro de montagem está em [como criar um agente de IA para WhatsApp](/blog/como-criar-agente-de-ia-para-whatsapp/).
+
+## Atraso, erro e reclamação (prompts 7 a 12)
+
+**7. Aviso de atraso antes do cliente perguntar**
+
+```text
+# Prompt: aviso de atraso
+O pedido ou serviço do cliente vai atrasar de [data prometida] para [nova data] por [motivo real, em uma frase].
+Escreva a mensagem avisando antes que ele pergunte: fato, nova data, o que estamos fazendo, uma compensação se houver ([frete grátis / desconto / prioridade]) e um pedido de desculpas direto, sem "transtornos".
+Até 5 linhas.
+```
+
+**8. Resposta a "onde está meu pedido?"**
+
+```text
+# Prompt: onde está meu pedido
+O cliente perguntou pelo pedido. Situação real: [em separação / enviado em X / parado na transportadora / sem informação].
+Responda com o status em uma frase, o próximo passo com data, e o que ele pode fazer se a data passar. Se não houver informação, diga isso e dê um prazo para eu voltar com resposta.
+Até 4 linhas, sem culpar a transportadora.
+```
+
+**9. Erro nosso: produto errado, cobrança duplicada, serviço mal feito**
+
+```text
+# Prompt: assumir um erro
+Cometemos um erro: [descrição objetiva]. A solução que vamos dar: [troca / reembolso / refazer] em [prazo].
+Escreva a resposta ao cliente assumindo o erro na primeira frase, explicando a solução e o prazo, e dizendo o que ele precisa fazer (se nada, diga que não precisa fazer nada).
+Sem justificativa longa, sem "infelizmente", sem "pedimos a compreensão".
+Até 5 linhas.
+```
+
+**10. Reclamação por WhatsApp ou e-mail**
+
+```text
+# Prompt: resposta a reclamação
+Reclamação recebida: [colar]. O que de fato aconteceu, do nosso lado: [fatos]. O que podemos oferecer: [opções].
+Escreva a resposta: 1) reconheça o problema específico com as palavras do cliente, 2) explique em uma frase o que aconteceu, sem desculpas vazias, 3) apresente a solução e o prazo, 4) pergunte se resolve.
+Tom: calmo e humano. Até 6 linhas.
+```
+
+**11. Reclamação pública (Google, redes sociais, sites de reclamação)**
+
+```text
+# Prompt: resposta pública
+Reclamação pública: [colar]. Fatos verificados: [lista].
+Escreva a resposta pública em nome da [nome da empresa]: agradeça o relato, reconheça o incômodo sem confirmar fatos que não verificamos, diga em uma frase o que será feito e convide para o canal privado ([e-mail ou WhatsApp oficial]).
+Sem discutir, sem expor dados do cliente, sem "qualquer inconveniente". Até 5 linhas.
+Depois, escreva a mensagem privada de acompanhamento.
+```
+
+**12. Pedido de reembolso ou cancelamento**
+
+```text
+# Prompt: reembolso ou cancelamento
+O cliente pediu [reembolso / cancelamento] de [produto ou serviço]. Nossa política: [regra, prazo, condições]. Situação dele: [dentro ou fora da política, motivo].
+Escreva a resposta: confirme o pedido, explique a política em linguagem simples, diga o que acontece e quando (valor, prazo de devolução, forma). Se estiver fora da política, ofereça a alternativa possível. Faça uma pergunta final para entender o motivo, sem insistir para ele ficar.
+Até 6 linhas.
+```
+
+Perder um cliente por má resposta a reclamação é caro, e o padrão de resposta faz diferença. O blog da Nvoip tem um bom guia sobre [reclamações dos clientes](https://www.nvoip.com.br/blog/reclamacoes-dos-clientes/) que complementa esses prompts.
+
+## Cliente irritado e situações difíceis (prompts 13 a 16)
+
+**13. Cliente irritado, com razão**
+
+```text
+# Prompt: cliente irritado com razão
+Mensagem do cliente: [colar, com o tom original]. Ele tem razão porque: [fato].
+Escreva a resposta: primeira frase reconhecendo o que aconteceu, sem "entendo sua frustração"; segunda, o que vou fazer agora, com horário; terceira, como ele acompanha. Nada de justificativa.
+Até 4 linhas. Tom firme e respeitoso, sem subserviência.
+```
+
+**14. Cliente irritado, sem razão**
+
+```text
+# Prompt: cliente irritado sem razão
+Mensagem do cliente: [colar]. O que de fato aconteceu: [fatos que mostram que a cobrança / o prazo / a entrega estavam corretos].
+Escreva a resposta: reconheça o incômodo, apresente os fatos com data e sem tom de "você está errado", ofereça o que posso fazer dentro da política e encerre com uma pergunta aberta.
+Sem ironia, sem repetir as palavras ofensivas dele, sem ceder ao que a política não permite. Até 5 linhas.
+```
+
+**15. Cliente ameaça expor a empresa ou acionar órgão de defesa**
+
+```text
+# Prompt: ameaça de exposição ou órgão de defesa
+O cliente escreveu: [colar]. Situação real: [fatos].
+Escreva uma resposta que não reaja à ameaça, reconheça o direito dele de reclamar onde quiser, reafirme a solução oferecida com prazo e documente por escrito o que já foi feito, com datas.
+Tom neutro e formal. Até 6 linhas. Ao final, me diga se este caso deve ir para o responsável antes do envio e por quê.
+```
+
+**16. Encerrar conversa que não avança**
+
+```text
+# Prompt: encerrar conversa
+A conversa abaixo está em loop: o cliente repete a mesma exigência e nossa posição é [posição final, com motivo].
+Escreva uma mensagem de encerramento respeitosa: resuma o que foi oferecido, confirme que a posição é final, indique o canal formal se ele quiser registrar ([e-mail / ouvidoria]) e agradeça.
+Até 5 linhas. Sem novos argumentos.
+Conversa: [colar]
+```
+
+## Cobrança e financeiro no atendimento (prompts 17 a 19)
+
+Cobrança é atendimento. A pessoa que cobra mal perde o cliente que ia pagar. Na Nvoip a régua tem quatro mensagens e roda sozinha, mas cada texto nasceu de um prompt como estes.
+
+**17. Lembrete de vencimento**
+
+```text
+# Prompt: lembrete de vencimento
+Escreva um lembrete de WhatsApp para [nome do cliente] sobre a fatura de [valor] que vence em [data], da [nome da empresa].
+Inclua [link ou código de pagamento], a forma de pagamento e um canal para dúvidas. Tom: prestativo, como quem avisa um amigo, não como quem cobra.
+Até 4 linhas. Sem "evite transtornos".
+```
+
+**18. Cobrança de atraso em três estágios**
+
+```text
+# Prompt: cobrança em três estágios
+Escreva 3 mensagens para um pagamento de [valor] que venceu em [data], para enviar com 3, 10 e 20 dias de atraso.
+Primeira: cordial, pode ter sido esquecimento, com link. Segunda: direta, pergunta se houve problema e oferece [parcelamento / nova data]. Terceira: formal, informa a consequência prevista em contrato ([suspensão / juros de X% / negativação após Y dias]) e oferece negociação.
+Cada uma com até 4 linhas, sem ameaça, sem letra maiúscula gritando.
+```
+
+**19. Cliente contesta uma cobrança**
+
+```text
+# Prompt: contestação de cobrança
+O cliente contestou a cobrança de [valor] alegando [motivo]. O que o contrato ou pedido mostra: [fatos].
+Escreva a resposta: agradeça a contestação, apresente os fatos com datas e valores, explique o item contestado em linguagem simples e diga o que acontece agora (mantém, ajusta ou devolve). Se houver erro nosso, assuma na primeira frase.
+Até 6 linhas.
+```
+
+Como estruturar a cadência inteira, inclusive o que a lei e a Meta permitem em mensagem de cobrança, está em [cobrança pelo WhatsApp](https://www.nvoip.com.br/blog/cobranca-whatsapp-business-outubro-2026/), no blog da Nvoip.
+
+## Pós-venda e trabalho interno do time (prompts 20 a 25)
+
+**20. Mensagem de pós-venda**
+
+```text
+# Prompt: pós-venda
+O cliente recebeu [produto / serviço] em [data]. Escreva uma mensagem de pós-venda para enviar [3 dias] depois: pergunte se está tudo certo com uma pergunta específica sobre o uso, ofereça uma dica útil de [uso ou cuidado] e diga onde pedir ajuda.
+Nada de pedir avaliação nem oferecer outro produto nesta mensagem. Até 4 linhas.
+```
+
+**21. Pedido de avaliação**
+
+```text
+# Prompt: pedir avaliação
+O cliente disse que ficou satisfeito com [produto / serviço]. Escreva uma mensagem pedindo uma avaliação em [Google / plataforma], com o link [link], explicando em uma frase por que isso ajuda uma empresa pequena e agradecendo de antemão.
+Até 3 linhas. Sem oferecer brinde em troca.
+```
+
+**22. Resumo de chamado para passar o bastão**
+
+```text
+# Prompt: resumo de chamado
+Resuma a conversa abaixo para o colega que vai assumir: 1) o que o cliente quer, 2) o que já foi dito ou prometido, com datas, 3) o que falta, 4) humor do cliente, 5) próxima ação.
+Máximo de 6 linhas. Não invente nada que não esteja na conversa.
+Conversa: [colar sem dados pessoais]
+```
+
+**23. Análise de transcrição de ligação**
+
+```text
+# Prompt: analisar transcrição de ligação
+Abaixo está a transcrição de uma ligação de atendimento. Avalie: 1) o cliente teve o problema resolvido? 2) quanto tempo até a primeira solução proposta? 3) o atendente prometeu algo? o quê e para quando? 4) 2 pontos positivos e 2 a melhorar na condução, 5) o cliente mencionou concorrente, cancelamento ou indicação?
+Formato: lista curta. Sem elogios genéricos.
+Transcrição: [colar]
+```
+
+Esse prompt só é útil se as ligações forem gravadas e transcritas. Na Nvoip isso acontece automaticamente; o que a tecnologia faz e o que a lei exige estão em [transcrição de áudio](https://www.nvoip.com.br/blog/transcricao-de-audio/), no blog da Nvoip.
+
+**24. Relatório semanal de atendimento**
+
+```text
+# Prompt: relatório semanal de atendimento
+Abaixo estão os dados da semana: número de conversas, tempo médio da primeira resposta, tempo médio de resolução, motivos de contato por categoria, reclamações e elogios. Compare com a semana anterior: [dados].
+Escreva um relatório de até 12 linhas: o que melhorou, o que piorou, o motivo de contato que mais cresceu e uma hipótese, 3 ações para a próxima semana.
+Sem introdução, sem adjetivos.
+Dados: [colar]
+```
+
+**25. Instrução do agente de atendimento (quando os prompts virarem rotina)**
+
+```text
+# Instrução do agente: atendente de WhatsApp da [nome da empresa]
+Você é o atendente da [nome da empresa]: [contexto da empresa].
+Base de conhecimento: [colar perguntas e respostas aprovadas].
+Regras:
+1. Responda em até 4 linhas, tom [cordial e direto], sem emoji.
+2. Só use prazos, preços e condições da base. Se não estiver na base, diga que vai confirmar e colete nome e melhor horário.
+3. Passe para um humano imediatamente quando: o cliente pedir, houver reclamação, pedido de cancelamento ou reembolso, menção a órgão de defesa ou advogado, ou a terceira mensagem seguida sem resolução.
+4. Ao passar, envie ao humano o resumo: o que o cliente quer, o que já foi dito, o que falta, humor, próxima ação.
+5. Nunca peça documento, cartão ou senha pela conversa.
+6. Termine toda resposta com uma pergunta ou um próximo passo claro.
+```
+
+Essa instrução é a versão resumida do Atendente de WhatsApp, um dos seis agentes do [e-book IA no Negócio](/ebook/ia-no-negocio/). O capítulo de Atendimento do manual traz a instrução completa, com triagem, primeira resposta, resumo da conversa e passagem para um humano, e o que fazer com o custo por mensagem da API.
+
+## Prompts para atendimento ao cliente: o antes e depois no tempo de resposta
+
+Faça esta medição antes de usar qualquer prompt: pegue as últimas 30 conversas e anote quanto tempo passou entre a mensagem do cliente e a primeira resposta sua. Em empresas pequenas é comum encontrar média de horas, com picos de um dia inteiro quando a mensagem chega à noite.
+
+Depois de duas semanas com os prompts 1 a 6 em uso, meça de novo. O que vi acontecer, na minha empresa e em empresas de quem mentorei, foi o tempo da primeira resposta cair de horas para minutos no horário comercial, porque o atendente não escreve do zero: cola a mensagem, recebe o rascunho, ajusta uma palavra e envia. Fora do horário, o prompt 2 garante que ninguém fique sem resposta.
+
+Quando o agente do prompt 25 entra em operação, a primeira resposta passa a sair em segundos, 24 horas por dia, e o time humano cuida do que exige julgamento: reclamação, cancelamento, negociação. Foi assim que o atendimento da Nvoip continuou funcionando com um time muito menor. Não foi corte de qualidade; foi corte de espera.
+
+Dois indicadores para acompanhar toda semana: tempo médio da primeira resposta e percentual de conversas resolvidas sem passar para um humano. O segundo não deve ser 100%; se for, o agente está resolvendo coisa que devia ter passado para uma pessoa. Os dois entram no painel que descrevo em [indicadores de gestão para pequenas empresas](/blog/indicadores-de-gestao-para-pequenas-empresas/).
+
+## Perguntas frequentes
+
+### Posso usar os prompts para atendimento ao cliente no plano gratuito?
+
+Sim, para começar. O limite de uso aparece quando o volume cresce e, em dados da empresa, prefira um plano pago de equipe, que não usa suas conversas para treinar o modelo. A comparação por tarefa e preço está em [ChatGPT, Gemini ou Claude: qual IA usar na empresa](/blog/chatgpt-gemini-ou-claude-qual-ia-usar-na-empresa/).
+
+### O cliente percebe que a resposta foi escrita por IA?
+
+Percebe quando a resposta é genérica, longa e cheia de "entendo sua frustração". Os prompts acima limitam o tamanho, proíbem as frases feitas e exigem o contexto da empresa. Com o tom certo, o cliente percebe só uma coisa: que foi respondido rápido.
+
+### Como passar para um humano sem o cliente ficar irritado?
+
+Dizendo a verdade em uma linha ("vou chamar a [nome], que cuida disso") e passando o resumo para a pessoa, para o cliente não repetir tudo. O prompt 22 e a regra 4 da instrução do agente existem para isso.
+
+### Preciso da API oficial do WhatsApp para usar os prompts?
+
+Para os prompts, não: você copia e cola no aplicativo normal. Para o agente responder sozinho, sim, porque é a API que permite conectar a IA ao número da empresa sem risco de bloqueio. A diferença entre WhatsApp Business e a API está explicada em [WhatsApp API](https://www.nvoip.com.br/blog/whatsapp-api/).
+
+## Por onde começar
+
+1. **Hoje:** meça o tempo da primeira resposta das últimas 30 conversas e escreva o parágrafo de contexto da empresa. Use o prompt 1 em todas as mensagens novas.
+2. **Esta semana:** monte a base de perguntas frequentes com o prompt 6 e adote os prompts de reclamação (10 e 11). Toda resposta ainda passa por uma pessoa.
+3. **Este mês:** quando os textos saírem sem edição, cole a instrução do prompt 25 em um agente e deixe-o responder a primeira mensagem, com transbordo para o time.
+
+O capítulo de Atendimento do [e-book IA no Negócio](/ebook/ia-no-negocio/) mostra o agente completo e os outros cinco que rodam na minha empresa. Se quiser o ponto de partida gratuito, baixe [as 12 tarefas que a IA já faz melhor que um analista](/gratis/): três delas são de atendimento.

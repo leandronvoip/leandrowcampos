@@ -54,11 +54,11 @@ const proofs = [
         <p class="eyebrow mb-7">{site.author.name} · {site.author.role}</p>
         <h1 class="display-1">15 anos empreendendo. O que funciona, sem enfeite.</h1>
         <p class="lead measure mt-8">
-          Conteúdo, cursos e consultoria sobre negócios, tecnologia e gestão, por quem toca uma empresa todos os dias. Primeira série: IA no negócio.
+          Conteúdo, cursos e consultoria sobre empreendedorismo, tecnologia, negócios, marketing, financeiro, processos e gestão de pessoas, por quem toca uma empresa todos os dias. O primeiro e-book, <em>IA no Negócio</em>, abre a série.
         </p>
         <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Button href="/gratis" size="lg">{site.leadMagnet.cta}</Button>
-          <Button href="/ebooks" variant="secondary" size="lg">Ver os e-books</Button>
+          <Button href={featured ? `/ebook/${featured.id}/` : '/ebooks'} size="lg">Conhecer o primeiro e-book</Button>
+          <Button href="/blog" variant="secondary" size="lg">Ver o blog</Button>
         </div>
       </div>
       <Portrait priority class="mx-auto w-full max-w-sm lg:max-w-md" ratio="3 / 4" />
@@ -102,7 +102,7 @@ const proofs = [
       <header class="reveal mx-auto mb-14 max-w-3xl text-center sm:mb-20">
         <p class="eyebrow mb-5">O que você encontra aqui</p>
         <h2 class="display-2">Seis frentes. Uma empresa inteira.</h2>
-        <p class="lead measure mx-auto mt-6">O que aprendi tocando uma empresa por quinze anos, organizado em conteúdo, cursos e consultoria. A IA entra em todas elas e abre a série.</p>
+        <p class="lead measure mx-auto mt-6">O que aprendi tocando uma empresa por quinze anos, organizado em conteúdo, cursos e consultoria. A IA entra em todas elas e é o tema do primeiro e-book.</p>
       </header>
       <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {site.topics.map((t, i) => (
@@ -118,7 +118,7 @@ const proofs = [
     </div>
   </section>
 
-  <!-- 4. O e-book em destaque: primeira série -->
+  <!-- 4. O e-book em destaque: o primeiro -->
   {featured && (
     <section id="ebook" class="glow section-y overflow-hidden border-t border-line">
       <div class="container-site">
@@ -127,7 +127,7 @@ const proofs = [
             <BookMockup title={featured.data.title} subtitle={featured.data.subtitle} cover={cover} coverAlt={featured.data.coverAlt} width="min(20rem, 70vw)" class="lg:mr-0" />
           </a>
           <div class="reveal" data-reveal-delay="120">
-            <p class="eyebrow mb-6">Primeira série · IA no negócio</p>
+            <p class="eyebrow mb-6">Primeiro e-book · IA no negócio</p>
             <h2 class="display-2">{featured.data.title}</h2>
             <p class="lead measure mt-6">{featured.data.subtitle}</p>
             <ul class="mt-8 space-y-3 border-t border-line pt-8">

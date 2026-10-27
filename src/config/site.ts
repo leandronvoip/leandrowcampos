@@ -11,7 +11,7 @@ export const site = {
   url: 'https://leandrowcampos.com.br',
   locale: 'pt_BR',
   lang: 'pt-BR',
-  /** Posicionamento (26/10/2026): a marca é o conhecimento de um empreendedor de 15 anos; a IA é o tema da primeira série. */
+  /** Posicionamento (26/10/2026): a marca é o conhecimento de um empreendedor de 15 anos; a IA é o tema do primeiro e-book. */
   description:
     'Empreendedorismo, tecnologia e IA por quem opera uma empresa de verdade. Conteúdo, cursos e consultoria sobre negócios, tecnologia e gestão.',
   /** Título padrão da página inicial e do rodapé. */
@@ -40,7 +40,7 @@ export const site = {
     proof: [
       { value: '70 → 10', label: 'pessoas no time, com IA' },
       { value: '50 mil+', label: 'clientes atendidos' },
-      { value: '10+', label: 'anos de operação' },
+      { value: '15+', label: 'anos de experiência' },
     ],
   },
   social: {
@@ -66,7 +66,7 @@ export const site = {
     { icon: 'target', title: 'Marketing e vendas', text: 'Posicionamento, funil, proposta e follow-up para empresa que precisa vender todo mês, não para campanha de prêmio.' },
     { icon: 'coins', title: 'Financeiro e processos', text: 'Caixa, cobrança, contratos com fornecedor e os processos que fazem a empresa rodar sem o dono em cada etapa.' },
     { icon: 'users', title: 'Pessoas', text: 'Contratar, desenvolver, dar feedback e desligar com respeito. E saber quando uma vaga não é a resposta.' },
-    { icon: 'sparkles', title: 'IA aplicada', text: 'A primeira série. Agentes e prompts que assumem trabalho de verdade nas dez áreas da empresa, por quem fez isso na própria.' },
+    { icon: 'sparkles', title: 'IA aplicada', text: 'O primeiro e-book. Agentes e prompts que assumem trabalho de verdade nas dez áreas da empresa, por quem fez isso na própria.' },
   ],
   /** Isca gratuita: PDF curto, uma tarefa por página, com o prompt pronto. */
   leadMagnet: {

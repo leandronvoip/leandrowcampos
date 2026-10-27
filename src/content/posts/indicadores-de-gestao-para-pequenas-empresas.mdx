@@ -1,0 +1,188 @@
+---
+title: "Indicadores de gestão para pequenas empresas: os 7 essenciais"
+description: "Os 7 indicadores de gestão para pequenas empresas que o dono deve olhar toda semana, com fórmula, meta de referência, modelo de planilha e o prompt que gera o relatório semanal."
+publishedAt: 2026-10-28T12:00:00-03:00
+tags: ["indicadores", "gestão", "financeiro", "ia"]
+draft: false
+---
+
+Indicadores de gestão para pequenas empresas só funcionam se o dono consegue olhar todos em dez minutos, uma vez por semana, e sair com uma decisão. Painel com 30 números ninguém olha. Painel com 7, olhado toda sexta-feira, muda a empresa em um trimestre.
+
+Na Nvoip, a empresa de telefonia e comunicação em nuvem que fundei, o painel semanal tem sete indicadores. Foi com ele que acompanhei a redução do time de 70 para 10 pessoas sem perder clientes: cada semana eu via se a receita se mantinha, se o caixa aguentava, se o atendimento continuava rápido e quanto trabalho a IA estava absorvendo. Sem esses números, a decisão de não repor uma vaga teria sido um palpite.
+
+Este artigo entrega os 7 indicadores com fórmula, meta de referência e o que fazer quando o número sai da faixa; o modelo de planilha, como tabela aqui e como arquivo para baixar; e o prompt que lê a planilha e escreve o relatório semanal em 12 linhas.
+
+Dois deles raramente aparecem em lista de indicadores e são os que mais importam para quem quer crescer sem contratar: faturamento por pessoa e horas feitas por IA.
+
+## Por que 7 indicadores de gestão, e não 30
+
+Uma empresa de 2 a 50 pessoas não tem analista de dados. Tem o dono, uma planilha e a sexta-feira à tarde. Então o critério para um indicador entrar no painel é duro: ele precisa responder a uma pergunta que, se a resposta for ruim, muda o que você faz na segunda-feira.
+
+As sete perguntas:
+
+1. Estamos vendendo o que precisamos vender? (faturamento vs meta)
+2. O dinheiro vai acabar? (caixa projetado)
+3. Quem comprou está pagando? (inadimplência)
+4. Estamos respondendo rápido? (tempo da primeira resposta)
+5. As propostas estão virando venda? (conversão)
+6. A empresa produz mais por pessoa do que no trimestre passado? (faturamento por pessoa)
+7. Quanto trabalho a IA tirou da mesa do time esta semana? (horas de IA)
+
+Churn, margem, ticket médio, custo de aquisição: todos importam, mas são mensais ou trimestrais. O painel semanal é para o que muda em sete dias. O blog da Nvoip tem um bom texto sobre a diferença entre [métricas reais e métricas de vaidade](https://www.nvoip.com.br/blog/metricas-reais-x-metricas-de-vaidade/); vale ler antes de adicionar qualquer número a mais.
+
+## Os 7 indicadores de gestão para pequenas empresas, com fórmula e meta
+
+Para cada indicador: a fórmula, a meta de referência que uso e o que fazer quando sai da faixa. As metas são ponto de partida, não lei. Ajuste ao seu setor depois de um trimestre de dados.
+
+### 1. Faturamento da semana vs meta
+
+**Fórmula:** faturamento da semana ÷ (meta mensal ÷ 4,33) menos 1. O resultado é a variação em percentual.
+
+**Meta de referência:** ficar entre menos 10% e mais 10% da meta semanal. Uma semana ruim é normal; duas seguidas abaixo de menos 10% pedem ação.
+
+**O que fazer:** olhar a coluna ao lado, a média das últimas quatro semanas. Se a média também caiu, o problema é de demanda ou de conversão, e a ação é comercial. Se só a semana caiu, pode ser calendário.
+
+Use o faturamento emitido, não o recebido. O recebido entra no indicador 3.
+
+### 2. Caixa projetado para 8 semanas
+
+**Fórmula:** saldo em caixa hoje mais tudo a receber nas próximas 8 semanas menos tudo a pagar nas próximas 8 semanas. Divida pelo custo fixo mensal para saber quantos meses de operação o número representa.
+
+**Meta de referência:** nunca abaixo de um mês de custo fixo em nenhuma das oito semanas. Em empresa com receita sazonal, dois meses.
+
+**O que fazer:** se a projeção fura o mínimo na semana 6, você tem seis semanas para agir, e as opções são boas: antecipar recebível, negociar prazo com fornecedor, adiar compra. Se descobre na semana zero, as opções são ruins. Esse indicador existe para transformar emergência em planejamento.
+
+Oito semanas é o horizonte em que uma empresa pequena consegue prever com alguma precisão. Doze meses é exercício de imaginação.
+
+### 3. Inadimplência
+
+**Fórmula:** valor vencido há mais de 30 dias ÷ faturamento dos últimos 90 dias.
+
+**Meta de referência:** abaixo de 3% em serviço recorrente; abaixo de 5% em comércio que vende a prazo. Acima de 5%, ou subindo três semanas seguidas, é alerta.
+
+**O que fazer:** a primeira causa quase sempre é régua de cobrança inexistente ou manual. A nossa tem quatro mensagens, dispara sozinha pela API e, quando o cliente responde, uma pessoa assume. Eu uso a Nvoip, que fundei, e recomendo; como montar a cadência está em [régua de cobrança](https://www.nvoip.com.br/blog/regua-de-cobranca/) e em [gestão de cobranças](https://www.nvoip.com.br/blog/gestao-de-cobrancas/), no blog da Nvoip. A segunda causa é vender para quem não devia; aí a ação é no indicador 5, qualificando melhor.
+
+### 4. Tempo médio da primeira resposta
+
+**Fórmula:** soma do tempo entre a mensagem do cliente e a primeira resposta da empresa ÷ número de conversas iniciadas. Em minutos.
+
+**Meta de referência:** menos de 5 minutos no horário comercial quando há um agente de IA respondendo; menos de 60 minutos quando é só gente. Fora do horário, uma resposta automática que confirma o recebimento e diz quando a resposta chega.
+
+**O que fazer:** se o tempo está acima de uma hora, você está perdendo venda para quem respondeu antes. A solução mais barata não é contratar; é um prompt de primeira resposta hoje e um agente em 30 dias. Os prompts estão em [prompts para atendimento ao cliente](/blog/prompts-para-atendimento-ao-cliente/).
+
+Se o seu sistema de atendimento não exporta esse tempo, anote em uma amostra de 20 conversas por semana. Amostra ruim toda semana vale mais que número perfeito nunca. O blog da Nvoip explica o [TMR](https://www.nvoip.com.br/blog/tmr/) e as armadilhas de medi-lo.
+
+### 5. Conversão de propostas
+
+**Fórmula:** propostas fechadas na semana ÷ propostas enviadas na semana. Conte a proposta como fechada na semana em que foi aceita, mesmo que tenha sido enviada antes.
+
+**Meta de referência:** entre 20% e 30% em venda consultiva (serviços, B2B). Em comércio com orçamento rápido, a faixa é mais alta e mais volátil. Abaixo de 15% por quatro semanas, há problema de qualificação, de preço ou de follow-up.
+
+**O que fazer:** olhe primeiro o follow-up. A maior parte das propostas não é recusada; é esquecida. Uma cadência de três mensagens em 14 dias, que a IA escreve e uma pessoa aprova, costuma recuperar parte. Os modelos estão em [script de vendas para WhatsApp](/blog/script-de-vendas-whatsapp/).
+
+### 6. Faturamento por pessoa
+
+**Fórmula:** faturamento do mês ÷ número de pessoas na operação. Conte funcionários, sócios que trabalham no dia a dia e terceirizados fixos, em equivalente a tempo integral. Na planilha semanal, multiplique o faturamento da semana por 4,33 para ter a base mensal.
+
+**Meta de referência:** crescer a cada trimestre. Não existe número absoluto certo para todas as empresas; existe a direção. Para comparar com o seu setor, escrevi um artigo só sobre isso: [faturamento por funcionário: qual é o ideal e como calcular](/blog/faturamento-por-funcionario/).
+
+**O que fazer:** este é o indicador central da tese de crescer sem contratar. Quando uma demanda nova aparece e a primeira reação é abrir vaga, o faturamento por pessoa cai antes de a receita subir. Quando a demanda é absorvida por processo documentado e IA, o indicador sobe. Na Nvoip, a receita não caiu enquanto o time ia de 70 para 10 pessoas; faça a divisão e você entende por que este número está no meu painel.
+
+### 7. Horas feitas por IA na semana
+
+**Fórmula:** para cada tarefa automatizada, multiplique o volume da semana pelos minutos que a tarefa levava quando uma pessoa fazia. Some tudo e divida por 60. Multiplique pelo custo médio da hora do time (salário com encargos ÷ 176) para ter o valor em reais.
+
+**Meta de referência:** crescer todo mês enquanto houver tarefa repetitiva feita à mão. Quando estagna com tarefas manuais ainda na lista, a implantação parou.
+
+**O que fazer:** manter uma aba com as tarefas automatizadas e o tempo que cada uma levava. Exemplo: primeira resposta no WhatsApp levava 4 minutos por conversa; 200 conversas na semana; 800 minutos, 13 horas. Resumo de reunião levava 20 minutos; 6 reuniões; 2 horas. Esse número é o que justifica o investimento em ferramenta e é o que mostra ao time que a IA está tirando trabalho chato, não emprego.
+
+Este é o indicador que ninguém mede e que eu considero obrigatório desde 2026. Sem ele, a conversa sobre IA na empresa vira opinião. Com ele, vira número ao lado do faturamento.
+
+## O modelo de planilha
+
+A estrutura abaixo é a do painel que uso, simplificada para caber em uma aba. Cada linha é uma semana. As colunas de entrada você preenche na sexta; as de fórmula se calculam. Há uma segunda aba, `Config`, com três valores: meta de faturamento mensal (B1), custo fixo mensal (B2) e custo médio da hora de uma pessoa (B3).
+
+| Coluna | Cabeçalho | Tipo | Fórmula ou preenchimento |
+|---|---|---|---|
+| A | Semana (data da sexta) | entrada | Data de fechamento |
+| B | Faturamento da semana | entrada | Faturado de segunda a sexta |
+| C | Meta semanal | fórmula | Config!B1 dividido por 4,33 |
+| D | Variação vs meta | fórmula | B dividido por C, menos 1 |
+| E | Média das últimas 4 semanas | fórmula | Média de B nas 4 linhas mais recentes |
+| F | Saldo em caixa hoje | entrada | Todas as contas e caixa físico |
+| G | A receber em 8 semanas | entrada | Recebíveis com vencimento em até 56 dias |
+| H | A pagar em 8 semanas | entrada | Contas, folha, impostos, fornecedores em até 56 dias |
+| I | Caixa projetado | fórmula | F mais G menos H |
+| J | Meses de custo fixo em caixa | fórmula | I dividido por Config!B2 |
+| K | Vencido há mais de 30 dias | entrada | Títulos em aberto com atraso maior que 30 dias |
+| L | Faturado nos últimos 90 dias | entrada | Soma das 13 semanas anteriores |
+| M | Inadimplência | fórmula | K dividido por L |
+| N | Conversas iniciadas | entrada | Novas conversas de clientes nos canais |
+| O | Soma dos tempos até a primeira resposta (min) | entrada | Exportado do sistema ou amostra de 20 |
+| P | Tempo médio da primeira resposta | fórmula | O dividido por N |
+| Q | Propostas enviadas | entrada | Orçamentos e propostas formais |
+| R | Propostas fechadas | entrada | Aceitas na semana |
+| S | Conversão | fórmula | R dividido por Q |
+| T | Pessoas na operação | entrada | Equivalente a tempo integral |
+| U | Faturamento por pessoa no mês | fórmula | B vezes 4,33, dividido por T |
+| V | Horas feitas por IA | entrada | Soma de (volume vezes minutos) dividido por 60 |
+| W | Valor das horas de IA | fórmula | V vezes Config!B3 |
+
+As fórmulas prontas para colar no Google Planilhas ou no Excel, com as observações de formatação e a tabela de metas, estão no arquivo: [baixar o modelo (.md, abre em qualquer editor)](/downloads/painel-semanal-7-indicadores.md). Copie a estrutura para a sua planilha; não prometo arquivo .xlsx porque o valor está em você montar e entender cada coluna.
+
+Preencher leva 15 minutos na sexta, se os dados estiverem acessíveis. Se levar uma hora, o problema não é o painel; é onde os dados estão. Nesse caso, a primeira automação a fazer é a exportação, e o n8n resolve boa parte disso: explico em [n8n: o que é e automações para PME](/blog/n8n-o-que-e-e-automacoes-para-pme/).
+
+## O prompt que escreve o relatório semanal
+
+Preenchida a planilha, você copia as últimas cinco linhas com os cabeçalhos e cola neste prompt. Em 30 segundos sai o relatório que antes levava uma hora para escrever, ou que nunca era escrito.
+
+```text
+# Prompt: relatório semanal dos 7 indicadores
+Abaixo estão as últimas 5 linhas da minha planilha de indicadores, com os cabeçalhos. A linha mais recente é a semana que fechou hoje.
+Metas: faturamento semanal [valor]; caixa projetado nunca abaixo de 1 mês de custo fixo ([valor]); inadimplência abaixo de [3%]; primeira resposta em menos de [5] minutos; conversão de propostas entre 20% e 30%; faturamento por pessoa crescendo; horas de IA crescendo.
+Escreva um relatório de até 12 linhas, sem introdução e sem adjetivos:
+1) os indicadores que melhoraram e os que pioraram em relação à semana anterior, com os números;
+2) o indicador que mais preocupa, por quê, e uma hipótese de causa;
+3) 3 ações para a próxima semana, cada uma com responsável sugerido pela função (atendimento, comercial, financeiro, dono);
+4) uma pergunta que eu deveria fazer ao time na reunião de segunda.
+Se algum dado estiver faltando ou parecer errado (por exemplo, inadimplência negativa), aponte antes de analisar.
+Dados: [colar as 5 linhas com cabeçalhos]
+```
+
+Esse prompt é a versão semanal do Conselheiro do dono, um dos seis agentes do [e-book IA no Negócio](/ebook/ia-no-negocio/). No capítulo "O dono" ele ganha a instrução completa, lê a planilha direto e prepara a pauta da reunião de segunda. Mas o prompt colado à mão já resolve.
+
+Uma regra: o relatório não substitui olhar os números. Leia o relatório e depois abra a planilha. Em dois minutos você confere se a IA entendeu certo; e, nas primeiras semanas, ela vai errar uma interpretação ou outra, principalmente quando um dado foi digitado errado. O prompt pede para apontar inconsistência justamente por isso.
+
+## Como o painel se encaixa na semana
+
+Sexta, 15 minutos: preencher a planilha e rodar o prompt. Sexta, 5 minutos: ler o relatório e marcar uma decisão. Segunda, 20 minutos: reunião curta com o time em cima das três ações sugeridas, ajustadas pelo que você sabe e a IA não.
+
+Isso é tudo. Não há reunião de duas horas de indicadores, não há apresentação. O painel é do dono, e a reunião é de ação. Quando o time cresce um pouco, cada responsável de área passa a preencher as colunas da sua área antes da sexta; o dono só lê.
+
+Depois de um trimestre, você terá 13 linhas. É quando as metas de referência deste artigo deixam de importar e as suas próprias médias passam a ser a meta. É também quando o indicador 6 começa a contar a história: se o faturamento por pessoa subiu três meses seguidos sem contratação, a empresa cresceu de verdade. Essa é a mudança de hábito que descrevi em [como organizar uma empresa pequena](/blog/como-organizar-uma-empresa-pequena/): primeiro o processo, depois o número, depois a decisão.
+
+## Perguntas frequentes
+
+### Quais são os indicadores de gestão mais importantes para uma pequena empresa?
+
+Os que mudam a decisão da semana: faturamento vs meta, caixa projetado, inadimplência, tempo da primeira resposta, conversão de propostas, faturamento por pessoa e horas feitas por IA. Margem, churn e custo de aquisição são importantes, mas mensais.
+
+### Preciso de um sistema de BI para acompanhar indicadores?
+
+Não para começar. Uma planilha com 23 colunas e 15 minutos de sexta-feira resolvem por muito tempo. BI faz sentido quando os dados vêm de vários sistemas e a exportação manual passa a custar mais que a ferramenta; o blog da Nvoip tem uma boa introdução sobre [business intelligence](https://www.nvoip.com.br/blog/business-intelligence/) para quando chegar a hora.
+
+### Com que frequência devo olhar os indicadores?
+
+Toda semana, no mesmo dia e horário, por 15 a 20 minutos. Diário gera ansiedade com variação normal; mensal demora demais para corrigir. A exceção é o caixa: quando a projeção estiver no limite, olhe duas vezes por semana.
+
+### Como medir horas economizadas por IA sem inventar número?
+
+Meça o tempo da tarefa manual antes de automatizar, em uma amostra de 10 execuções. Guarde esse número. Depois, multiplique pelo volume real da semana. É uma estimativa, e deve ser tratada assim, mas é uma estimativa com base, que você pode defender para o sócio e para o time.
+
+## Por onde começar
+
+1. **Hoje:** crie a planilha com as 23 colunas e preencha a primeira linha com os dados desta semana, mesmo que alguns fiquem em branco. Branco é informação: diz onde o dado não existe ainda.
+2. **Esta sexta:** preencha de novo e rode o prompt do relatório. Leve uma decisão para a reunião de segunda.
+3. **Este trimestre:** mantenha as 13 semanas. Quando o faturamento por pessoa subir sem contratação, você terá a prova de que crescer sem contratar funciona na sua empresa, não só na minha.
+
+O capítulo "O dono", no [e-book IA no Negócio](/ebook/ia-no-negocio/), tem o agente que lê esta planilha, prepara a reunião e dá a segunda opinião antes de uma decisão grande. E se quiser o primeiro passo gratuito, baixe [as 12 tarefas que a IA já faz melhor que um analista](/gratis/): o relatório semanal é uma delas.

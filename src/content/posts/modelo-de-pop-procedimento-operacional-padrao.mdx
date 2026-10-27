@@ -1,0 +1,243 @@
+---
+title: "Modelo de POP: procedimento operacional padrão em 1 hora com IA"
+description: "Modelo de POP (procedimento operacional padrão) pronto para copiar e o método de 1 hora: grave em áudio, transcreva, cole no prompt e revise. Com um exemplo real de ativação de cliente."
+publishedAt: 2026-10-27T15:00:00-03:00
+tags: ["processos", "modelos", "ia", "gestão"]
+draft: false
+---
+
+Um modelo de POP, o procedimento operacional padrão, é uma página que diz como uma tarefa da empresa é feita: quando começa, quem faz, os passos, o que fazer quando sai do padrão e como saber que ficou pronta. O modelo completo está logo abaixo, para copiar, e também para [baixar o modelo (.md, abre em qualquer editor)](/downloads/modelo-de-pop.md). Com ele e o método deste artigo, você documenta um processo em uma hora, com a IA fazendo a parte chata.
+
+Documentar processos foi o pré-requisito para a Nvoip, a empresa que fundei, reduzir o time de 70 para 10 pessoas sem perder clientes. Sem POP, nada pode ser entregue à IA nem a uma pessoa nova: o processo mora na cabeça de alguém, e quando essa pessoa sai de férias, a empresa para. Com POP, a tarefa tem dono, passos e um número para acompanhar, e a decisão de automatizar vira uma leitura.
+
+O problema dos modelos de POP que você encontra por aí é que vieram da indústria e da área de qualidade: dez páginas, fluxograma, assinatura em três níveis. Empresa de 2 a 50 pessoas não escreve isso e, se escrever, ninguém lê. O meu cabe em uma página, tem uma seção que os modelos antigos não têm, "o que a IA faz e o que a pessoa revisa", e nasce de um áudio de dez minutos.
+
+Vou mostrar o modelo, o método em quatro passos com o prompt pronto, um POP real da Nvoip como exemplo e os erros que vejo quando uma empresa começa a documentar.
+
+## O que é um POP e para que ele serve numa empresa pequena
+
+POP é a sigla de procedimento operacional padrão: a descrição escrita de como uma tarefa repetitiva é executada, para que qualquer pessoa autorizada, ou um agente de IA, consiga fazê-la do mesmo jeito, com o mesmo resultado.
+
+Numa empresa pequena, o POP serve para quatro coisas, nessa ordem de valor:
+
+1. Entregar a tarefa para a IA. Um agente de IA só funciona com instrução completa, e a instrução é o POP reescrito. Sem POP, você pergunta à IA; com POP, você contrata a IA.
+2. Treinar gente nova em dias, não em meses. A pessoa lê a página, faz acompanhada uma vez e segue sozinha.
+3. Tirar o dono da operação. Se o processo está escrito, o dono não precisa ser consultado em cada exceção, porque as exceções previstas estão no papel.
+4. Melhorar. O que está escrito pode ser medido e mudado; o que está na cabeça, não.
+
+Se a sua empresa ainda não tem as funções nomeadas e com dono, faça isso antes: é a etapa 1 de [como organizar uma empresa pequena](/blog/como-organizar-uma-empresa-pequena/). POP é a etapa 3.
+
+## O modelo de POP em uma página
+
+Copie o bloco abaixo para um documento e preencha os campos entre colchetes. Dez seções, uma página. O arquivo para [baixar o modelo (.md, abre em qualquer editor)](/downloads/modelo-de-pop.md) tem o mesmo conteúdo.
+
+```text
+# POP: [nome do processo]
+
+Código: [área]-[número], ex.: ATD-03
+Versão: 1.0 | Data: [dd/mm/aaaa] | Próxima revisão: [dd/mm/aaaa, seis meses depois]
+Dono do processo: [nome e cargo]
+Quem executa: [cargo ou agente de IA, com o nome da pessoa que supervisiona]
+
+## 1. Objetivo
+[Uma frase: o que este processo entrega e para quem.]
+
+## 2. Quando começa e quando termina
+Começa quando: [gatilho]
+Termina quando: [resultado verificável]
+
+## 3. Quem faz o quê
+| Passo | Quem executa | Quem supervisiona |
+|---|---|---|
+| [passos 1 a N] | [pessoa, cargo ou IA] | [pessoa] |
+
+## 4. O que precisa estar pronto antes
+- [acesso, sistema, documento ou informação]
+
+## 5. Passo a passo
+1. [Verbo no infinitivo + objeto + onde.]
+   Critério de pronto: [como saber que o passo foi concluído certo]
+2. [...]
+   Critério de pronto: [...]
+
+## 6. Exceções: o que fazer quando sai do padrão
+| Situação | O que fazer | Quem decide |
+|---|---|---|
+| [situação fora do padrão] | [ação] | [cargo] |
+
+## 7. O que a IA faz neste processo e o que a pessoa revisa
+A IA faz: [tarefas repetitivas entregues a um agente]
+A pessoa revisa: [o que não sai sem leitura humana]
+Instrução do agente: [onde está salva]
+
+## 8. Indicador
+[Um número que mostra se o processo está saudável, com meta.]
+
+## 9. Registros
+[Onde fica o que o processo produz.]
+
+## 10. Histórico de versões
+| Versão | Data | O que mudou | Quem alterou |
+|---|---|---|---|
+| 1.0 | [data] | Primeira versão | [nome] |
+```
+
+Três escolhas de desenho que fazem diferença. "Critério de pronto" em cada passo é o que evita o POP vago: "enviar e-mail" não diz nada; "enviar e-mail e receber a confirmação de leitura" diz. A tabela de exceções é onde mora o conhecimento de quem faz há anos, e é a parte que a pessoa nova e a IA mais precisam. E a seção 7 é a ponte para a automação: quando ela está preenchida, o agente de IA já está meio escrito.
+
+## O método de 1 hora: grave, transcreva, cole no prompt, revise
+
+Ninguém documenta processo porque documentar dá trabalho e porque quem sabe fazer não gosta de escrever. O método resolve os dois problemas: a pessoa fala, a IA escreve, a pessoa só corrige.
+
+### Passo 1: grave em áudio enquanto faz (15 minutos)
+
+Peça para quem executa a tarefa fazê-la uma vez narrando em voz alta, com o celular gravando. "Agora eu abro o sistema, confiro o CNPJ, se não bater eu mando mensagem para o financeiro..." Não precisa ser bonito; precisa ser completo. Peça para a pessoa falar também o que ela faz quando dá errado: é aí que estão as exceções.
+
+Se a tarefa é longa, grave só a parte principal e peça para a pessoa listar, no fim, o que ficou de fora. Dez a quinze minutos de áudio costumam cobrir um processo de empresa pequena.
+
+### Passo 2: transcreva (5 minutos)
+
+Qualquer ferramenta de IA atual transcreve áudio; a maior parte dos gravadores de celular também. Na Nvoip, a transcrição de áudio é rotina porque usamos para ligações, como explico em [transcrição de áudio](https://www.nvoip.com.br/blog/transcricao-de-audio/), e o mesmo recurso serve para esse áudio de processo. Não revise a transcrição; vá direto ao prompt.
+
+### Passo 3: cole no prompt (10 minutos)
+
+Cole a transcrição no prompt abaixo. Ele devolve o POP preenchido no modelo, com uma lista de perguntas para o que ficou faltando.
+
+```text
+# Prompt: transformar a transcrição em um POP de uma página
+
+Você é analista de processos de uma empresa pequena. Vou colar a transcrição de um áudio em que a pessoa que executa uma tarefa narra como a faz, incluindo o que acontece quando dá errado.
+
+Transforme a transcrição no modelo de POP abaixo, preenchendo todas as seções. Regras:
+1. Use somente o que está na transcrição. Não invente passo, sistema, prazo ou regra.
+2. Escreva os passos com verbo no infinitivo, objeto e onde acontece. Um passo por ação.
+3. Para cada passo, escreva um "Critério de pronto" verificável. Se a transcrição não disser, escreva "[A CONFIRMAR]".
+4. Tudo o que a pessoa descreveu como "quando dá errado", "às vezes", "se não", vai para a tabela de Exceções.
+5. Na seção 7, sugira quais passos são repetitivos e poderiam ser feitos por um agente de IA, e quais exigem revisão humana. Marque como sugestão.
+6. Na seção 8, proponha um indicador com meta, marcado como sugestão.
+7. Ao final, liste até 8 perguntas que eu preciso fazer à pessoa para completar o que ficou como [A CONFIRMAR].
+
+Empresa: [nome], [setor]. Área do processo: [área]. Dono do processo: [nome e cargo].
+
+MODELO:
+[cole aqui o modelo de POP de uma página]
+
+TRANSCRIÇÃO:
+[cole aqui a transcrição]
+```
+
+### Passo 4: revise com quem faz (20 minutos)
+
+Sente com a pessoa que gravou, leiam o POP juntos, respondam as perguntas que a IA listou e corrijam o que saiu errado. Na minha experiência, saem 70% a 80% certos na primeira versão; o resto é detalhe de exceção. Salve como versão 1.0, marque a revisão para seis meses e guarde no lugar único onde ficam os processos da empresa.
+
+Uma hora. Três processos por semana, e em um mês os mais críticos estão documentados.
+
+## Exemplo real: o POP de ativação de cliente da Nvoip
+
+Para mostrar o modelo preenchido, segue o POP de ativação de cliente da Nvoip, em termos gerais. É o processo que começa quando um cliente novo paga e termina quando ele está usando o serviço. Era feito por uma pessoa, passo a passo; hoje a maior parte é feita por automação e IA, com uma pessoa supervisionando as exceções.
+
+```text
+# POP: Ativação de cliente novo
+
+Código: ATD-01
+Versão: atual | Dono do processo: responsável pelo atendimento
+Quem executa: agente de IA e automação; supervisão do atendimento
+
+## 1. Objetivo
+Deixar o cliente novo usando o serviço em até 1 dia útil após a confirmação do pagamento, com os dados corretos e o primeiro contato feito.
+
+## 2. Quando começa e quando termina
+Começa quando: o pagamento da primeira fatura é confirmado.
+Termina quando: o cliente acessou o painel, o serviço está configurado e a conta está marcada como ativa, com o registro do primeiro contato.
+
+## 3. Quem faz o quê
+| Passo | Quem executa | Quem supervisiona |
+|---|---|---|
+| 1 a 3 | Automação | Atendimento |
+| 4 e 5 | Agente de IA | Atendimento |
+| 6 | Pessoa do atendimento | Dono do processo |
+
+## 4. O que precisa estar pronto antes
+- Cadastro completo com CNPJ ou CPF, e-mail e telefone válidos.
+- Pagamento confirmado no sistema financeiro.
+- Acesso ao painel administrativo.
+
+## 5. Passo a passo
+1. Conferir se os dados do cadastro batem com os do pagamento.
+   Critério de pronto: nome, documento e e-mail iguais nos dois registros.
+2. Liberar a conta e configurar o serviço contratado.
+   Critério de pronto: conta com status ativo e serviço aparecendo no painel do cliente.
+3. Enviar as credenciais e o guia de primeiros passos pelo canal escolhido pelo cliente.
+   Critério de pronto: mensagem entregue, com confirmação do canal.
+4. Em 24 horas, verificar se o cliente acessou. Se não, enviar a mensagem de "precisa de ajuda?".
+   Critério de pronto: acesso registrado ou mensagem de ajuda entregue.
+5. Resumir o que o cliente contratou e as dúvidas que apareceram para a equipe.
+   Critério de pronto: resumo anexado ao cadastro.
+6. Ligar ou mandar mensagem pessoal para clientes de plano maior, apresentando o ponto de contato.
+   Critério de pronto: contato registrado no histórico do cliente.
+
+## 6. Exceções
+| Situação | O que fazer | Quem decide |
+|---|---|---|
+| Dados do cadastro não batem com o pagamento | Não ativar; pedir confirmação ao cliente pelo canal oficial | Atendimento |
+| Cliente não acessou em 3 dias úteis | Ligar; se não atender, segunda mensagem e registro | Atendimento |
+| Cliente pede configuração fora do contratado | Encaminhar ao comercial com o resumo do passo 5 | Comercial |
+| Suspeita de fraude no pagamento | Suspender a ativação e acionar o financeiro | Financeiro |
+
+## 7. O que a IA faz e o que a pessoa revisa
+A IA faz: conferência de dados, envio das credenciais, verificação de acesso, mensagem de ajuda e o resumo para a equipe.
+A pessoa revisa: toda exceção da tabela acima e o contato pessoal do passo 6.
+
+## 8. Indicador
+Tempo entre pagamento e ativação, meta de 1 dia útil; percentual de clientes que acessaram em 3 dias.
+
+## 9. Registros
+Checklist de ativação e resumo no cadastro do cliente; mensagens no histórico do canal.
+```
+
+Repare na seção 7. Quando esse POP foi escrito pela primeira vez, a coluna da IA estava vazia e tudo era feito por pessoa. A seção foi preenchida aos poucos, um passo por vez, sempre depois de duas semanas de revisão. É assim que um POP vira um agente: o [capítulo de Atendimento do e-book IA no Negócio](/ebook/ia-no-negocio/) mostra a instrução completa que nasceu desse processo. E a parte de mensagens roda na Nvoip, que fundei, uso e recomendo: o guia [como automatizar atendimento no WhatsApp, SMS e ligações](https://www.nvoip.com.br/blog/automatizar-atendimento-whatsapp-sms-ligacoes/) mostra como as mensagens dos passos 3 e 4 saem sozinhas, e o [script de atendimento](https://www.nvoip.com.br/blog/script-de-atendimento/) ajuda a escrever o passo 6.
+
+## Os erros mais comuns ao preencher o modelo de POP
+
+Escrever o processo ideal, não o real. O POP documenta como a tarefa é feita hoje, com as gambiarras. Depois você melhora. Quem escreve o ideal produz um documento que ninguém segue.
+
+Pular as exceções. É a seção mais valiosa e a mais pulada. Se a tabela de exceções está vazia, o POP está incompleto: toda tarefa tem o "mas quando acontece isso...".
+
+Dez páginas. Se não cabe em uma, são dois processos. Divida.
+
+Sem dono e sem data de revisão. POP sem dono envelhece em três meses. Com dono e revisão semestral, ele acompanha a empresa.
+
+Guardar em lugar que ninguém acha. Uma pasta só, com os códigos no nome do arquivo, que toda a equipe acessa. O POP que está no e-mail de alguém não existe.
+
+Documentar e não delegar. O POP existe para tirar a tarefa de quem a faz hoje e dar para uma pessoa nova ou para a IA. Se depois de escrito a mesma pessoa continua fazendo do mesmo jeito, faltou o passo seguinte, que descrevo em [como delegar tarefas na empresa](/blog/como-delegar-tarefas-na-empresa/).
+
+## Perguntas frequentes
+
+### O que deve conter um POP?
+
+Objetivo, gatilho de início e critério de término, quem faz o quê, pré-requisitos, passo a passo com critério de pronto, exceções, indicador, onde ficam os registros e histórico de versões. Em empresa pequena, acrescento o que a IA faz e o que a pessoa revisa. Tudo em uma página.
+
+### Qual a diferença entre POP, processo e fluxograma?
+
+Processo é o conjunto de atividades que entrega um resultado; POP é o documento que descreve como executar esse processo; fluxograma é um desenho do processo. Para empresa pequena, o POP em texto basta: é mais fácil de escrever, de manter e de colar na IA. Desenhe o fluxograma só se o processo tiver muitas ramificações.
+
+### Quem deve escrever o POP?
+
+Quem executa a tarefa, com o dono do processo revisando. Com o método do áudio, quem executa só fala; a IA escreve; o dono revisa. Nunca peça para alguém de fora escrever o processo de quem faz: sai bonito e errado.
+
+### Com que frequência revisar um POP?
+
+A cada seis meses, ou quando o processo muda, o que vier primeiro. Marque a data no cabeçalho. A revisão leva 15 minutos: leia, pergunte a quem executa o que mudou, suba a versão.
+
+### Dá para fazer um POP em Word ou em planilha?
+
+Dá, e o modelo deste artigo cabe nos dois. Eu prefiro texto simples, numa pasta compartilhada, porque é o formato que a IA lê melhor e o que a equipe atualiza sem medo de quebrar formatação. O arquivo para baixar é .md e abre em qualquer editor, incluindo o Word.
+
+## Por onde começar
+
+Hoje: escolha a tarefa que para a empresa quando a pessoa que a faz falta. Peça para ela gravar um áudio de dez minutos fazendo e narrando, incluindo o que dá errado.
+
+Esta semana: transcreva, cole no prompt com o modelo, revise com a pessoa em 20 minutos e salve a versão 1.0 na pasta única de processos.
+
+Este mês: três processos por semana, e no fim as funções críticas documentadas. Depois, cada POP recebe a sua [descrição de cargo](/blog/descricao-de-cargo-modelo/) correspondente, e a seção 7 vira o primeiro agente de IA.
+
+A seção 7 de cada POP é, em detalhe, o [e-book IA no Negócio](/ebook/ia-no-negocio/): um agente por área, com a instrução que nasceu de um processo documentado. E se quiser ver quais tarefas valem a pena documentar primeiro, baixe [as 12 tarefas que a IA já faz melhor que um analista](/gratis/).

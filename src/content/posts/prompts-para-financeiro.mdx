@@ -1,0 +1,215 @@
+---
+title: "Prompts para financeiro: DRE, fluxo de caixa e cobrança com IA"
+description: "Como preparar o CSV anonimizado e 20 prompts para financeiro: DRE, caixa projetado, inadimplência, precificação e régua de cobrança, para quem toca o caixa sem analista."
+publishedAt: 2026-10-29T11:00:00-03:00
+tags: ["prompts", "financeiro", "ia", "indicadores"]
+draft: false
+---
+
+Prompts para financeiro só funcionam com dados. Diferente de marketing ou de RH, onde a IA cria texto a partir de uma descrição, no financeiro ela precisa ler a sua planilha: o extrato, as contas a receber, as vendas do mês. Sem o arquivo, qualquer prompt devolve uma aula de contabilidade genérica, e você não precisa de aula, precisa saber se vai fechar o mês.
+
+Na Nvoip, o financeiro de uma empresa com mais de 50 mil clientes atendidos é operado por uma equipe pequena com IA fazendo a leitura pesada: conferência de extrato, projeção de caixa, análise de inadimplência e a régua de cobrança inteira. Foi uma das áreas em que mais tempo foi devolvido quando reduzi o time de 70 para 10 pessoas, e uma das que mais exigiu regra, porque dado financeiro é dado sensível.
+
+Este artigo tem duas partes. A primeira ensina a preparar o arquivo CSV anonimizado, que é o que separa um prompt útil de um vazamento de dados. A segunda traz 20 prompts para financeiro em cinco grupos: DRE, caixa projetado, inadimplência, precificação e régua de cobrança.
+
+Nada aqui substitui o contador. A IA lê, organiza, projeta e aponta; o contador assina e você decide.
+
+## Como preparar o CSV anonimizado antes de qualquer prompt
+
+A regra que uso: a IA nunca recebe nome de cliente, CPF, CNPJ, e-mail, telefone ou número de conta. Recebe códigos. Isso protege o cliente, protege a empresa diante da LGPD e não tira nada da análise, porque a IA não precisa saber quem é o cliente para calcular inadimplência; precisa saber quanto, desde quando e qual o padrão.
+
+O processo em quatro passos:
+
+1. **Exporte do seu sistema** (ERP, banco, planilha) em CSV ou Excel.
+2. **Substitua identificadores por códigos.** Crie uma coluna "cliente_id" com C001, C002 e assim por diante. A tabela de correspondência fica numa planilha separada, só sua.
+3. **Apague colunas que não servem à análise:** endereço, contato, observações livres (que costumam ter nome de gente).
+4. **Padronize datas e valores:** data em AAAA-MM-DD, valor com ponto decimal e sem "R$". A IA se perde menos.
+
+Um CSV de contas a receber pronto para a IA fica assim:
+
+```text
+cliente_id,segmento,plano,valor,vencimento,pagamento,status,dias_atraso
+C001,comercio,mensal,890.00,2026-09-10,2026-09-10,pago,0
+C002,servicos,anual,4200.00,2026-09-15,,aberto,42
+C003,industria,mensal,1350.00,2026-09-20,2026-10-02,pago,12
+C004,comercio,mensal,890.00,2026-10-05,,aberto,22
+```
+
+Para a DRE, o arquivo é outro: uma linha por lançamento, com data, categoria (receita de serviço, custo direto, despesa com pessoal, marketing, impostos), descrição curta sem nome de pessoa e valor. Se o seu contador manda a DRE pronta em PDF, melhor ainda: a IA lê o PDF.
+
+Se a sua empresa tem uma política de uso de IA, essa regra de anonimização entra nela como cláusula. Na Nvoip entrou.
+
+Com o arquivo pronto, cole este contexto antes dos prompts:
+
+```text
+# Prompt: contexto financeiro (colar no início da conversa)
+Você é meu analista financeiro. Empresa: [nome], [segmento], regime tributário [Simples Nacional, Lucro Presumido ou Real], faturamento mensal aproximado [faixa], [número] pessoas. Modelo de receita: [recorrente, por projeto, venda avulsa]. Os dados que vou enviar estão anonimizados: clientes aparecem como códigos. Regras: mostre sempre o cálculo que fez; separe fato (o que o dado diz) de interpretação (o que você acha); quando faltar informação, pergunte em vez de supor; nunca dê orientação tributária definitiva, apenas aponte o que confirmar com o contador. Guarde este contexto.
+```
+
+## Prompts para financeiro: ler e entender a DRE
+
+A DRE responde se a empresa dá lucro. Quase todo dono de pequena empresa recebe uma do contador e não lê, porque vem em formato de contador. Os quatro prompts abaixo traduzem.
+
+```text
+# Prompt: 1. Traduzir a DRE do contador
+Aqui está a DRE de [mês/ano] que recebi do contador [cole ou anexe]. Explique linha por linha em linguagem de dono de empresa: o que cada grupo significa e qual número eu deveria olhar primeiro. Depois, resuma em 5 linhas: receita, custo direto, margem bruta, despesas fixas e resultado. Mostre as porcentagens sobre a receita.
+```
+
+```text
+# Prompt: 2. Comparar três meses e achar o que mudou
+Aqui estão as DREs de [mês 1], [mês 2] e [mês 3] [cole]. Monte uma tabela com as linhas principais nos três meses, em valor e em porcentagem da receita. Destaque as 3 variações mais relevantes, explique o que pode ter causado cada uma com base nos dados e liste as perguntas que eu deveria fazer ao contador ou à equipe.
+```
+
+```text
+# Prompt: 3. Montar a DRE gerencial a partir dos lançamentos
+Aqui está a lista de lançamentos de [mês] com data, categoria, descrição e valor [cole CSV]. Monte uma DRE gerencial simplificada: receita bruta, deduções e impostos sobre venda, receita líquida, custos diretos, margem de contribuição, despesas fixas por grupo (pessoas, marketing, tecnologia, administrativo, financeiro), resultado operacional. Liste os lançamentos que você não conseguiu classificar para eu decidir.
+```
+
+```text
+# Prompt: 4. Ponto de equilíbrio
+Com base nesta DRE [cole]: calcule a margem de contribuição em porcentagem, o total de despesas fixas e o ponto de equilíbrio em faturamento mensal. Mostre a fórmula. Depois, simule: quanto preciso faturar para ter [valor] de lucro por mês? E se as despesas fixas subirem [valor] com uma contratação?
+```
+
+O prompt 4 é o que eu mais uso antes de qualquer decisão de contratar. A pergunta "quanto a mais preciso vender para pagar essa pessoa" muda muita conversa, e o artigo [quanto custa um funcionário para a empresa](/blog/quanto-custa-um-funcionario-para-a-empresa/) dá o número completo para colocar na simulação.
+
+## Prompts para o caixa projetado
+
+Lucro na DRE e dinheiro no caixa são coisas diferentes, e empresa pequena quebra pelo caixa. O caixa projetado responde a uma pergunta só: nas próximas semanas, entra mais do que sai?
+
+```text
+# Prompt: 5. Projeção de caixa de 8 semanas
+Aqui estão: saldo atual [valor], contas a receber com vencimento [cole CSV], contas a pagar com vencimento [cole CSV] e despesas fixas recorrentes com dia de pagamento [cole]. Monte a projeção de caixa semanal para as próximas 8 semanas: saldo inicial, entradas previstas, saídas previstas, saldo final. Aplique uma taxa de inadimplência de [porcentagem] sobre os recebíveis. Marque as semanas em que o saldo fica abaixo de [valor mínimo de segurança].
+```
+
+```text
+# Prompt: 6. Cenários pessimista, base e otimista
+Sobre a projeção anterior, crie três cenários: base (como está), pessimista (recebimentos atrasam 15 dias e as vendas novas caem [porcentagem]) e otimista (inadimplência cai pela metade e as vendas sobem [porcentagem]). Mostre o saldo final de cada semana nos três cenários numa tabela e diga em qual semana cada cenário exige ação.
+```
+
+```text
+# Prompt: 7. O que fazer na semana que fica negativa
+Na projeção, a semana [número] fica com saldo de [valor negativo]. Liste as ações possíveis em ordem de menor custo para a empresa: antecipar recebíveis (quais clientes e quanto), negociar prazo com fornecedores (quais), adiar despesas não essenciais (quais), e só por último crédito. Para cada ação, estime o efeito no saldo e o que preciso fazer hoje.
+```
+
+```text
+# Prompt: 8. Rotina semanal de caixa
+Monte uma rotina de 30 minutos toda segunda-feira para atualizar o caixa projetado: quais arquivos exportar, em que ordem, o que conferir, quais perguntas fazer a você e qual resumo de 5 linhas eu deveria mandar para o sócio. Formato de checklist.
+```
+
+Na Nvoip, a rotina do prompt 8 roda toda semana e o resumo cai no mesmo painel dos outros indicadores. Como escolher esses indicadores está em [indicadores de gestão para pequenas empresas](/blog/indicadores-de-gestao-para-pequenas-empresas/).
+
+## Prompts para analisar a inadimplência
+
+Inadimplência não é um número, é um padrão. Quem atrasa, desde quando, em que segmento, com que plano. A IA é muito boa em achar padrão num CSV, e esses quatro prompts fazem a leitura que um analista faria em uma tarde.
+
+```text
+# Prompt: 9. Raio-x da inadimplência
+Aqui está o contas a receber anonimizado [cole CSV com cliente_id, segmento, plano, valor, vencimento, status, dias_atraso]. Calcule: taxa de inadimplência em valor e em quantidade, valor em atraso por faixa (1 a 15 dias, 16 a 30, 31 a 60, mais de 60), concentração (quanto os 10 maiores devedores representam do total) e inadimplência por segmento e por plano. Apresente em tabelas e aponte os 3 padrões mais relevantes.
+```
+
+```text
+# Prompt: 10. Priorizar quem cobrar primeiro
+Com o mesmo arquivo, crie uma lista de prioridade de cobrança usando valor em atraso, dias de atraso e histórico (se o cliente_id já atrasou antes, conforme [cole histórico]). Ordene em 3 grupos: cobrar hoje com contato direto, cobrar pela régua automática, e casos para eu avaliar renegociação ou corte. Explique o critério de cada grupo.
+```
+
+```text
+# Prompt: 11. Causa provável do atraso
+Para os clientes com mais de 30 dias de atraso [cole subconjunto], cruze com os dados de uso ou de compra que tenho [cole: último uso, último pedido, chamados abertos]. Classifique a causa provável em: esqueceu, está com dificuldade financeira, está insatisfeito, deixou de usar. Para cada causa, sugira a abordagem de cobrança adequada e o que não fazer.
+```
+
+```text
+# Prompt: 12. Política de crédito e corte
+Com base nos padrões de inadimplência [cole o resultado do prompt 9], proponha uma política de crédito em uma página: quando exigir pagamento antecipado, limite por perfil, em quantos dias de atraso o serviço é suspenso, quando a cobrança vai para terceiros e quem aprova exceções. Aponte o que preciso validar com o contador e com um advogado.
+```
+
+## Prompts para precificação
+
+Preço errado é o problema financeiro mais comum que vejo em mentoria, e o mais invisível: a empresa vende, fatura, trabalha muito e não sobra. A IA ajuda a abrir a conta.
+
+```text
+# Prompt: 13. Custo real de um produto ou serviço
+Quero saber o custo real de [produto ou serviço]. Custos diretos: [materiais, horas de trabalho com valor/hora, ferramentas, taxas]. Despesas fixas mensais da empresa: [valor]. Volume mensal vendido: [quantidade]. Calcule o custo unitário completo (direto mais rateio das fixas), mostre a fórmula e diga qual é a margem real com o preço atual de [valor].
+```
+
+```text
+# Prompt: 14. Preço por margem desejada e por mercado
+Com o custo unitário de [valor], calcule o preço para margens de 20%, 30% e 40% sobre o preço de venda, considerando impostos de [porcentagem] sobre a venda e taxa de pagamento de [porcentagem]. Depois compare com os preços de mercado que levantei: [liste 3 referências]. Me dê uma recomendação clara de preço e o que eu precisaria mudar no custo para praticar o preço mais baixo do mercado sem perder margem.
+```
+
+```text
+# Prompt: 15. Simular um reajuste
+Tenho [número] clientes no plano [nome] pagando [valor]. Quero reajustar para [novo valor]. Simule: receita adicional se ninguém cancelar; quantos cancelamentos eu suporto antes de a receita ficar igual à atual; e três formas de comunicar o reajuste reduzindo cancelamento (antecedência, contrapartida, faixa de transição). Escreva a mensagem de comunicação em até 8 linhas.
+```
+
+```text
+# Prompt: 16. Pacotes e precificação por valor
+Meu [produto ou serviço] é vendido de forma única por [valor]. Com estes perfis de cliente [descreva 3] e o que cada um valoriza, proponha 3 pacotes (entrada, principal, completo) com o que entra em cada um, preço sugerido e a lógica. O pacote principal deve ser o que resolve o problema mais comum e tem a melhor margem.
+```
+
+## Prompts para financeiro: a régua de cobrança
+
+Régua de cobrança é a sequência de mensagens que lembra o cliente de pagar, antes e depois do vencimento, em canal e tom certos. É o processo financeiro que mais devolve dinheiro por hora investida, e a IA escreve a régua inteira em uma sessão. O blog da Nvoip tem um guia completo de [régua de cobrança](https://www.nvoip.com.br/blog/regua-de-cobranca/) e outro sobre [gestão de cobranças](https://www.nvoip.com.br/blog/gestao-de-cobrancas/) que valem a leitura antes dos prompts.
+
+Nossa régua tem quatro mensagens, do lembrete amigável antes do vencimento até o aviso de suspensão, e roda pelo WhatsApp oficial e por SMS, com e-mail como cópia. Eu uso a Nvoip, que fundei, e recomendo: a [API de WhatsApp](https://www.nvoip.com.br/whatsapp/) com modelos aprovados é o que permite disparar cobrança sem risco de bloqueio do número, e o artigo sobre [cobrança pelo WhatsApp Business](https://www.nvoip.com.br/blog/cobranca-whatsapp-business-outubro-2026/) explica as regras da Meta para mensagens de cobrança em outubro de 2026. Para decidir o canal de cada etapa, [SMS ou WhatsApp](https://www.nvoip.com.br/blog/sms-ou-whatsapp/) ajuda.
+
+```text
+# Prompt: 17. Desenhar a régua de cobrança
+Desenhe uma régua de cobrança para [produto ou serviço] com ticket médio de [valor] e vencimento no dia [dia]. Etapas sugeridas: lembrete 3 dias antes, aviso no dia do vencimento, cobrança 5 dias depois, cobrança firme 15 dias depois, aviso de suspensão 30 dias depois. Para cada etapa: canal (WhatsApp, SMS, e-mail ou ligação), tom, objetivo e o que acontece se o cliente responder. Formato de tabela.
+```
+
+```text
+# Prompt: 18. Escrever as mensagens da régua
+Escreva as mensagens de cada etapa da régua acima para WhatsApp (até 4 linhas, com campos [nome], [valor], [vencimento] e [link de pagamento]) e para SMS (até 160 caracteres). Tom: respeitoso, direto, sem ameaça e sem "notamos que". A mensagem de suspensão deve informar a consequência e a forma de regularizar. Nenhuma mensagem deve expor valor ou dívida para terceiros.
+```
+
+```text
+# Prompt: 19. Resposta a quem pede para negociar
+O cliente respondeu à cobrança pedindo para parcelar ou adiar: "[cole a mensagem dele]". Escreva 2 respostas possíveis em até 4 linhas, com uma única pergunta cada: uma oferecendo [condição que posso dar] e outra pedindo uma data firme. Inclua a regra de quando eu devo aceitar e quando devo recusar, com base na política de crédito [cole].
+```
+
+```text
+# Prompt: 20. Medir a régua todo mês
+Aqui estão os dados de cobrança do mês: mensagens enviadas por etapa, pagamentos recebidos após cada etapa, dias médios até o pagamento e cancelamentos [cole]. Calcule a taxa de recuperação por etapa, o tempo médio de regularização e o custo da régua por real recuperado. Aponte qual etapa tem o melhor resultado, qual deveria mudar de canal ou de texto, e escreva um resumo de 6 linhas.
+```
+
+A régua completa que rodamos na Nvoip, com a instrução do agente Analista financeiro que a executa e sabe quando parar e chamar uma pessoa, está no capítulo Financeiro do [e-book IA no Negócio](/ebook/ia-no-negocio/).
+
+## O que a IA não faz no financeiro
+
+Depois de dois anos usando IA no caixa da Nvoip, três limites ficaram claros, e vale deixar escrito:
+
+- **Ela não assina.** DRE oficial, apuração de imposto, folha e obrigações acessórias são do contador. A IA ajuda você a entender e a conferir o que ele entrega, o que já é muito.
+- **Ela não decide crédito.** Pode organizar o padrão de inadimplência e propor uma política; quem aprova a exceção para um cliente específico é você.
+- **Ela erra em silêncio.** Um CSV com uma coluna deslocada gera uma projeção errada com a mesma confiança de uma certa. Por isso todos os prompts pedem "mostre o cálculo". Confira pelo menos um número de cada tabela na fonte.
+
+Com esses limites respeitados, o financeiro é a área em que a IA mais se paga em uma pequena empresa. Não porque faz algo que você não saberia fazer, mas porque faz toda semana o que você só faria quando a situação já estivesse ruim. O artigo [como reduzir custos na empresa sem demitir](/blog/como-reduzir-custos-na-empresa-sem-demitir/) mostra os cortes que começam exatamente por essa leitura semanal.
+
+## Perguntas frequentes
+
+### Posso colar meu extrato bancário no ChatGPT?
+
+Só depois de anonimizar: tire nomes de pessoas e empresas, números de conta e documentos, e deixe data, descrição genérica, categoria e valor. Nas versões empresariais das ferramentas, os dados não são usados para treino; mesmo assim, a regra de não enviar identificadores vale sempre.
+
+### Qual é melhor para análise financeira: ChatGPT, Gemini ou Claude?
+
+Os três leem CSV e PDF e fazem as contas destes prompts. Para arquivos grandes, com milhares de linhas, o Gemini e o Claude costumam aceitar mais conteúdo de uma vez. O comparativo por tarefa está em [ChatGPT, Gemini ou Claude](/blog/chatgpt-gemini-ou-claude-qual-ia-usar-na-empresa/). Mais importante que a ferramenta é a qualidade do arquivo.
+
+### A IA pode substituir o contador?
+
+Não, e não é esse o objetivo. O contador cuida das obrigações legais e assina. A IA traduz o que ele entrega, projeta o caixa, analisa inadimplência e escreve a régua de cobrança, tarefas que o contador normalmente não faz e que a empresa pequena não tinha para quem delegar.
+
+### De quanto em quanto tempo devo rodar esses prompts?
+
+Caixa projetado toda semana (30 minutos). Inadimplência e régua todo mês. DRE e ponto de equilíbrio todo mês, quando a DRE do contador chega. Precificação a cada seis meses ou quando o custo mudar.
+
+### Mensagem de cobrança pelo WhatsApp pode dar problema?
+
+Pode, se for enviada de número comum em massa ou com tom de ameaça. Pelo WhatsApp oficial, com modelo aprovado pela Meta e dentro das regras de cobrança, não. O artigo da Nvoip sobre cobrança pelo WhatsApp, linkado na seção da régua, lista o que pode e o que não pode.
+
+## Por onde começar
+
+1. Hoje: exporte o contas a receber, anonimize em 15 minutos e rode o prompt 9. Você vai descobrir pelo menos um padrão que não via.
+2. Esta semana: monte a projeção de caixa de 8 semanas com o prompt 5 e marque 30 minutos de segunda-feira para atualizar.
+3. Este mês: desenhe e escreva a régua de cobrança com os prompts 17 e 18, e coloque para rodar em canal oficial.
+
+Análise de inadimplência e régua de cobrança estão entre as [12 tarefas que a IA já faz melhor que um analista](/gratis/), em PDF gratuito. O agente Analista financeiro completo, com as outras nove áreas da empresa, está no [IA no Negócio](/ebook/ia-no-negocio/).

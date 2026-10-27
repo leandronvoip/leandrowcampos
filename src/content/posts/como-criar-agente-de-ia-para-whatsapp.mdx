@@ -1,0 +1,188 @@
+---
+title: "Como criar um agente de IA para WhatsApp sem programar"
+description: "Como criar um agente de IA para WhatsApp em 3 caminhos: recursos da Meta, plataforma sem código e n8n. Custos, prompt de sistema pronto e o que quebra em produção."
+publishedAt: 2026-10-27T10:00:00-03:00
+tags: ["ia", "agentes", "whatsapp", "atendimento"]
+draft: false
+---
+
+Para criar um agente de IA para WhatsApp sem programar você precisa de três coisas: um número de WhatsApp Business ligado à API oficial da Meta, um modelo de IA com uma instrução bem escrita e uma regra clara de quando a conversa passa para uma pessoa. O resto é configuração, e dá para fazer em uma tarde.
+
+Eu opero telefonia e WhatsApp corporativo há quinze anos. Na Nvoip, a empresa que fundei, mais de 50 mil clientes passaram pelo nosso atendimento, e hoje a maior parte das conversas de primeiro contato é resolvida por um agente de IA antes de chegar a um humano. Foi um dos pilares para reduzir o time de 70 para 10 pessoas sem perder clientes.
+
+Também vi muita coisa quebrar. Número banido por disparo sem consentimento, cliente preso num robô que não sabia transferir, conta de mensagens que dobrou porque ninguém leu a tabela de preços da Meta. Este guia é o que eu gostaria de ter lido antes.
+
+Vou mostrar três caminhos, do mais simples ao mais flexível: os recursos nativos do WhatsApp Business, uma plataforma sem código com API oficial e o n8n ligado a uma API de comunicação. Para cada um, o que custa, o que resolve e onde para. No fim, o prompt de sistema que uso como base e as perguntas que mais recebo.
+
+## O que é um agente de IA para WhatsApp e o que ele não é
+
+Um agente de IA para WhatsApp é um programa que lê a mensagem do cliente, decide o que fazer com base numa instrução e numa base de conhecimento e responde em linguagem natural. A diferença para o chatbot de botões de cinco anos atrás está no "decide": ele entende a pergunta escrita de qualquer jeito, consulta o que você ensinou e escreve a resposta, em vez de obrigar o cliente a digitar 1, 2 ou 3.
+
+Ele não é um funcionário autônomo. Um bom agente responde o que foi autorizado a responder, pede dados quando precisa, resume a conversa e transfere para uma pessoa quando sai do escopo. Quem promete "atendimento 100% automatizado" está vendendo problema.
+
+Também não é só um prompt colado no ChatGPT. Para rodar no WhatsApp ele precisa de uma ponte com a Meta, de memória da conversa, de horário de funcionamento, de regras de opt-in e de registro do que foi dito. É essa infraestrutura que os três caminhos abaixo resolvem de formas diferentes.
+
+Antes de escolher, responda duas perguntas: quantas conversas por dia o seu número recebe e quantas delas têm resposta que cabe numa página de perguntas e respostas. Se são 15 conversas e 10 delas são "qual o horário", "quanto custa" e "onde fica", qualquer caminho serve. Se são 300 conversas com consulta de pedido, agendamento e cobrança, você vai precisar de integração.
+
+## Antes de criar o agente: o que quebra em produção
+
+Quase todo tutorial de agente de IA para WhatsApp começa pela ferramenta. Eu começo pelo que dá errado, porque é isso que decide se o projeto dura um mês ou um ano.
+
+### Banimento do número
+
+A Meta bane número que manda mensagem para quem não pediu. Isso vale para o aplicativo gratuito, para a API oficial e principalmente para soluções "não oficiais" que simulam um celular conectado ao WhatsApp Web. Essas soluções são baratas, funcionam por um tempo e um dia o número some, junto com o histórico. Eu não coloco o número principal da empresa em nada que não seja a API oficial.
+
+### Opt-in e janela de 24 horas
+
+Pela regra da Meta, o cliente precisa ter concordado em receber mensagens. Quando ele manda mensagem, abre uma janela de 24 horas em que a empresa responde livremente. Fora dessa janela, só mensagem de template aprovado pela Meta, com categoria e cobrança próprias. Um agente que "lembra" o cliente três dias depois precisa usar template; se a ferramenta não deixar isso claro, desconfie.
+
+### Custo por mensagem
+
+Desde julho de 2025 a Meta cobra por mensagem entregue, não mais por conversa. As categorias são marketing, utilidade, autenticação e serviço, cada uma com preço por país. Cada número tem 1.000 mensagens de serviço gratuitas por mês; em outubro de 2026, a partir do dia 1º, a Meta passou a cobrar a mensagem de serviço que passa desse limite. As tarifas em reais estão na tabela oficial, que muda com frequência: [preços da Plataforma WhatsApp Business](https://developers.facebook.com/docs/whatsapp/pricing). Mensagem do cliente para a empresa não é cobrada.
+
+### Transbordo para humano
+
+É o item que mais separa agente bom de agente ruim. O cliente precisa conseguir falar com uma pessoa em uma mensagem, e a pessoa precisa receber o resumo do que já foi dito. Sem isso, o agente vira a URA de telefone que todo mundo odeia. No [capítulo de Atendimento do e-book IA no Negócio](/ebook/ia-no-negocio/) eu mostro o agente completo com as regras de transbordo que usamos, mas a versão curta é: transferir quando o cliente pede, quando ele repete a pergunta, quando aparece palavra de reclamação ou cancelamento e quando o assunto envolve dinheiro.
+
+### LGPD e registro
+
+Toda conversa fica gravada em algum lugar. Você precisa saber onde, por quanto tempo e quem acessa. Se o agente coleta CPF, endereço ou dados de pagamento, isso tem que estar na sua política de privacidade. Escrevi sobre as regras internas que recomendo em [política de uso de IA na empresa](/blog/politica-de-uso-de-ia-na-empresa-modelo/).
+
+## Caminho 1: recursos nativos do WhatsApp Business
+
+O aplicativo WhatsApp Business é gratuito e já traz o básico de automação: mensagem de saudação, mensagem de ausência, respostas rápidas por atalho, etiquetas e catálogo. Em junho de 2026 a Meta começou a liberar o Meta Business Agent, um assistente de IA que responde perguntas usando as informações da empresa, recomenda produtos do catálogo e agenda horários, com a opção de definir quando um humano assume. Segundo a [cobertura do Canaltech em 5 de junho de 2026](https://canaltech.com.br/apps/whatsapp-libera-ia-que-fala-pela-sua-empresa-e-funciona-24h-por-dia/), o uso começou gratuito e a Meta avisou que lançaria planos pagos nos meses seguintes.
+
+Para quem serve: profissional autônomo, loja de bairro, clínica pequena. Um número, uma pessoa atendendo, perguntas repetidas e previsíveis.
+
+O que resolve: horário, endereço, preço de tabela, "vocês têm tal produto", agendamento simples.
+
+Onde para: não integra com o seu sistema. O agente não consulta o status do pedido, não emite boleto, não registra no CRM, não funciona com vários atendentes em computadores diferentes. A base de conhecimento é o que você digita no perfil e no catálogo. E a conta é pessoal: se o funcionário sai com o celular, o atendimento vai junto.
+
+Minha opinião: se você ainda está no aplicativo, ligue a saudação, a ausência e teste o agente da Meta. Custa zero e mostra em uma semana quais perguntas se repetem. Essa lista de perguntas é a matéria-prima do próximo caminho.
+
+## Caminho 2: plataforma sem código com API oficial do WhatsApp
+
+Aqui o número sai do celular e passa a rodar na API oficial da Meta, operada por uma plataforma que já tem o chatbot, a IA, a fila de atendimento humano e os relatórios prontos. Você configura por tela, sem programar.
+
+Eu uso a Nvoip, que fundei, e recomendo. O [WhatsApp da Nvoip](https://www.nvoip.com.br/whatsapp/) roda na API oficial, e o [chatbot](https://www.nvoip.com.br/chatbot/) permite montar o agente com IA, base de conhecimento, horário de atendimento e transbordo para a equipe, tudo na mesma tela em que a equipe atende. Se o seu negócio recebe ligação, o voicebot da mesma plataforma faz o mesmo trabalho no telefone, com a mesma base de conhecimento.
+
+### Como montar, passo a passo
+
+1. Crie a conta e conecte o número à API oficial. A plataforma guia a verificação do negócio junto à Meta; separe CNPJ, site e um e-mail do domínio da empresa.
+2. Escreva a base de conhecimento. Não copie o site inteiro. Faça uma lista de 30 a 60 perguntas reais com a resposta como você responderia. Use o histórico do WhatsApp dos últimos dois meses.
+3. Cole a instrução do agente, que está mais abaixo neste artigo, e ajuste o nome, o tom e as regras de transbordo.
+4. Configure horário, fila e quem recebe a transferência.
+5. Teste com cinco pessoas de fora da empresa por dois dias. Peça para elas tentarem quebrar o agente.
+6. Ligue para todo o tráfego e leia as conversas todos os dias na primeira semana. Toda resposta errada vira uma linha nova na base de conhecimento.
+
+Para quem serve: empresa de 2 a 50 pessoas com equipe de atendimento ou vendas, vários atendentes, necessidade de relatório e de integração com CRM.
+
+O que resolve: tudo do caminho 1, mais atendimento em equipe, templates para cobrança e aviso, integração com CRM e ERP, campanhas com consentimento e histórico centralizado. Se você já automatiza cobrança, o blog da Nvoip tem um guia atualizado sobre cobrança pelo WhatsApp Business com as regras de outubro de 2026.
+
+Onde para: lógica muito específica do seu negócio, como "consulta o estoque de três fornecedores e escolhe o mais barato", pode exigir integração sob medida. Aí entra o caminho 3, muitas vezes junto com o caminho 2.
+
+## Caminho 3: n8n ligado a uma API de comunicação
+
+O n8n é uma ferramenta de automação visual em que você liga caixinhas: um gatilho, uma chamada de IA, uma consulta ao seu sistema, um envio de mensagem. Ele não envia WhatsApp sozinho; precisa de uma API de comunicação por trás. No meu caso é a [API da Nvoip](https://www.nvoip.com.br/api/), que manda WhatsApp, SMS e ligação pelo mesmo token, e a Nvoip tem uma [página de integração com n8n](https://www.nvoip.com.br/integracoes/automacao/n8n/) com os exemplos.
+
+O fluxo mínimo de um agente no n8n tem cinco nós:
+
+1. Webhook: recebe a mensagem que chegou no WhatsApp.
+2. Memória: busca as últimas mensagens daquele cliente em um banco ou planilha.
+3. Modelo de IA: envia a instrução do agente, a base de conhecimento e o histórico, e recebe a resposta.
+4. Decisão: se a resposta contém a marca de transbordo, avisa a equipe; se não, segue.
+5. HTTP Request: chama a API de comunicação para enviar a resposta ao cliente.
+
+Para quem serve: quem tem uma pessoa com perfil técnico na empresa, ou um parceiro, e precisa de lógica própria: consultar pedido no ERP, abrir chamado, cruzar planilha, decidir por regra.
+
+O que resolve: qualquer coisa que tenha API. É o caminho que me permite, por exemplo, ligar um resumo de conversa a uma tarefa no sistema interno.
+
+Onde para: manutenção. Um fluxo de n8n é código visual, e código precisa de dono. Quando a Meta muda uma regra ou a API muda um campo, alguém tem que abrir o fluxo. Escrevi um guia inteiro sobre isso em [n8n: o que é e 7 automações para PME](/blog/n8n-o-que-e-e-automacoes-para-pme/), com os fluxos prontos para importar.
+
+## Quanto custa um agente de IA para o WhatsApp
+
+A conta tem quatro linhas: o número na API oficial, as mensagens cobradas pela Meta, o modelo de IA e a ferramenta que liga tudo. Os números abaixo são os que consegui conferir nas páginas oficiais em outubro de 2026; o que não está com valor eu prefiro não chutar.
+
+| Item | Caminho 1: nativo | Caminho 2: plataforma | Caminho 3: n8n + API |
+|---|---|---|---|
+| Aplicativo ou plataforma | WhatsApp Business gratuito; Meta Business Agent gratuito no lançamento, com planos pagos anunciados | Mensalidade da plataforma, por número e por atendente; consulte os [planos da Nvoip](https://www.nvoip.com.br/planos/) | n8n Cloud a partir de 20 € por mês no plano Starter, cobrado anualmente, com 2,5 mil execuções; Pro a 50 € por mês com 10 mil execuções. Versão Community gratuita para hospedar por conta própria. Fonte: [n8n.io/pricing](https://n8n.io/pricing/) e [docs.n8n.io/hosting](https://docs.n8n.io/hosting/) |
+| Mensagens da Meta | Sem cobrança por mensagem no aplicativo | Por mensagem entregue, por categoria; 1.000 mensagens de serviço gratuitas por mês por número; tarifa em reais na [tabela oficial](https://developers.facebook.com/docs/whatsapp/pricing) | Igual ao caminho 2 |
+| Modelo de IA | Incluído no agente da Meta | Normalmente incluído na plataforma | Pago por uso, em dólar, pela API do modelo escolhido |
+| Pessoa para manter | Você mesmo | Quem já atende | Uma pessoa com perfil técnico, interna ou parceira |
+
+Duas observações de quem paga essa conta todo mês. Primeiro: a linha que mais cresce com o volume é a das mensagens da Meta, e ela não depende do caminho escolhido, então vale otimizar. As táticas que usamos para reduzir o número de mensagens sem perder qualidade são simples: juntar confirmações numa mensagem só, responder dentro da janela de 24 horas e usar template só quando a janela fechou. Segundo: a linha mais cara costuma ser a invisível, a pessoa que mantém o fluxo. Por isso, para a maior parte das empresas de 2 a 50 pessoas, eu começo pelo caminho 2 e só vou ao 3 quando aparece uma regra que a plataforma não cobre.
+
+## O prompt de sistema do agente, pronto para copiar
+
+Esta é a instrução base que uso. Ela funciona como instrução do agente em plataformas sem código, como prompt de sistema no n8n e, com pequenos ajustes, como GPT personalizado ou projeto no Claude e no Gemini, como mostro em [como criar um agente de IA no ChatGPT, Claude ou Gemini](/blog/como-criar-agente-de-ia-no-chatgpt-claude-gemini/).
+
+```text
+# Instrução do agente: atendente de WhatsApp da [nome da empresa]
+
+Você é o atendente de WhatsApp da [nome da empresa], que vende [produto ou serviço] para [tipo de cliente] em [cidade ou região]. Seu nome no atendimento é [nome do agente]. Você fala em português do Brasil, em frases curtas, com tom [cordial e direto / informal e caloroso], sem emojis, sem gírias.
+
+OBJETIVO
+Resolver dúvidas sobre horário, endereço, preços de tabela, formas de pagamento, prazo de entrega e funcionamento de [produto ou serviço]. Coletar nome, telefone e o que o cliente precisa quando ele quiser comprar, agendar ou falar com alguém.
+
+FONTE DE VERDADE
+Responda somente com o que está na BASE DE CONHECIMENTO abaixo. Se a resposta não estiver lá, diga "Não tenho essa informação aqui, vou passar para a equipe" e transfira. Nunca invente preço, prazo, estoque ou política.
+
+REGRAS DE RESPOSTA
+1. Uma pergunta por mensagem. Não faça lista de perguntas.
+2. Máximo de 4 linhas por mensagem. Se precisar de mais, divida em duas mensagens.
+3. Confirme o que entendeu antes de dar uma resposta longa.
+4. Nunca peça documento, senha, dados de cartão ou endereço completo. Para pagamento, envie somente o link oficial [link de pagamento] ou transfira.
+5. Não prometa desconto, exceção ou prazo diferente da tabela.
+6. Se o cliente escrever em outro idioma, responda nesse idioma.
+
+TRANSFERIR PARA UM HUMANO (escreva exatamente [TRANSFERIR] no início da resposta e um resumo em 3 linhas) quando:
+- o cliente pedir para falar com uma pessoa, de qualquer forma;
+- o cliente repetir a mesma pergunta duas vezes;
+- aparecer reclamação, cancelamento, reembolso, Procon, advogado ou palavrão;
+- o assunto envolver cobrança em aberto, nota fiscal ou contrato;
+- você não encontrar a resposta na base de conhecimento.
+Ao transferir, diga ao cliente: "Vou passar para [nome da pessoa ou equipe], que responde em até [prazo] em horário comercial."
+
+HORÁRIO
+Atendimento humano: [dias e horário]. Fora desse horário, informe que a equipe responde no próximo dia útil e continue ajudando com o que estiver na base.
+
+ENCERRAMENTO
+Quando a dúvida estiver resolvida, pergunte se pode ajudar em algo mais. Se o cliente disser que não, agradeça em uma linha e encerre.
+
+BASE DE CONHECIMENTO
+[cole aqui as perguntas e respostas, uma por linha, no formato "Pergunta: ... Resposta: ..."]
+```
+
+Três cuidados que aprendi testando esta instrução. A marca [TRANSFERIR] precisa ser lida pela ferramenta: na plataforma sem código ela vira uma regra de transbordo; no n8n ela vira um nó de decisão. A base de conhecimento vai no fim, porque os modelos dão mais peso ao começo da instrução, e as regras precisam vencer a base quando houver conflito. E "uma pergunta por mensagem" é a regra que mais melhora a taxa de resposta do cliente; eu explico o porquê em [script de vendas para WhatsApp](/blog/script-de-vendas-whatsapp/).
+
+## Perguntas frequentes
+
+### Existe agente de IA para WhatsApp grátis?
+
+Existe, com limites. O WhatsApp Business é gratuito e o Meta Business Agent começou gratuito em 2026, com planos pagos anunciados. Também dá para rodar n8n na versão Community sem pagar licença, mas você paga o servidor, o modelo de IA e as mensagens da Meta. "Grátis" aqui significa "sem mensalidade de software", não "sem custo".
+
+### Quanto custa uma IA para o WhatsApp por mês?
+
+Depende de três linhas: mensalidade da plataforma, mensagens cobradas pela Meta por entrega e o modelo de IA. Para 15 conversas por dia, o custo fica dominado pela mensalidade; para 300, pelas mensagens da Meta. Confira a tabela oficial da Meta e os planos da plataforma antes de fechar, e peça o custo por conversa, não só o preço do plano.
+
+### Qual é o melhor agente de IA para WhatsApp?
+
+O que roda na API oficial, transfere para humano em uma mensagem e deixa você ler as conversas. Para empresa de 2 a 50 pessoas eu uso e recomendo a Nvoip, que fundei. Para quem só precisa do básico, o recurso nativo da Meta resolve. Para quem tem regra própria, n8n com API de comunicação.
+
+### Preciso de CNPJ para usar a API oficial do WhatsApp?
+
+Para a API oficial a Meta exige a verificação do negócio, e no Brasil isso passa por CNPJ, site ou presença pública e um e-mail do domínio da empresa. O aplicativo gratuito não exige. A plataforma sem código conduz esse processo; reserve uma semana para a aprovação.
+
+### O agente pode mandar mensagem primeiro, para avisar ou cobrar?
+
+Pode, com template aprovado pela Meta e consentimento do cliente. Lembrete de consulta, aviso de entrega e boleto vencido são mensagens de utilidade; promoção é marketing e custa mais. Sem consentimento registrado, não envie. A tabela oficial da Meta, linkada acima, detalha as categorias.
+
+## Por onde começar
+
+Hoje, em uma hora: exporte as conversas do WhatsApp dos últimos 30 dias e marque as 30 perguntas mais repetidas com a resposta certa. Essa lista vale mais que qualquer ferramenta.
+
+Esta semana: escolha o caminho pelo volume. Menos de 30 conversas por dia e uma pessoa atendendo, ligue os recursos nativos. Mais que isso ou equipe, abra uma conta numa plataforma com API oficial, cole a instrução acima e rode o teste com cinco pessoas de fora.
+
+Este mês: leia todas as conversas do agente por sete dias e corrija a base de conhecimento. Depois, defina o indicador que vai acompanhar: eu olho tempo de primeira resposta e percentual de conversas resolvidas sem humano.
+
+Este atendente é um dos seis agentes do [e-book IA no Negócio](/ebook/ia-no-negocio/), que traz a instrução completa com a base de conhecimento modelo e as regras de transbordo que usamos. Se quiser começar pelo gratuito, baixe [as 12 tarefas que a IA já faz melhor que um analista](/gratis/): a primeira resposta no WhatsApp é a número um da lista.

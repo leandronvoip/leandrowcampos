@@ -63,19 +63,53 @@ def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
         "https://leandrowcampos.com.br\n\n"
         "Para sair da lista, responda com \"sair\"."
     )
-    html = (
-        "<div style=\"font-family:Inter,Arial,sans-serif;font-size:16px;line-height:1.6;color:#111;max-width:560px\">"
-        f"<p>Oi, {primeiro}.</p>"
-        "<p>Você entrou na lista do <strong>Leandro Campos</strong>. Duas coisas chegam por aqui:</p>"
-        "<ol><li>O PDF <strong>12 tarefas da sua empresa que a IA já faz melhor que um analista</strong>, assim que ficar pronto.</li>"
-        "<li>As novidades do e-book <strong>IA no Negócio: o manual prático do empreendedor</strong>, que já está à venda pelo preço de lançamento de R$ 47 até 12 de novembro: "
-        "<a href=\"https://leandrowcampos.com.br/ebook/ia-no-negocio/\" style=\"color:#b8862b\">leandrowcampos.com.br/ebook/ia-no-negocio</a>.</li></ol>"
-        "<p>Enquanto isso, uma pergunta rápida: <strong>qual área da sua empresa mais consome o seu tempo hoje?</strong> "
-        "Responda este e-mail com uma palavra (atendimento, vendas, financeiro, pessoas, tecnologia...). Eu leio todas.</p>"
-        "<p>Leandro Campos<br><span style=\"color:#666\">Fundador da Nvoip · 15 anos empreendendo</span><br>"
-        "<a href=\"https://leandrowcampos.com.br\" style=\"color:#b8862b\">leandrowcampos.com.br</a></p>"
-        "<p style=\"color:#888;font-size:13px\">Para sair da lista, responda com \"sair\".</p></div>"
-    )
+    html = f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{assunto}</title></head>
+<body style="margin:0;padding:0;background:#f3f1ec;font-family:Inter,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:#141416;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f1ec;padding:28px 12px;">
+<tr><td align="center">
+<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;">
+  <tr><td style="background:#0a0a0c;border-radius:16px 16px 0 0;padding:28px 32px;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr>
+      <td style="font:700 20px/1 'Inter Tight',Inter,Helvetica,Arial,sans-serif;color:#f5f3ee;letter-spacing:-.02em;">Leandro Campos<span style="color:#d4a857;">.</span></td>
+      <td align="right" style="font:600 11px/1 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;letter-spacing:.18em;text-transform:uppercase;">Lista</td>
+    </tr></table>
+  </td></tr>
+  <tr><td style="background:#ffffff;padding:36px 32px 8px 32px;">
+    <p style="margin:0 0 14px 0;font:600 12px/1 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;letter-spacing:.2em;text-transform:uppercase;">Você está na lista</p>
+    <h1 style="margin:0 0 18px 0;font:700 28px/1.15 'Inter Tight',Inter,Helvetica,Arial,sans-serif;color:#141416;letter-spacing:-.025em;">Oi, {primeiro}. Duas coisas chegam por aqui.</h1>
+    <p style="margin:0 0 24px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Obrigado por entrar. Eu uso esta lista para mandar o que de fato funciona na minha empresa, sem enfeite e sem spam: um e-mail por semana, no máximo.</p>
+  </td></tr>
+  <tr><td style="background:#ffffff;padding:0 32px;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e6e2da;border-radius:12px;">
+      <tr><td style="padding:18px 20px;">
+        <p style="margin:0 0 6px 0;font:700 12px/1 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;">1</p>
+        <p style="margin:0 0 6px 0;font:700 16px/1.35 Inter,Helvetica,Arial,sans-serif;color:#141416;">O PDF gratuito: 12 tarefas da sua empresa que a IA já faz melhor que um analista</p>
+        <p style="margin:0;font:400 14px/1.55 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Uma tarefa por página, com o prompt pronto para copiar. Chega neste e-mail assim que ficar pronto.</p>
+      </td></tr>
+    </table>
+    <div style="height:12px;line-height:12px;font-size:0;">&nbsp;</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e6e2da;border-radius:12px;background:#fbfaf7;">
+      <tr><td style="padding:18px 20px;">
+        <p style="margin:0 0 6px 0;font:700 12px/1 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;">2</p>
+        <p style="margin:0 0 6px 0;font:700 16px/1.35 Inter,Helvetica,Arial,sans-serif;color:#141416;">O e-book IA no Negócio: o manual prático do empreendedor</p>
+        <p style="margin:0 0 16px 0;font:400 14px/1.55 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Os prompts e os agentes que eu uso para operar a minha empresa, nas 10 áreas, prontos para a sua. Preço de lançamento de <strong style="color:#141416;">R$ 47</strong> até 12 de novembro (depois, R$ 97).</p>
+        <table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="background:#f26a1b;border-radius:999px;">
+          <a href="https://leandrowcampos.com.br/ebook/ia-no-negocio/?utm_source=email&amp;utm_medium=boas-vindas&amp;utm_campaign=lancamento-ia-no-negocio" style="display:inline-block;padding:12px 22px;font:600 15px/1 Inter,Helvetica,Arial,sans-serif;color:#0a0a0c;text-decoration:none;">Conhecer o e-book por R$ 47</a>
+        </td></tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td style="background:#ffffff;padding:28px 32px 32px 32px;border-radius:0 0 16px 16px;">
+    <p style="margin:0 0 10px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Enquanto isso, uma pergunta rápida: <strong style="color:#141416;">qual área da sua empresa mais consome o seu tempo hoje?</strong> Responda este e-mail com uma palavra (atendimento, vendas, financeiro, pessoas, tecnologia). Eu leio todas.</p>
+    <p style="margin:24px 0 0 0;font:700 16px/1.3 'Inter Tight',Inter,Helvetica,Arial,sans-serif;color:#141416;">Leandro Campos<span style="color:#f26a1b;">.</span><br><span style="font:400 13px/1.5 Inter,Helvetica,Arial,sans-serif;color:#6f6e6a;">Fundador da Nvoip · 15 anos empreendendo</span></p>
+  </td></tr>
+  <tr><td style="padding:22px 16px 0 16px;text-align:center;font:400 12px/1.6 Inter,Helvetica,Arial,sans-serif;color:#8a8883;">
+    <a href="https://leandrowcampos.com.br" style="color:#8a8883;text-decoration:none;">leandrowcampos.com.br</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/leandrowcampos" style="color:#8a8883;text-decoration:none;">Instagram</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/leandro-campos" style="color:#8a8883;text-decoration:none;">LinkedIn</a> &nbsp;·&nbsp; <a href="https://www.youtube.com/c/leandro-campos" style="color:#8a8883;text-decoration:none;">YouTube</a><br>
+    Você recebe este e-mail porque se cadastrou em leandrowcampos.com.br. Para sair da lista, responda com "sair".
+  </td></tr>
+</table>
+</td></tr></table>
+</body></html>"""
     return assunto, texto, html
 
 

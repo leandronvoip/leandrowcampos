@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>bridge</title>
+<script>
+// Ponte para enviar arquivos públicos deste site a uma página que os pede via postMessage.
+window.addEventListener('message', async (ev) => {
+  const d = ev.data || {};
+  if (!d || d.type !== 'lwc-get-file' || typeof d.path !== 'string') return;
+  if (!/^\/images\/ads\/[A-Za-z0-9._-]+$/.test(d.path)) return;
+  try {
+    const r = await fetch(d.path, { cache: 'no-store' });
+    const buf = await r.arrayBuffer();
+    ev.source.postMessage({ type: 'lwc-file', path: d.path, mime: r.headers.get('content-type') || 'application/octet-stream', buf }, ev.origin, [buf]);
+  } catch (e) {
+    ev.source.postMessage({ type: 'lwc-file-error', path: d.path, error: String(e) }, ev.origin);
+  }
+});
+</script>

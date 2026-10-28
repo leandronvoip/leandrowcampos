@@ -78,9 +78,9 @@ export const site = {
       final: 'analista',
     },
     shortTitle: 'as 12 tarefas',
-    cta: 'Baixar as 12 tarefas',
+    cta: 'Quero as 12 tarefas grátis',
     description:
-      'Um PDF curto, uma tarefa por página, com o prompt pronto para copiar. Doze coisas que a sua empresa já pode delegar à IA hoje, sem contratar ninguém.',
+      'É grátis e é um gostinho do e-book IA no Negócio: um PDF curto, uma tarefa por página, com o prompt pronto para copiar. Doze coisas que a sua empresa já pode delegar à IA hoje, sem contratar ninguém.',
   },
   defaultOgImage: '/images/og-default.png',
 } as const;

@@ -24,7 +24,10 @@ ALLOWED_ORIGINS = {
 }
 
 ddb = boto3.resource("dynamodb")
-ses = boto3.client("ses", region_name=os.environ.get("SES_REGION", "us-east-1"))
+_ses_kwargs = {"region_name": os.environ.get("SES_REGION", "us-east-1")}
+if os.environ.get("SES_ACCESS_KEY_ID"):  # remetente na conta dedicada de SES (485891566746)
+    _ses_kwargs.update(aws_access_key_id=os.environ["SES_ACCESS_KEY_ID"], aws_secret_access_key=os.environ["SES_SECRET_ACCESS_KEY"])
+ses = boto3.client("ses", **_ses_kwargs)
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
@@ -45,14 +48,13 @@ def _resp(status: int, body: dict, origin: str) -> dict:
 
 def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
     primeiro = (nome or "").strip().split(" ")[0] or "olá"
-    assunto = "Você está na lista: 12 tarefas e a abertura em 10/11"
+    assunto = "Você está na lista: as 12 tarefas e o manual por R$ 47"
     texto = (
         f"Oi, {primeiro}.\n\n"
         "Você entrou na lista do Leandro Campos. Duas coisas chegam por aqui:\n\n"
-        "1. O PDF \"12 tarefas da sua empresa que a IA já faz melhor que um analista\", assim que ficar pronto, "
-        "antes da abertura.\n"
-        "2. O aviso da abertura do e-book \"IA no Negócio: o manual prático do empreendedor\", "
-        "em 10 de novembro às 9h, com o preço de lançamento de R$ 47.\n\n"
+        "1. O PDF \"12 tarefas da sua empresa que a IA já faz melhor que um analista\", assim que ficar pronto.\n"
+        "2. As novidades do e-book \"IA no Negócio: o manual prático do empreendedor\", que já está à venda "
+        "pelo preço de lançamento de R$ 47 até 12 de novembro: https://leandrowcampos.com.br/ebook/ia-no-negocio/\n\n"
         "Enquanto isso, uma pergunta rápida: qual área da sua empresa mais consome o seu tempo hoje? "
         "Responda este e-mail com uma palavra (atendimento, vendas, financeiro, pessoas, tecnologia...). "
         "Eu leio todas.\n\n"
@@ -65,8 +67,9 @@ def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
         "<div style=\"font-family:Inter,Arial,sans-serif;font-size:16px;line-height:1.6;color:#111;max-width:560px\">"
         f"<p>Oi, {primeiro}.</p>"
         "<p>Você entrou na lista do <strong>Leandro Campos</strong>. Duas coisas chegam por aqui:</p>"
-        "<ol><li>O PDF <strong>12 tarefas da sua empresa que a IA já faz melhor que um analista</strong>, assim que ficar pronto, antes da abertura.</li>"
-        "<li>O aviso da abertura do e-book <strong>IA no Negócio: o manual prático do empreendedor</strong>, em 10 de novembro às 9h, com o preço de lançamento de R$ 47.</li></ol>"
+        "<ol><li>O PDF <strong>12 tarefas da sua empresa que a IA já faz melhor que um analista</strong>, assim que ficar pronto.</li>"
+        "<li>As novidades do e-book <strong>IA no Negócio: o manual prático do empreendedor</strong>, que já está à venda pelo preço de lançamento de R$ 47 até 12 de novembro: "
+        "<a href=\"https://leandrowcampos.com.br/ebook/ia-no-negocio/\" style=\"color:#b8862b\">leandrowcampos.com.br/ebook/ia-no-negocio</a>.</li></ol>"
         "<p>Enquanto isso, uma pergunta rápida: <strong>qual área da sua empresa mais consome o seu tempo hoje?</strong> "
         "Responda este e-mail com uma palavra (atendimento, vendas, financeiro, pessoas, tecnologia...). Eu leio todas.</p>"
         "<p>Leandro Campos<br><span style=\"color:#666\">Fundador da Nvoip · 15 anos empreendendo</span><br>"

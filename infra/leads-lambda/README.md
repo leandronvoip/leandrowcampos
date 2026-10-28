@@ -16,3 +16,7 @@ Atualizar o código:
 cd infra/leads-lambda && zip -qj /tmp/lwc-leads.zip handler.py && \
 AWS_PROFILE=claude aws lambda update-function-code --region us-east-1 --function-name lwc-leads --zip-file fileb:///tmp/lwc-leads.zip
 ```
+
+## Remetente (28/10/2026)
+
+O envio sai pela conta dedicada de SES da Nvoip (485891566746, região `sa-east-1`), onde `news.leandrowcampos.com.br` está verificado com DKIM. A Lambda usa o usuário IAM `lwc-leads-sender` (política send-only restrita à identidade), com a chave nas variáveis `SES_ACCESS_KEY_ID`/`SES_SECRET_ACCESS_KEY`; cópia da chave no cofre do Codex (`.secrets/aws/ses-lwc-leads-sender-485.json`). O SES da conta principal (935930665473) segue pausado em us-east-1 e não é usado.

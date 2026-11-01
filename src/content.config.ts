@@ -36,6 +36,14 @@ const ebooks = defineCollection({
       support: z.string(),
       cta: z.string().default('Quero o e-book'),
     }),
+    /** Números de prova logo abaixo da primeira dobra. */
+    proof: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
+    /** Páginas reais do livro mostradas antes da compra. */
+    previews: z.array(z.object({ src: z.string(), alt: z.string(), caption: z.string() })).optional(),
+    /** Um prompt grátis, para testar o método na hora. */
+    samplePrompt: z.object({ title: z.string(), lead: z.string(), text: z.string() }).optional(),
+    /** O que entra no pacote, na ordem da oferta. */
+    stack: z.array(z.object({ title: z.string(), detail: z.string() })).optional(),
     pains: z
       .array(z.object({ title: z.string(), text: z.string(), /** Nome do ícone em Icon.astro. */ icon: z.string().optional() }))
       .length(3),

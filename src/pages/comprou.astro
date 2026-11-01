@@ -5,7 +5,10 @@
  */
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
+import { getEntry } from 'astro:content';
 import { site } from '../config/site';
+
+const ebook = await getEntry('ebooks', 'ia-no-negocio');
 ---
 
 <Base title="Compra confirmada" description="Próximos passos após a compra." noindex minimal>
@@ -21,7 +24,7 @@ import { site } from '../config/site';
         {[
           ['Procure o e-mail da Hotmart', 'O remetente é a Hotmart. Se não aparecer em alguns minutos, confira a caixa de promoções e o spam.'],
           ['Entre na área de membros', 'Use o mesmo e-mail da compra. No primeiro acesso, a Hotmart pede para criar uma senha.'],
-          ['Comece pelo capítulo 3', 'Em 20 minutos você monta o primeiro agente no ChatGPT, no Gemini ou no Claude. Depois vá direto para a área da empresa que mais dói hoje.'],
+          ['Comece pelo capítulo 4', 'Em 20 minutos você monta o primeiro agente no ChatGPT, no Gemini ou no Claude. Depois vá direto para a área da empresa que mais dói hoje.'],
         ].map(([title, text], i) => (
           <li class="card reveal flex gap-6 p-7" data-reveal-delay={150 + i * 90}>
             <span aria-hidden="true" class="eyebrow mt-1.5 shrink-0 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
@@ -41,9 +44,22 @@ import { site } from '../config/site';
     </div>
   </section>
 
+  <div id="compra-dados" hidden data-id={ebook?.id} data-title={ebook?.data.title} data-price={ebook?.data.price}></div>
   <script>
     import { track } from '../lib/tracking';
-    // Sinal leve de conclusão. O evento Purchase com valor deve vir do servidor (webhook da Hotmart), não daqui.
-    track('CompleteRegistration', { content_name: 'comprou' });
+    // A Hotmart redireciona para cá depois da compra. Conta uma vez por navegador, para recarregar não duplicar.
+    const el = document.getElementById('compra-dados');
+    let jaContou = false;
+    try { jaContou = localStorage.getItem('lwc_purchase') === '1'; } catch { /* armazenamento bloqueado */ }
+    if (el && !jaContou) {
+      track('Purchase', {
+        content_ids: [el.dataset.id],
+        content_name: el.dataset.title,
+        content_type: 'product',
+        value: Number(el.dataset.price),
+        currency: 'BRL',
+      });
+      try { localStorage.setItem('lwc_purchase', '1'); } catch { /* armazenamento bloqueado */ }
+    }
   </script>
 </Base>

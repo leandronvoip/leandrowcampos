@@ -28,4 +28,4 @@ pnpm-debug.log*
 !.env.example
 
 # Material do e-book fica no repositório privado leandrowcampos-ebook
-ebook/
+/ebook/

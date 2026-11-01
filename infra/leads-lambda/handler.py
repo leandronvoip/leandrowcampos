@@ -77,7 +77,7 @@ def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
   <tr><td style="background:#ffffff;padding:36px 32px 8px 32px;">
     <p style="margin:0 0 14px 0;font:600 12px/1 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;letter-spacing:.2em;text-transform:uppercase;">Você está na lista</p>
     <h1 style="margin:0 0 18px 0;font:700 28px/1.15 'Inter Tight',Inter,Helvetica,Arial,sans-serif;color:#141416;letter-spacing:-.025em;">Oi, {primeiro}. Aqui está o seu PDF.</h1>
-    <p style="margin:0 0 24px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Obrigado por entrar. Eu uso esta lista para mandar o que de fato funciona na minha empresa e sem spam: um e-mail por semana, no máximo.</p>
+    <p style="margin:0 0 24px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Obrigado por entrar. Eu uso esta lista para mandar o que de fato funciona na minha empresa, sem spam: um e-mail por semana, no máximo.</p>
   </td></tr>
   <tr><td style="background:#ffffff;padding:0 32px;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e6e2da;border-radius:12px;">

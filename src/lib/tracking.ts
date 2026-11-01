@@ -54,7 +54,8 @@ export function captureUtms(): Utms {
   const found: Utms = {};
   for (const key of UTM_KEYS) {
     const v = params.get(key);
-    if (v) found[key] = v.slice(0, 200);
+    // O código de clique não pode ser cortado: truncado, a Meta não atribui a venda ao anúncio.
+    if (v) found[key] = key === 'fbclid' || key === 'gclid' ? v.slice(0, 1000) : v.slice(0, 200);
   }
   const stored = getStoredUtms();
   if (Object.keys(found).length === 0) return stored;
@@ -104,6 +105,8 @@ export function track(name: string, params: Record<string, unknown> = {}): void 
 /**
  * Anexa a origem (UTMs) aos links de checkout da Hotmart.
  * A Hotmart aceita `src` (origem) e `sck` (rastreio livre) na URL de checkout.
+ * O `fbclid` vai junto porque a compra acontece em outro domínio: é por ele que o pixel
+ * do checkout liga a venda ao clique no anúncio.
  */
 export function decorateCheckoutLinks(selector = 'a[data-checkout]'): void {
   const utms = getStoredUtms();
@@ -111,13 +114,15 @@ export function decorateCheckoutLinks(selector = 'a[data-checkout]'): void {
     ? [utms.utm_source, utms.utm_medium, utms.utm_campaign].filter(Boolean).join('_')
     : '';
   const sck = utms.utm_content || utms.utm_term || '';
-  if (!src && !sck) return;
+  const fbclid = utms.fbclid || '';
+  if (!src && !sck && !fbclid) return;
 
   document.querySelectorAll<HTMLAnchorElement>(selector).forEach((a) => {
     try {
       const url = new URL(a.href);
       if (src && !url.searchParams.has('src')) url.searchParams.set('src', src.slice(0, 100));
       if (sck && !url.searchParams.has('sck')) url.searchParams.set('sck', sck.slice(0, 100));
+      if (fbclid && !url.searchParams.has('fbclid')) url.searchParams.set('fbclid', fbclid);
       a.href = url.toString();
     } catch {
       /* link relativo ou inválido: ignora */

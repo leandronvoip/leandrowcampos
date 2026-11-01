@@ -55,7 +55,7 @@ def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
         "1. O PDF \"12 tarefas da sua empresa que a IA já faz melhor que um analista\": https://leandrowcampos.com.br/materiais/12-tarefas-ia.pdf\n"
         "2. As novidades do e-book \"IA no Negócio: o manual prático do empreendedor\", que já está à venda "
         "pelo preço de lançamento de R$ 47 até 12 de novembro: https://leandrowcampos.com.br/ebook/ia-no-negocio/\n\n"
-        "Enquanto isso, uma pergunta rápida: qual área da sua empresa mais consome o seu tempo hoje? "
+        "Uma pergunta rápida: qual área da sua empresa mais consome o seu tempo hoje? "
         "Responda este e-mail com uma palavra (atendimento, vendas, financeiro, pessoas, tecnologia...). "
         "Eu leio todas.\n\n"
         "Leandro Campos\n"
@@ -76,8 +76,8 @@ def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
   </td></tr>
   <tr><td style="background:#ffffff;padding:36px 32px 8px 32px;">
     <p style="margin:0 0 14px 0;font:600 12px/1 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;letter-spacing:.2em;text-transform:uppercase;">Você está na lista</p>
-    <h1 style="margin:0 0 18px 0;font:700 28px/1.15 'Inter Tight',Inter,Helvetica,Arial,sans-serif;color:#141416;letter-spacing:-.025em;">Oi, {primeiro}. Duas coisas chegam por aqui.</h1>
-    <p style="margin:0 0 24px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Obrigado por entrar. Eu uso esta lista para mandar o que de fato funciona na minha empresa, sem enfeite e sem spam: um e-mail por semana, no máximo.</p>
+    <h1 style="margin:0 0 18px 0;font:700 28px/1.15 'Inter Tight',Inter,Helvetica,Arial,sans-serif;color:#141416;letter-spacing:-.025em;">Oi, {primeiro}. Aqui está o seu PDF.</h1>
+    <p style="margin:0 0 24px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Obrigado por entrar. Eu uso esta lista para mandar o que de fato funciona na minha empresa e sem spam: um e-mail por semana, no máximo.</p>
   </td></tr>
   <tr><td style="background:#ffffff;padding:0 32px;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e6e2da;border-radius:12px;">
@@ -101,7 +101,7 @@ def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
     </table>
   </td></tr>
   <tr><td style="background:#ffffff;padding:28px 32px 32px 32px;border-radius:0 0 16px 16px;">
-    <p style="margin:0 0 10px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Enquanto isso, uma pergunta rápida: <strong style="color:#141416;">qual área da sua empresa mais consome o seu tempo hoje?</strong> Responda este e-mail com uma palavra (atendimento, vendas, financeiro, pessoas, tecnologia). Eu leio todas.</p>
+    <p style="margin:0 0 10px 0;font:400 16px/1.6 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Uma pergunta rápida: <strong style="color:#141416;">qual área da sua empresa mais consome o seu tempo hoje?</strong> Responda este e-mail com uma palavra (atendimento, vendas, financeiro, pessoas, tecnologia). Eu leio todas.</p>
     <p style="margin:24px 0 0 0;font:700 16px/1.3 'Inter Tight',Inter,Helvetica,Arial,sans-serif;color:#141416;">Leandro Campos<span style="color:#f26a1b;">.</span><br><span style="font:400 13px/1.5 Inter,Helvetica,Arial,sans-serif;color:#6f6e6a;">Fundador da Nvoip · 15 anos empreendendo</span></p>
   </td></tr>
   <tr><td style="padding:22px 16px 0 16px;text-align:center;font:400 12px/1.6 Inter,Helvetica,Arial,sans-serif;color:#8a8883;">

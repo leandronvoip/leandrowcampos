@@ -7,6 +7,7 @@ import Testimonials from '../../components/Testimonials.astro';
 import AuthorBox from '../../components/AuthorBox.astro';
 import BookMockup from '../../components/BookMockup.astro';
 import BuyCta from '../../components/BuyCta.astro';
+import LeadForm from '../../components/LeadForm.astro';
 import { site } from '../../config/site';
 import { brl } from '../../lib/format';
 import { resolveCover } from '../../lib/assets';
@@ -293,6 +294,28 @@ const schema = {
     </div>
   </section>
 
+  <!-- 13. Para quem ainda não vai comprar: amostra grátis no fim, sem competir com o botão de compra -->
+  {open && (
+    <section id="pdf-gratis" class="section-y-sm border-t border-line">
+      <div class="container-site grid max-w-5xl items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div>
+          <p class="eyebrow mb-5">Ainda não é a hora?</p>
+          <h2 class="display-3">Leve um gostinho do manual, de graça.</h2>
+          <p class="lead mt-5">
+            São 12 tarefas da sua empresa que a IA já faz, uma por página, cada uma com o prompt pronto para copiar.
+            Teste no seu negócio e decida depois.
+          </p>
+        </div>
+        <div class="card-elevated p-7 sm:p-9">
+          <h3 class="text-xl">Onde enviamos o PDF?</h3>
+          <div class="mt-6">
+            <LeadForm origem="ebook-saida" cta={site.leadMagnet.cta} whatsapp={false} />
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- Barra de compra fixa no celular: some enquanto outro botão de compra estiver na tela -->
   {open && (
     <>
@@ -355,9 +378,9 @@ const schema = {
       }
     });
 
-    // Barra fixa: aparece só quando nenhum botão de compra da página está visível.
+    // Barra fixa: aparece só quando nenhum botão de compra da página nem o formulário do PDF está visível.
     const barra = document.getElementById('barra-compra');
-    const alvos = ['cta-topo', 'cta-oferta', 'cta-final-botao'].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    const alvos = ['cta-topo', 'cta-oferta', 'cta-final-botao', 'pdf-gratis'].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
     if (barra && alvos.length && 'IntersectionObserver' in window) {
       const visiveis = new Set<Element>();
       const atualizar = () => barra.classList.toggle('translate-y-full', visiveis.size > 0);

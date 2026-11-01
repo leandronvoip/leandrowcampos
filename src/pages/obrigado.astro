@@ -12,7 +12,7 @@ import { shortDate } from '../lib/format';
       <h1 class="display-2">Obrigado. Agora confira seu e-mail.</h1>
       <p class="lead mx-auto mt-8">
         Em poucos minutos chega uma mensagem de <strong class="font-medium text-ink">{site.author.email}</strong>
-        <span data-only="gratis home-isca ebooks-isca"> com o PDF das 12 tarefas</span>.
+        <span data-only="gratis home-isca ebooks-isca ebook-saida"> com o PDF das 12 tarefas</span>.
         Se não aparecer, olhe a caixa de promoções ou o spam e marque como “não é spam”.
       </p>
       <p data-wa class="mt-4 hidden text-muted">Você também vai receber um “oi” no WhatsApp para confirmar o número.</p>
@@ -20,8 +20,8 @@ import { shortDate } from '../lib/format';
       <div class="card reveal mt-14 p-7 text-left sm:p-9" data-reveal-delay="180">
         <h2 class="text-xl sm:text-2xl">Enquanto espera</h2>
         <ul class="mt-5 space-y-4 text-muted">
-          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/sobre" class="text-ink no-underline hover:text-accent">Conheça a história</a>: quinze anos empreendendo e o ano em que a IA mudou a empresa.</span></li>
-          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/lancamento" class="text-ink no-underline hover:text-accent">Veja o lançamento</a>: o e-book abre carrinho de {shortDate(site.launch.cartOpens)} a {shortDate(site.launch.cartCloses)}.</span></li>
+          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/sobre" class="text-ink no-underline hover:text-accent">Conheça a história</a>: quinze anos empreendendo e como a IA mudou a empresa.</span></li>
+          <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href="/ebook/ia-no-negocio/" class="text-ink no-underline hover:text-accent">Veja o manual completo</a>: R$ 47 no lançamento, até {shortDate(site.launch.cartCloses)}.</span></li>
           <li class="flex gap-4"><span aria-hidden="true" class="text-accent">→</span><span><a href={site.social.linkedin} rel="noopener" target="_blank" class="text-ink no-underline hover:text-accent">Siga no LinkedIn</a> para acompanhar os bastidores.</span></li>
         </ul>
       </div>

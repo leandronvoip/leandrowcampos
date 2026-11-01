@@ -48,11 +48,11 @@ def _resp(status: int, body: dict, origin: str) -> dict:
 
 def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
     primeiro = (nome or "").strip().split(" ")[0] or "olá"
-    assunto = "Você está na lista: as 12 tarefas e o manual por R$ 47"
+    assunto = "Aqui estão as 12 tarefas: o PDF que você pediu"
     texto = (
         f"Oi, {primeiro}.\n\n"
-        "Você entrou na lista do Leandro Campos. Duas coisas chegam por aqui:\n\n"
-        "1. O PDF \"12 tarefas da sua empresa que a IA já faz melhor que um analista\", assim que ficar pronto.\n"
+        "Você entrou na lista do Leandro Campos. Duas coisas para você:\n\n"
+        "1. O PDF \"12 tarefas da sua empresa que a IA já faz melhor que um analista\": https://leandrowcampos.com.br/materiais/12-tarefas-ia.pdf\n"
         "2. As novidades do e-book \"IA no Negócio: o manual prático do empreendedor\", que já está à venda "
         "pelo preço de lançamento de R$ 47 até 12 de novembro: https://leandrowcampos.com.br/ebook/ia-no-negocio/\n\n"
         "Enquanto isso, uma pergunta rápida: qual área da sua empresa mais consome o seu tempo hoje? "
@@ -84,7 +84,8 @@ def _welcome(nome: str, origem: str) -> tuple[str, str, str]:
       <tr><td style="padding:18px 20px;">
         <p style="margin:0 0 6px 0;font:700 12px/1 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;">1</p>
         <p style="margin:0 0 6px 0;font:700 16px/1.35 Inter,Helvetica,Arial,sans-serif;color:#141416;">O PDF gratuito: 12 tarefas da sua empresa que a IA já faz melhor que um analista</p>
-        <p style="margin:0;font:400 14px/1.55 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Uma tarefa por página, com o prompt pronto para copiar. Chega neste e-mail assim que ficar pronto.</p>
+        <p style="margin:0 0 12px 0;font:400 14px/1.55 Inter,Helvetica,Arial,sans-serif;color:#4a4a4f;">Uma tarefa por página, com o prompt pronto para copiar.</p>
+        <a href="https://leandrowcampos.com.br/materiais/12-tarefas-ia.pdf" style="font:700 14px/1.4 Inter,Helvetica,Arial,sans-serif;color:#f26a1b;text-decoration:underline;">Baixar o PDF das 12 tarefas</a>
       </td></tr>
     </table>
     <div style="height:12px;line-height:12px;font-size:0;">&nbsp;</div>

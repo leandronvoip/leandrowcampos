@@ -102,6 +102,19 @@ const baseSchema = {
 
     <script type="application/ld+json" set:html={JSON.stringify(schema ?? baseSchema)} />
 
+    <script is:inline>
+      // A Hotmart manda nome, e-mail e outros dados do comprador na URL da página de obrigado.
+      // Limpa a URL antes de carregar o pixel e o GA4, para esses dados nunca saírem daqui.
+      (function () {
+        if (location.pathname.replace(/\/$/, '') !== '/comprou' || !location.search) return;
+        try {
+          window.__lwcTransacao = new URLSearchParams(location.search).get('transaction') || '';
+          history.replaceState(null, '', location.pathname);
+        } catch (e) {
+          /* sem histórico disponível */
+        }
+      })();
+    </script>
     <Analytics />
   </head>
   <body class="flex min-h-dvh flex-col">

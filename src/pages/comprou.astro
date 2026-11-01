@@ -1,7 +1,7 @@
 ---
 /**
  * Página de pós-compra. Configure na Hotmart como "página de obrigado" externa
- * para o produto 8764405. Não recebe dados da compra: só orienta o próximo passo.
+ * para o produto 8764405. A Hotmart manda dados do comprador na URL; o Base.astro limpa antes dos rastreadores.
  */
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
@@ -44,22 +44,19 @@ const ebook = await getEntry('ebooks', 'ia-no-negocio');
     </div>
   </section>
 
-  <div id="compra-dados" hidden data-id={ebook?.id} data-title={ebook?.data.title} data-price={ebook?.data.price}></div>
+  <div id="compra-dados" hidden data-id={ebook?.id} data-price={ebook?.data.price}></div>
   <script>
-    import { track } from '../lib/tracking';
-    // A Hotmart redireciona para cá depois da compra. Conta uma vez por navegador, para recarregar não duplicar.
+    // A compra na Meta vem do pixel do checkout da Hotmart. Disparar aqui contaria a venda em dobro.
+    // Para o GA4, que não está no checkout, registra a compra uma vez por transação (transaction_id).
     const el = document.getElementById('compra-dados');
-    let jaContou = false;
-    try { jaContou = localStorage.getItem('lwc_purchase') === '1'; } catch { /* armazenamento bloqueado */ }
-    if (el && !jaContou) {
-      track('Purchase', {
-        content_ids: [el.dataset.id],
-        content_name: el.dataset.title,
-        content_type: 'product',
+    const transacao = (window as unknown as { __lwcTransacao?: string }).__lwcTransacao;
+    if (el && transacao && typeof window.gtag === 'function') {
+      window.gtag('event', 'purchase', {
+        transaction_id: transacao,
         value: Number(el.dataset.price),
         currency: 'BRL',
+        items: [{ item_id: el.dataset.id, quantity: 1, price: Number(el.dataset.price) }],
       });
-      try { localStorage.setItem('lwc_purchase', '1'); } catch { /* armazenamento bloqueado */ }
     }
   </script>
 </Base>

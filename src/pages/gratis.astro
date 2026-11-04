@@ -23,23 +23,27 @@ const tasks = [
 
 <Base title="12 tarefas grátis" description={`${site.leadMagnet.title}. PDF gratuito, uma tarefa por página, com o prompt pronto para copiar.`}>
   <section class="glow overflow-hidden">
-    <div class="container-site grid items-start gap-12 pb-20 pt-14 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 lg:pb-32 lg:pt-28">
-      <div>
+    <div class="container-site grid items-start gap-10 pb-20 pt-14 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-x-20 lg:gap-y-10 lg:pb-32 lg:pt-28">
+      <div class="lg:col-start-1 lg:row-start-1">
         <p class="eyebrow mb-7">PDF gratuito · amostra do e-book</p>
-        <LeadTitle as="h1" class="display-1" />
-        <p class="lead measure mt-8">{site.leadMagnet.description} Nenhuma exige programar ou contratar ferramenta nova.</p>
-        <ol class="mt-10 grid gap-3 border-t border-line pt-8 text-ink/90 sm:grid-cols-2 sm:gap-x-8">
+        <LeadTitle as="h1" class="display-2 lg:display-1" />
+        <p class="lead measure mt-8 hidden lg:block">{site.leadMagnet.description} Nenhuma exige programar ou contratar ferramenta nova.</p>
+      </div>
+      <!-- No celular, o formulário vem logo depois do título: o anúncio promete "Baixar". -->
+      <div class="card-elevated p-7 sm:p-9 lg:sticky lg:top-28 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+        <h2 class="text-2xl">Onde enviamos o PDF?</h2>
+        <p class="mb-7 mt-2 text-sm text-muted">Chega no e-mail em poucos minutos. WhatsApp é opcional, para quem quiser receber avisos por lá.</p>
+        <LeadForm origem="gratis" cta={site.leadMagnet.cta} />
+      </div>
+      <div class="lg:col-start-1 lg:row-start-2">
+        <p class="lead measure mb-8 lg:hidden">{site.leadMagnet.description} Nenhuma exige programar ou contratar ferramenta nova.</p>
+        <ol class="grid gap-3 border-t border-line pt-8 text-ink/90 sm:grid-cols-2 sm:gap-x-8">
           {tasks.map((item, i) => (
             <li class="flex gap-4"><span aria-hidden="true" class="eyebrow mt-1 tabular-nums">{String(i + 1).padStart(2, '0')}</span><span>{item}</span></li>
           ))}
         </ol>
         <p class="mt-8 text-sm text-muted">Escrito por {site.author.name}, {site.author.role.toLowerCase()}, que reduziu o próprio time de 70 para 10 pessoas com IA.</p>
         <p class="mt-4 text-sm text-muted">Gostou das 12? O e-book <a href="/ebook/ia-no-negocio/" class="text-accent">IA no Negócio</a> é o manual inteiro: as 10 áreas da empresa, os prompts e os 6 agentes prontos para copiar.</p>
-      </div>
-      <div class="card-elevated reveal p-7 sm:p-9 lg:sticky lg:top-28" data-reveal-delay="120">
-        <h2 class="text-2xl">Onde enviamos o PDF?</h2>
-        <p class="mb-7 mt-2 text-sm text-muted">Chega no e-mail em poucos minutos. WhatsApp é opcional, para quem quiser receber avisos por lá.</p>
-        <LeadForm origem="gratis" cta={site.leadMagnet.cta} />
       </div>
     </div>
   </section>
